@@ -787,57 +787,36 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     </div>
   </section>
 
-<!-- =============================== ESPACE CLIENT =============================== -->
-<div id="espace-client" class="page">
+// ===== ESPACE CLIENT — Connexion au CRM =====
+const CRM_URL = 'https://simele-crm-production.up.railway.app';
 
-<style>
-#espace-client { background: var(--blanc); min-height: calc(100vh - 76px); }
-
-/* ── LOGIN ── */
-.ec-login-wrap {
-  min-height: calc(100vh - 76px);
-  display: flex; align-items: center; justify-content: center;
-  background: var(--marine-fonce); position: relative; overflow: hidden;
-}
-.ec-login-wrap::after {
-  content: 'CCS'; position: absolute; bottom: -60px; right: -40px;
-  font-family: var(--display); font-size: 24rem; font-weight: 600;
-  color: rgba(255,255,255,0.018); line-height: 1; pointer-events: none;
-}
-.ec-login-box {
-  background: var(--blanc-pur); border-radius: 4px;
-  padding: 3.5rem; width: 100%; max-width: 420px;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.3); position: relative; z-index: 1;
-}
-.ec-login-logo { text-align: center; margin-bottom: 2rem; }
-.ec-login-logo img { height: 56px; display: inline-block; }
-.ec-login-title { font-family: var(--display); font-size: 1.5rem; font-weight: 300; color: var(--marine-fonce); text-align: center; margin-bottom: 0.2rem; }
-.ec-login-sub { font-size: 0.75rem; color: var(--gris); text-align: center; letter-spacing: 0.08em; margin-bottom: 2rem; }
-.ec-fg { margin-bottom: 1.2rem; }
-.ec-lbl { display: block; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gris); margin-bottom: 0.4rem; font-weight: 500; }
-.ec-inp {
-  width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--gris-clair);
-  border-radius: 2px; font-family: var(--body); font-size: 0.88rem;
-  background: var(--blanc); color: var(--marine-fonce); outline: none; transition: border-color 0.2s;
-}
-.ec-inp:focus { border-color: var(--marine); }
-.ec-btn-submit {
-  width: 100%; padding: 0.9rem; background: var(--marine); color: var(--blanc-pur);
-  border: none; border-radius: 2px; font-family: var(--body); font-size: 0.78rem;
-  letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
-  cursor: pointer; transition: background 0.2s; margin-top: 0.5rem;
-}
-.ec-btn-submit:hover { background: var(--marine-moyen); }
-.ec-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-.ec-err {
-  background: #fef2f2; border: 1px solid #fecaca; border-radius: 2px;
-  padding: 0.7rem 1rem; font-size: 0.82rem; color: #991b1b;
-  margin-bottom: 1rem; display: none;
-}
-.ec-forgot { text-align: center; margin-top: 1.2rem; font-size: 0.75rem; color: var(--gris); }
-.ec-forgot a { color: var(--marine); text-decoration: none; cursor: pointer; opacity: 0.7; }
-.ec-forgot a:hover { opacity: 1; }
-
+document.getElementById('ec-loginbtn').addEventListener('click', async function() {
+  const email = document.getElementById('ec-email').value.trim();
+  const errEl = document.getElementById('ec-err');
+  errEl.style.display = 'none';
+  if (!email) { errEl.textContent = 'Veuillez saisir votre email.'; errEl.style.display = 'block'; return; }
+  this.disabled = true; this.textContent = 'Connexion...';
+  try {
+    const r = await fetch(CRM_URL + '/api/clients', {
+      headers: { 'Authorization': 'Bearer ' + btoa(email) }
+    });
+    const data = await r.json();
+    const client = Array.isArray(data) ? data.find(c => c.email.toLowerCase() === email.toLowerCase()) : null;
+    if (!client) { errEl.textContent = 'Aucun dossier trouvé pour cet email. Contactez le CCS.'; errEl.style.display = 'block'; this.disabled = false; this.textContent = 'Accéder à mon espace'; return; }
+    // Afficher le dashboard
+    document.getElementById('ec-login').style.display = 'none';
+    document.getElementById('ec-dash').style.display = 'block';
+    document.getElementById('ec-username').textContent = (client.prenom || '') + ' ' + (client.nom || '');
+    document.getElementById('ec-useremail').textContent = client.email;
+    if (document.getElementById('ec-projet-nom')) document.getElementById('ec-projet-nom').textContent = client.projet_nom || 'En cours de définition';
+    if (document.getElementById('ec-prestation-val')) document.getElementById('ec-prestation-val').textContent = client.prestation || '—';
+    if (document.getElementById('ec-statut-val')) document.getElementById('ec-statut-val').textContent = client.statut || 'À qualifier';
+    window._ecClient = client;
+  } catch(e) {
+    errEl.textContent = 'Erreur de connexion. Réessayez.'; errEl.style.display = 'block';
+  }
+  this.disabled = false; this.textContent = 'Accéder à mon espace';
+});
 /* ── DASHBOARD ── */
 .ec-dash { display: none; }
 .ec-dheader {
