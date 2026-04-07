@@ -351,7 +351,6 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 }
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -1500,74 +1499,81 @@ function showPage(id) {
 }
 </script>
 
+
+
 <script>
-// ===== EMAILJS - Formulaire de contact RDV =====
-document.addEventListener('DOMContentLoaded', function() {
-  emailjs.init({ publicKey: '7dhOjQ5vEojh0bZQY' });
+// ===== EMAILJS SIMELE =====
+(function() {
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+  script.onload = function() {
+    emailjs.init({ publicKey: '7dhOjQ5vEojh0bZQY' });
 
-  // Trouver le bouton de soumission du formulaire contact
-  const contactPage = document.getElementById('contact');
-  if (!contactPage) return;
+    var contactPage = document.getElementById('contact');
+    if (!contactPage) return;
 
-  // Chercher le bouton principal dans la page contact
-  const submitBtn = contactPage.querySelector('.btn-primary, .btn-blanc, [data-action="submit"]');
-  if (!submitBtn) return;
+    // Trouver tous les boutons/liens .btn dans la section contact
+    var btns = contactPage.querySelectorAll('a.btn-primary, a.btn-blanc, a.btn-outline, button[type=submit], .contact-submit');
+    var submitBtn = btns[btns.length - 1]; // prendre le dernier bouton = "Envoyer"
+    if (!submitBtn) return;
 
-  submitBtn.addEventListener('click', function(e) {
-    e.preventDefault();
+    submitBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-    const nom = document.getElementById('contact-nom');
-    const email = document.getElementById('contact-email');
-    const telephone = document.getElementById('contact-telephone');
-    const message = document.getElementById('contact-message');
+      var nomEl      = document.getElementById('contact-nom');
+      var emailEl    = document.getElementById('contact-email');
+      var telEl      = document.getElementById('contact-telephone');
+      var msgEl      = document.getElementById('contact-message');
 
-    if (!nom || !email) return;
-    if (!nom.value.trim() || !email.value.trim()) {
-      alert('Veuillez remplir les champs obligatoires (nom et email).');
-      return;
-    }
+      if (!nomEl || !emailEl) return;
+      if (!nomEl.value.trim() || !emailEl.value.trim()) {
+        alert('Veuillez remplir votre nom et email.');
+        return;
+      }
 
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = 'Envoi en cours…';
-    submitBtn.style.opacity = '0.7';
-    submitBtn.style.pointerEvents = 'none';
+      var originalHTML = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Envoi en cours…';
+      submitBtn.style.opacity = '0.7';
+      submitBtn.style.pointerEvents = 'none';
 
-    // Extraire prénom/nom
-    const parts = nom.value.trim().split(' ');
-    const prenom = parts[0] || '';
-    const nomFamille = parts.slice(1).join(' ') || '';
+      var parts = nomEl.value.trim().split(' ');
+      var prenom = parts[0] || '';
+      var nom = parts.slice(1).join(' ') || nomEl.value.trim();
 
-    emailjs.send('CCS Guadeloupe', 'template_ukpbzjn', {
-      prenom: prenom,
-      nom: nomFamille || nom.value.trim(),
-      email: email.value.trim(),
-      telephone: telephone ? telephone.value.trim() : 'Non renseigné',
-      message: message ? message.value.trim() : 'Aucun message'
-    }).then(function() {
-      submitBtn.innerHTML = '✓ Message envoyé !';
-      submitBtn.style.background = '#2d7a4f';
-      submitBtn.style.opacity = '1';
-      if (nom) nom.value = '';
-      if (email) email.value = '';
-      if (telephone) telephone.value = '';
-      if (message) message.value = '';
-      setTimeout(function() {
-        submitBtn.innerHTML = originalText;
-        submitBtn.style.background = '';
+      emailjs.send('CCS Guadeloupe', 'template_ukpbzjn', {
+        prenom:     prenom,
+        nom:        nom,
+        email:      emailEl.value.trim(),
+        telephone:  telEl  ? telEl.value.trim()  : 'Non renseigné',
+        message:    msgEl  ? msgEl.value.trim()  : 'Aucun message'
+      }).then(function() {
+        submitBtn.innerHTML = '✓ Message envoyé !';
+        submitBtn.style.background = '#2d7a4f';
+        submitBtn.style.opacity = '1';
+        nomEl.value = ''; emailEl.value = '';
+        if (telEl) telEl.value = '';
+        if (msgEl) msgEl.value = '';
+        setTimeout(function() {
+          submitBtn.innerHTML = originalHTML;
+          submitBtn.style.background = '';
+          submitBtn.style.pointerEvents = '';
+        }, 4000);
+      }, function(err) {
+        console.error('EmailJS error:', JSON.stringify(err));
+        submitBtn.innerHTML = '✗ Erreur — Réessayez';
+        submitBtn.style.background = '#c0392b';
+        submitBtn.style.opacity = '1';
         submitBtn.style.pointerEvents = '';
-      }, 4000);
-    }, function(error) {
-      submitBtn.innerHTML = '✗ Erreur — Réessayez';
-      submitBtn.style.background = '#c0392b';
-      submitBtn.style.opacity = '1';
-      submitBtn.style.pointerEvents = '';
-      setTimeout(function() {
-        submitBtn.innerHTML = originalText;
-        submitBtn.style.background = '';
-      }, 4000);
+        setTimeout(function() {
+          submitBtn.innerHTML = originalHTML;
+          submitBtn.style.background = '';
+        }, 4000);
+      });
     });
-  });
-});
+  };
+  document.body.appendChild(script);
+})();
 </script>
 </body>
 </html>
