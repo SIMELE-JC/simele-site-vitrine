@@ -1499,8 +1499,7 @@ function showPage(id) {
 }
 </script>
 
-<!-- EmailJS RDV -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
 window.addEventListener('load', function() {
   if (typeof emailjs === 'undefined') return;
@@ -1559,6 +1558,78 @@ window.addEventListener('load', function() {
       }, 4000);
     }, function(err) {
       console.error('EmailJS error:', JSON.stringify(err));
+      btn.innerHTML = '✗ Erreur — Réessayez';
+      btn.style.background = '#c0392b';
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = '';
+      setTimeout(function() {
+        btn.innerHTML = orig;
+        btn.style.background = '';
+      }, 4000);
+    });
+  });
+});
+</script>
+
+<!-- EmailJS RDV -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+window.addEventListener('load', function() {
+  if (typeof emailjs === 'undefined') return;
+  emailjs.init({ publicKey: '7dhOjQ5vEojh0bZQY' });
+
+  var contact = document.getElementById('contact');
+  if (!contact) return;
+
+  var inputs   = contact.querySelectorAll('input.form-input');
+  var select   = contact.querySelector('select.form-select');
+  var textarea = contact.querySelector('textarea.form-textarea');
+  var btn      = contact.querySelector('a.btn-primary');
+  if (!btn) return;
+
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var nomVal   = inputs[0] ? inputs[0].value.trim() : '';
+    var emailVal = inputs[1] ? inputs[1].value.trim() : '';
+    var telVal   = inputs[2] ? inputs[2].value.trim() : '';
+    var svcVal   = select && select.selectedIndex > 0 ? select.options[select.selectedIndex].text : '';
+    var msgVal   = textarea ? textarea.value.trim() : '';
+
+    if (!nomVal || !emailVal) {
+      alert('Veuillez remplir votre nom et email.');
+      return;
+    }
+
+    var orig = btn.innerHTML;
+    btn.innerHTML = 'Envoi en cours…';
+    btn.style.opacity = '0.7';
+    btn.style.pointerEvents = 'none';
+
+    var parts = nomVal.split(' ');
+    emailjs.send('CCS Guadeloupe', 'template_kwbb3uo', {
+      prenom:    parts[0] || nomVal,
+      nom:       parts.slice(1).join(' ') || '',
+      email:     emailVal,
+      telephone: telVal,
+      message:   (svcVal ? 'Service : ' + svcVal + '\n\n' : '') + msgVal
+    }).then(function() {
+      btn.innerHTML = '✓ Demande envoyée !';
+      btn.style.background = '#2d7a4f';
+      btn.style.opacity = '1';
+      if (inputs[0]) inputs[0].value = '';
+      if (inputs[1]) inputs[1].value = '';
+      if (inputs[2]) inputs[2].value = '';
+      if (select) select.selectedIndex = 0;
+      if (textarea) textarea.value = '';
+      setTimeout(function() {
+        btn.innerHTML = orig;
+        btn.style.background = '';
+        btn.style.pointerEvents = '';
+      }, 4000);
+    }, function(err) {
+      console.error('EmailJS:', JSON.stringify(err));
       btn.innerHTML = '✗ Erreur — Réessayez';
       btn.style.background = '#c0392b';
       btn.style.opacity = '1';
