@@ -351,6 +351,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -640,16 +641,16 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
           <span class="label">Formulaire de contact</span>
           <h2>Envoyez-moi<br><span class="italic text-marine">un message</span></h2>
           <div class="divider"></div>
-          <div class="form-group"><label class="form-label">Prénom & Nom *</label><input type="text" class="form-input" placeholder="Marie Dupont"></div>
-          <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" placeholder="marie@exemple.com"></div>
-          <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" placeholder="+590 6 90 00 00 00"></div>
+          <div class="form-group"><label class="form-label">Prénom & Nom *</label><input type="text" id="contact-nom" class="form-input" placeholder="Marie Dupont" required></div>
+          <div class="form-group"><label class="form-label">Email *</label><input type="email" id="contact-email" class="form-input" placeholder="marie@exemple.com" required></div>
+          <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" id="contact-telephone" class="form-input" placeholder="+590 6 90 00 00 00"></div>
           <div class="form-group"><label class="form-label">Ce qui vous intéresse *</label>
             <select class="form-select">
               <option value="">— Choisissez une option —</option>
               <option>Diagnostic de projet (80€)</option><option>Coaching individuel (3 séances)</option><option>Coaching individuel (5 séances)</option><option>Business Plan</option><option>Prévisionnel financier</option><option>Dossier de financement</option><option>Pack Essentiel</option><option>Pack Création</option><option>Pack Financement</option><option>Pack Global</option><option>Je ne sais pas encore — conseil SVP</option>
             </select>
           </div>
-          <div class="form-group"><label class="form-label">Décrivez brièvement votre projet</label><textarea class="form-textarea" placeholder="En quelques lignes, parlez-moi de votre idée, votre secteur d'activité et là où vous en êtes..."></textarea></div>
+          <div class="form-group"><label class="form-label">Décrivez brièvement votre projet</label><textarea id="contact-message" class="form-textarea" placeholder="En quelques lignes, parlez-moi de votre idée, votre secteur d'activité et là où vous en êtes..."></textarea></div>
           <a class="btn-primary" style="width:100%; text-align:center; display:block;">Envoyer ma demande</a>
           <p style="font-size:0.72rem; color:var(--gris); margin-top:1rem; text-align:center;">Réponse sous 24h ouvrées — Confidentialité garantie.</p>
         </div>
@@ -1497,6 +1498,76 @@ function showPage(id) {
   const t = document.getElementById(id);
   if (t) { t.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 }
+</script>
+
+<script>
+// ===== EMAILJS - Formulaire de contact RDV =====
+document.addEventListener('DOMContentLoaded', function() {
+  emailjs.init({ publicKey: '7dhOjQ5vEojh0bZQY' });
+
+  // Trouver le bouton de soumission du formulaire contact
+  const contactPage = document.getElementById('contact');
+  if (!contactPage) return;
+
+  // Chercher le bouton principal dans la page contact
+  const submitBtn = contactPage.querySelector('.btn-primary, .btn-blanc, [data-action="submit"]');
+  if (!submitBtn) return;
+
+  submitBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const nom = document.getElementById('contact-nom');
+    const email = document.getElementById('contact-email');
+    const telephone = document.getElementById('contact-telephone');
+    const message = document.getElementById('contact-message');
+
+    if (!nom || !email) return;
+    if (!nom.value.trim() || !email.value.trim()) {
+      alert('Veuillez remplir les champs obligatoires (nom et email).');
+      return;
+    }
+
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = 'Envoi en cours…';
+    submitBtn.style.opacity = '0.7';
+    submitBtn.style.pointerEvents = 'none';
+
+    // Extraire prénom/nom
+    const parts = nom.value.trim().split(' ');
+    const prenom = parts[0] || '';
+    const nomFamille = parts.slice(1).join(' ') || '';
+
+    emailjs.send('CCS Guadeloupe', 'template_ukpbzjn', {
+      prenom: prenom,
+      nom: nomFamille || nom.value.trim(),
+      email: email.value.trim(),
+      telephone: telephone ? telephone.value.trim() : 'Non renseigné',
+      message: message ? message.value.trim() : 'Aucun message'
+    }).then(function() {
+      submitBtn.innerHTML = '✓ Message envoyé !';
+      submitBtn.style.background = '#2d7a4f';
+      submitBtn.style.opacity = '1';
+      if (nom) nom.value = '';
+      if (email) email.value = '';
+      if (telephone) telephone.value = '';
+      if (message) message.value = '';
+      setTimeout(function() {
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.background = '';
+        submitBtn.style.pointerEvents = '';
+      }, 4000);
+    }, function(error) {
+      submitBtn.innerHTML = '✗ Erreur — Réessayez';
+      submitBtn.style.background = '#c0392b';
+      submitBtn.style.opacity = '1';
+      submitBtn.style.pointerEvents = '';
+      setTimeout(function() {
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.background = '';
+      }, 4000);
+    });
+  });
+});
 </script>
 </body>
 </html>
