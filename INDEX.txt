@@ -1,0 +1,272 @@
+📦 SYSTÈME COMPLET LIVRÉ - CABINET DE CONSEILS SIMELE
+════════════════════════════════════════════════════════════
+
+Date: 10 avril 2026
+Livrable: Connexion CRM ↔ Site Vitrine + Portail Client
+Tous les fichiers sont disponibles dans /mnt/user-data/outputs/
+
+════════════════════════════════════════════════════════════
+📑 FICHIERS FOURNIS (10 fichiers)
+════════════════════════════════════════════════════════════
+
+🎯 LIRE EN PREMIER (Avant tout!)
+├─ 00-README.md (13K)                    ← COMMENCE ICI!
+│  └─ Résumé global + plan d'action 4h
+
+📚 DOCUMENTATION (À consulter lors du déploiement)
+├─ GUIDE-INTEGRATION.md (9.5K)           ← Explique le flux complet
+├─ CHECKLIST-DEPLOIEMENT.md (11K)        ← Étapes détaillées (à suivre!)
+├─ API-DOCUMENTATION.md (12K)            ← Tous les endpoints
+└─ RAILWAY-CONFIGURATION.md (5.9K)       ← Variables d'env
+
+💻 CODE BACKEND CRM (3 fichiers → serveur/)
+├─ db.js (6.1K)                          ← REMPLACER server/db.js
+├─ index.js (2.0K)                       ← REMPLACER server/index.js
+└─ portal.js (17K)                       ← CRÉER server/routes/portal.js
+
+🎨 CODE FRONTEND (2 fichiers → public/)
+├─ crm-onglet-nouveaux-clients.html (11K)  ← Copier dans CRM
+└─ site-vitrine-inscription.html (9.7K)    ← Copier dans site vitrine
+
+════════════════════════════════════════════════════════════
+🚀 DÉMARRAGE RAPIDE (4 heures)
+════════════════════════════════════════════════════════════
+
+1️⃣ LIRE (15 min)
+   Ouvre: 00-README.md
+   Puis: GUIDE-INTEGRATION.md
+
+2️⃣ BACKEND (45 min)
+   Remplace: server/db.js
+   Remplace: server/index.js
+   Crée: server/routes/portal.js
+   Push → Railway redéploie
+
+3️⃣ FRONTEND CRM (45 min)
+   Ajoute onglet nav "Nouveaux Clients"
+   Intègre crm-onglet-nouveaux-clients.html
+   Push → Railway redéploie
+
+4️⃣ FRONTEND SITE (45 min)
+   Modifie nav "Créer mon dossier"
+   Intègre site-vitrine-inscription.html
+   Push → Railway redéploie
+
+5️⃣ CONFIGURATION (35 min)
+   Configure variables Railway (voir RAILWAY-CONFIGURATION.md)
+   Crée volume /app/data 10GB
+   Test + déploiement
+
+════════════════════════════════════════════════════════════
+📋 STRUCTURE DES FICHIERS DANS TES REPOS
+════════════════════════════════════════════════════════════
+
+APRÈS DÉPLOIEMENT, tes repos auront cette structure:
+
+simele-crm/
+├── server/
+│   ├── index.js              ← MODIFIÉ (nouveau)
+│   ├── db.js                 ← MODIFIÉ (nouvelles tables)
+│   ├── routes/
+│   │   ├── auth.js           (inchangé)
+│   │   ├── clients.js        (inchangé)
+│   │   └── portal.js         ← NOUVEAU! (du fichier fourni)
+│   └── middleware/
+│       └── auth.js           (inchangé)
+├── public/
+│   └── index.html            ← MODIFIÉ (onglet + nav)
+└── [autres fichiers]
+
+simele-site-vitrine/
+├── public/
+│   └── index.html            ← MODIFIÉ (formulaire + nav)
+└── [autres fichiers]
+
+════════════════════════════════════════════════════════════
+✅ ÉTAPES DE VÉRIFICATION
+════════════════════════════════════════════════════════════
+
+APRÈS CHAQUE PUSH, vérifie:
+
+Backend OK?
+  curl https://ccs-gc-logi.up.railway.app/api/health
+  → {"status":"ok","app":"SIMELE CRM"...}
+
+Inscription OK?
+  curl -X POST https://ccs-gc-logi.up.railway.app/api/portal/inscription \
+    -H "Content-Type: application/json" \
+    -d '{"nom":"Test","prenom":"Admin","email":"test@example.com"}'
+  → {"success":true,"message":"Demande reçue !..."}
+
+CRM OK?
+  Va sur: https://ccs-gc-logi.up.railway.app
+  Cherche: onglet "➕ Nouveaux Clients" dans la nav
+  → Doit afficher le formulaire
+
+Site OK?
+  Va sur: https://www.ccsguadeloupe.fr
+  Cherche: "Créer mon dossier" dans la nav
+  → Doit afficher le formulaire d'inscription
+
+════════════════════════════════════════════════════════════
+🔐 SÉCURITÉ - À FAIRE IMMÉDIATEMENT
+════════════════════════════════════════════════════════════
+
+⚠️ JAMAIS partager en texte clair:
+  ❌ JWT_SECRET
+  ❌ ADMIN_PASSWORD
+  ❌ Tokens Railway
+  ❌ Secrets dans git
+
+✅ À la place:
+  ✅ Ajouter à .env (local)
+  ✅ Configurer dans Railway
+  ✅ Ajouter .env au .gitignore
+
+════════════════════════════════════════════════════════════
+📞 AIDE & DÉPANNAGE
+════════════════════════════════════════════════════════════
+
+En cas de problème, consulte dans cet ordre:
+
+1. CHECKLIST-DEPLOIEMENT.md → Section "🆘 DÉPANNAGE"
+2. GUIDE-INTEGRATION.md → Flux complet + schémas
+3. API-DOCUMENTATION.md → Endpoints disponibles
+4. RAILWAY-CONFIGURATION.md → Variables + volume
+
+════════════════════════════════════════════════════════════
+🎯 CE QUE TU OBTIENS APRÈS DÉPLOIEMENT
+════════════════════════════════════════════════════════════
+
+✅ Site vitrine avec formulaire d'inscription client
+✅ CRM avec onglet "Gestion des nouveaux clients"
+✅ Système automatique d'approbation des demandes
+✅ Espace client sécurisé pour chaque client
+✅ Documents synchronisés entre CRM et client
+✅ Historique des versions des documents
+✅ Authentification par email unique
+✅ Base de données persistante sur Railway
+✅ Stockage des fichiers sécurisé
+
+════════════════════════════════════════════════════════════
+📊 TAILLE DES FICHIERS
+════════════════════════════════════════════════════════════
+
+Documentation:        ~50 KB
+Code backend:         ~25 KB
+Code frontend:        ~21 KB
+────────────────────────────
+TOTAL:                ~96 KB (léger et efficace!)
+
+════════════════════════════════════════════════════════════
+🎓 PROCÉDURE COMPLÈTE EN 6 POINTS
+════════════════════════════════════════════════════════════
+
+1. Lis 00-README.md (15 min)
+   ↓
+2. Lis GUIDE-INTEGRATION.md pour comprendre le flux (20 min)
+   ↓
+3. Suis CHECKLIST-DEPLOIEMENT.md étape par étape (3h)
+   ↓
+4. Configure Railway avec RAILWAY-CONFIGURATION.md (30 min)
+   ↓
+5. Teste avec API-DOCUMENTATION.md (20 min)
+   ↓
+6. C'EST BON! ✅ Tout fonctionne!
+
+════════════════════════════════════════════════════════════
+🚀 COMMANDES CLÉS
+════════════════════════════════════════════════════════════
+
+Générer JWT_SECRET:
+  openssl rand -hex 32
+
+Clone tes repos:
+  git clone https://github.com/SIMELE-JC/simele-crm.git
+  git clone https://github.com/SIMELE-JC/simele-site-vitrine.git
+
+Push le code:
+  git add .
+  git commit -m "✨ Ajout portail client"
+  git push origin main
+
+Tester le backend:
+  curl https://ccs-gc-logi.up.railway.app/api/health
+
+Voir les logs Railway:
+  railway logs  # Si CLI installée
+  Ou dashboard: railway.app → Logs
+
+════════════════════════════════════════════════════════════
+💡 CONSEILS IMPORTANTS
+════════════════════════════════════════════════════════════
+
+✅ À FAIRE:
+  • Créer un dossier "SIMELE-Update" pour organiser
+  • Lire la docs AVANT de coder
+  • Tester chaque phase avant la suivante
+  • Garder les sauvegardes des fichiers originaux
+  • Noter tes JWT_SECRET et ADMIN_PASSWORD dans un endroit sûr
+
+❌ À NE PAS FAIRE:
+  • Ne pas commiter les secrets en git
+  • Ne pas modifier les fichiers sans les lire en entier
+  • Ne pas sauter des étapes de configuration
+  • Ne pas partager les tokens en texte clair
+  • Ne pas oublier le volume persistant Railway
+
+════════════════════════════════════════════════════════════
+📈 TIMELINE ESTIMÉE
+════════════════════════════════════════════════════════════
+
+Phase 1: Préparation (15 min)
+  └─ Télécharger et lire les docs
+
+Phase 2: Backend (45 min)
+  ├─ Modifi 3 fichiers (30 min)
+  └─ Push + test (15 min)
+
+Phase 3: Frontend CRM (45 min)
+  ├─ Intégration (30 min)
+  └─ Push + test (15 min)
+
+Phase 4: Frontend Site (45 min)
+  ├─ Intégration (30 min)
+  └─ Push + test (15 min)
+
+Phase 5: Configuration (35 min)
+  ├─ Variables Railway (15 min)
+  ├─ Volume persistent (10 min)
+  └─ Test complet (10 min)
+
+────────────────
+TOTAL: 185 minutes ≈ 3 heures (+ 1h de marge)
+
+════════════════════════════════════════════════════════════
+✨ RÉSULTAT FINAL
+════════════════════════════════════════════════════════════
+
+Un système professionnel et complet où:
+
+👨‍💼 Client:
+  - Demande un dossier via formulaire
+  - Attend approbation
+  - Reçoit identifiants par email
+  - Se connecte à son espace personnel
+  - Peut télécharger ses documents
+
+👨‍💻 Admin (toi):
+  - Vois les demandes en attente
+  - Valide ou rejette
+  - Génère automatiquement les identifiants
+  - Gère les documents
+  - Synchronise tout automatiquement
+
+════════════════════════════════════════════════════════════
+
+🎉 TON SYSTÈME EST PRÊT! 🎉
+
+Commence par lire: 00-README.md
+Puis suis: CHECKLIST-DEPLOIEMENT.md
+
+BON DÉPLOIEMENT! 🚀
