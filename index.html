@@ -1685,7 +1685,7 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<div id="espace-client" class="page" style="display:none">
+<div id="espace-client" class="page">
   <div id="ec-auth" class="ec-page">
     <div style="max-width:480px;margin:0 auto">
       <div style="text-align:center;margin-bottom:2rem">
@@ -1889,19 +1889,9 @@ function quizNav(dir){if(dir===1&&_qr[_qs]===null){alert('Veuillez sélectionner
 async function afficherResultat(){
   const total=_qr.reduce((s,v)=>s+(v||0),0);
   let profil,emoji,reco;
-  if(total<=16){profil='Profil 1 — À structurer';emoji='🔴';reco='• Diagnostic de projet (80 €)
-• Coaching individuel 3 séances
-
-Ces premières étapes vous permettront de clarifier votre vision et poser des bases solides.';}
-  else if(total<=23){profil='Profil 2 — À accompagner';emoji='🟠';reco='• Coaching individuel 5 séances
-• Pack Essentiel Création
-
-Un accompagnement structuré pour passer à l'action efficacement.';}
-  else{profil='Profil 3 — Prêt(e) à investir';emoji='🟢';reco='• Business Plan
-• Prévisionnel financier
-• Pack Financement ou Pack Global
-
-Vous avez les bases. Il est temps de formaliser et convaincre les financeurs.';}
+  if(total<=16){profil='Profil 1 — À structurer';emoji='🔴';reco='• Diagnostic de projet (80 €)\n• Coaching individuel 3 séances\n\nCes premières étapes vous permettront de clarifier votre vision et poser des bases solides.';}
+  else if(total<=23){profil='Profil 2 — À accompagner';emoji='🟠';reco='• Coaching individuel 5 séances\n• Pack Essentiel Création\n\nUn accompagnement structuré pour passer à l'action efficacement.';}
+  else{profil='Profil 3 — Prêt(e) à investir';emoji='🟢';reco='• Business Plan\n• Prévisionnel financier\n• Pack Financement ou Pack Global\n\nVous avez les bases. Il est temps de formaliser et convaincre les financeurs.';}
   document.getElementById('quiz-container').style.display='none';
   document.getElementById('quiz-result').style.display='';
   document.getElementById('res-emoji').textContent=emoji;
