@@ -1210,7 +1210,7 @@ document.getElementById('ec-loginbtn').addEventListener('click', async function(
 
 <script>
 (function() {
-  const CRM = 'https://simele-crm-production.up.railway.app';
+  const CRM_URL = 'https://ccs-gc-logi.up.railway.app';;
   let TOKEN = localStorage.getItem('ec_token');
   let CLIENT = null;
   try { CLIENT = JSON.parse(localStorage.getItem('ec_client')); } catch(e) {}
@@ -1807,7 +1807,7 @@ window.addEventListener('load', function() {
   </div>
 </div>
 <script>
-const CRM='https://simele-crm-production.up.railway.app';
+  const CRM_URL = 'https://ccs-gc-logi.up.railway.app';
 let _pt=localStorage.getItem('pt'),_pu=JSON.parse(localStorage.getItem('pu')||'null'),_pan=[];
 
 function switchAuth(t){
