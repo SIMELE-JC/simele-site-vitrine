@@ -1919,5 +1919,12 @@ const _origSP=window.showPage;
 window.showPage=function(page){_origSP&&_origSP(page);if(page==='espace-client'&&_pt&&_pu)setTimeout(afficherDashboard,50);};
 window.addEventListener('load',function(){if(_pt&&_pu&&window.location.hash==='#espace-client')afficherDashboard();});
 </script>
+  <script>
+function portalLogin() {
+  const e = document.getElementById('login-email').value.trim();
+  const p = document.getElementById('login-password').value;
+  // ... appelle l'API
+}
+</script>
 </body>
 </html>
