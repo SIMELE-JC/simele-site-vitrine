@@ -964,6 +964,15 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
   </div>
 </div>
 <script>
+function showPage(id) {
+  var footer = document.getElementById('site-footer');
+  if (footer) footer.style.display = id === 'espace-client' ? 'none' : '';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const t = document.getElementById(id);
+  if (t) { t.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+}
+</script>
+<script>
 var _CRM='https://ccs-gc-logi.up.railway.app';
 var _ecToken=localStorage.getItem('ec_token');
 var _ecUser=null;
