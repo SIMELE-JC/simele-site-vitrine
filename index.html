@@ -1084,7 +1084,7 @@ window.ecEnvoyer=async function(){
   var n=document.getElementById('ec-nom').value.trim(),p=document.getElementById('ec-prenom').value.trim(),e=document.getElementById('ec-email').value.trim(),t=document.getElementById('ec-tel').value.trim(),s=document.getElementById('ec-statut').value,pr=document.getElementById('ec-prestation').value,pj=document.getElementById('ec-projet').value.trim();
   var msg=document.getElementById('ec-reg-msg'),btn=document.getElementById('ec-btn');
   if(!n||!p||!e){msg.innerHTML='<div style="background:#fef2f2;color:#dc2626;padding:.6rem 1rem;border-radius:8px;font-size:.88rem">Nom, prénom et email obligatoires.</div>';return;}
-  if(!/^[^s@]+@[^s@]+.[^s@]+$/.test(e)){msg.innerHTML='<div style="background:#fef2f2;color:#dc2626;padding:.6rem 1rem;border-radius:8px;font-size:.88rem">Email invalide.</div>';return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){msg.innerHTML='<div style="background:#fef2f2;color:#dc2626;padding:.6rem 1rem;border-radius:8px;font-size:.88rem">Email invalide.</div>';return;}
   btn.disabled=true;btn.textContent='Envoi...';msg.innerHTML='';
   try{
     var r=await fetch(_CRM+'/api/portal/inscription',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nom:n,prenom:p,email:e,tel:t,situation_fam:s,prestation:pr,projet:pj})});
