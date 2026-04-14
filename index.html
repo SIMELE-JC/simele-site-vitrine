@@ -393,6 +393,26 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 .panier-total{background:var(--marine);color:white;padding:1.5rem;border-radius:8px;margin-top:1.5rem}
 .panier-ligne{display:flex;justify-content:space-between;font-size:.85rem;padding:.3rem 0;opacity:.85}
 .panier-ligne-total{display:flex;justify-content:space-between;font-weight:600;font-size:1rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.3);margin-top:.5rem}
+
+.nav-hamburger{display:none;flex-direction:column;justify-content:space-between;width:30px;height:20px;background:none;border:none;cursor:pointer;padding:0;z-index:1001}
+.nav-hamburger span{display:block;width:100%;height:2px;background:var(--marine-fonce,#1a365d);border-radius:2px;transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+#mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1002}
+#mob-overlay.open{display:block}
+#mob-menu{position:fixed;top:0;right:-310px;width:280px;height:100vh;background:#fff;z-index:1003;padding:1.8rem 1.4rem;box-shadow:-4px 0 32px rgba(0,0,0,.15);transition:right .3s ease;overflow-y:auto}
+#mob-menu.open{right:0}
+.mob-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.8rem;padding-bottom:1rem;border-bottom:1px solid #e8ecf4}
+.mob-logo{font-family:'Playfair Display',serif;color:var(--marine-fonce,#1a365d);font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1.4}
+.mob-x{width:32px;height:32px;background:#f3f4f6;border:none;border-radius:50%;cursor:pointer;font-size:1rem;color:#374151;display:flex;align-items:center;justify-content:center}
+#mob-menu ul{list-style:none;padding:0;margin:0}
+#mob-menu ul li{border-bottom:1px solid #f3f4f6}
+#mob-menu ul li a{display:block;padding:.9rem .3rem;font-size:1rem;font-weight:500;color:var(--marine-fonce,#1a365d);cursor:pointer;letter-spacing:.02em}
+.mob-espace{color:var(--or,#c9a84c)!important;font-weight:700!important}
+.mob-cta-li{border:none!important;margin-top:1.2rem}
+.mob-cta-li a{background:var(--marine-fonce,#1a365d)!important;color:#fff!important;border-radius:10px;text-align:center;font-weight:700!important;font-size:.9rem!important;padding:1rem!important}
+@media(max-width:960px){.nav-hamburger{display:flex!important}}
 </style>
 </head>
 <body>
@@ -414,7 +434,20 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     <li><a onclick="showPage('espace-client')" class="nav-espace-client">Mon Espace</a></li>
     <li><a onclick="showPage('contact')" class="nav-cta">Prendre RDV</a></li>
   </ul>
+  <button class="nav-hamburger" id="nav-ham" onclick="mobToggle()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+<div id="mob-overlay" onclick="mobClose()"></div>
+<div id="mob-menu">
+  <div class="mob-hdr"><div class="mob-logo">Cabinet de Conseils<br>SIMELE</div><button class="mob-x" onclick="mobClose()">&#10005;</button></div>
+  <ul>
+    <li><a onclick="mobNav('accueil')">Accueil</a></li>
+    <li><a onclick="mobNav('services')">Services</a></li>
+    <li><a onclick="mobNav('apropos')">&Agrave; Propos</a></li>
+    <li><a onclick="mobNav('tunnel')">Diagnostic</a></li>
+    <li><a onclick="mobNav('espace-client')" class="mob-espace">Mon Espace</a></li>
+    <li class="mob-cta-li"><a onclick="mobNav('contact')">Prendre RDV</a></li>
+  </ul>
+</div>
 
 <!-- =============================== ACCUEIL =============================== -->
 <div id="accueil" class="page active">
@@ -1686,304 +1719,39 @@ window.addEventListener('load', function() {
 </script>
 
 <div id="espace-client" class="page">
-  <div id="ec-auth" class="ec-page">
-    <div style="max-width:480px;margin:0 auto">
-      <div style="text-align:center;margin-bottom:2rem">
-        <span class="label">Espace client</span>
-        <h1 style="font-family:var(--display);font-size:2rem;color:var(--marine);margin-top:.5rem">Accédez à votre espace</h1>
-      </div>
-      <div style="display:flex;border-bottom:2px solid var(--gris-clair);margin-bottom:2rem">
-        <button class="ec-tab active" onclick="switchAuth('login')" id="tab-login">Se connecter</button>
-        <button class="ec-tab" onclick="switchAuth('register')" id="tab-register">Créer mon espace</button>
-      </div>
-      <div id="auth-login">
-        <div style="margin-bottom:1rem"><label class="ec-label">Email</label><input type="email" class="ec-input" id="login-email" placeholder="votre@email.com"></div>
-        <div style="margin-bottom:1.5rem"><label class="ec-label">Mot de passe</label><input type="password" class="ec-input" id="login-password" placeholder="••••••••"></div>
-        <div id="login-msg"></div>
-        <button class="ec-btn ec-btn-primary" style="width:100%" onclick="portalLogin()">Se connecter</button>
-        <p style="text-align:center;margin-top:1.5rem;font-size:.82rem;color:var(--gris)">Pas de compte ? <a href="#" onclick="switchAuth('register')" style="color:var(--marine)">Créer mon espace</a></p>
-      </div>
-      <div id="auth-register" style="display:none">
-        <div id="register-msg"></div>
-        <div class="ec-form-grid">
-          <div><label class="ec-label">Prénom *</label><input type="text" class="ec-input" id="reg-prenom" placeholder="Marie"></div>
-          <div><label class="ec-label">Nom *</label><input type="text" class="ec-input" id="reg-nom" placeholder="Dupont"></div>
-        </div>
-        <div style="margin:1rem 0"><label class="ec-label">Email *</label><input type="email" class="ec-input" id="reg-email" placeholder="marie@email.com"></div>
-        <div class="ec-form-grid" style="margin-bottom:1rem">
-          <div><label class="ec-label">Téléphone</label><input type="tel" class="ec-input" id="reg-tel" placeholder="+590 6 90 00 00 00"></div>
-          <div><label class="ec-label">Situation familiale</label><select class="ec-input" id="reg-sitfam"><option value="">— Choisir —</option><option>Célibataire</option><option>Marié(e)</option><option>Pacsé(e)</option><option>Divorcé(e)</option></select></div>
-        </div>
-        <div style="margin-bottom:1rem"><label class="ec-label">Adresse</label><input type="text" class="ec-input" id="reg-adresse" placeholder="Rue, ville, code postal"></div>
-        <div class="ec-form-grid" style="margin-bottom:1rem">
-          <div><label class="ec-label">Date de naissance</label><input type="date" class="ec-input" id="reg-datenais"></div>
-          <div><label class="ec-label">Lieu de naissance</label><input type="text" class="ec-input" id="reg-lieunais" placeholder="Pointe-à-Pitre"></div>
-        </div>
-        <div style="margin-bottom:1.5rem"><label class="ec-label">Votre projet</label><textarea class="ec-input" id="reg-projet" rows="3" placeholder="Décrivez votre projet en quelques lignes..."></textarea></div>
-        <button class="ec-btn ec-btn-primary" style="width:100%" onclick="portalRegister()">Envoyer ma demande</button>
-        <p style="text-align:center;margin-top:1rem;font-size:.78rem;color:var(--gris)">Votre demande sera traitée sous 24h. Vous recevrez vos identifiants par email.</p>
-      </div>
-    </div>
+  <div style="padding:3rem 1.5rem 2rem;text-align:center">
+    <h1 style="font-family:'Playfair Display',serif;color:var(--marine-fonce,#1a365d);font-size:2rem;margin-bottom:.8rem">Mon Espace Client</h1>
+    <p style="color:#6b7280;font-size:1rem;max-width:500px;margin:0 auto">D&eacute;posez votre demande &mdash; le cabinet vous recontacte sous 48h ouvrées</p>
   </div>
-
-  <div id="ec-dashboard" style="display:none">
-    <div class="ec-page">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--gris-clair)">
-        <div>
-          <p style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gris);margin-bottom:.3rem">Bienvenue</p>
-          <h2 id="ec-username" style="font-family:var(--display);font-size:1.8rem;color:var(--marine);margin:0"></h2>
-          <span id="ec-identifiant" class="ec-badge ec-badge-validated" style="margin-top:.4rem;display:inline-block"></span>
-        </div>
-        <button class="ec-btn ec-btn-outline" onclick="portalLogout()">Se déconnecter</button>
+  <div style="max-width:660px;margin:0 auto;padding:0 1.2rem 4rem">
+    <div id="ec-form-wrap" style="background:#fff;border-radius:16px;padding:2.2rem 1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.10);border:1px solid #e8ecf4">
+      <h2 style="font-family:'Playfair Display',serif;color:#1a365d;margin:0 0 1.6rem;font-size:1.25rem">Nouvelle demande de dossier</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.3rem;font-weight:600">NOM <span style="color:#c0392b">*</span></label><input id="ec-nom" type="text" placeholder="Nom de famille" style="width:100%;padding:.7rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/></div>
+        <div><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.3rem;font-weight:600">PR&Eacute;NOM <span style="color:#c0392b">*</span></label><input id="ec-prenom" type="text" placeholder="Pr&eacute;nom" style="width:100%;padding:.7rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/></div>
+        <div><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.3rem;font-weight:600">EMAIL <span style="color:#c0392b">*</span></label><input id="ec-email" type="email" placeholder="email@exemple.fr" style="width:100%;padding:.7rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/></div>
+        <div><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.3rem;font-weight:600">T&Eacute;L&Eacute;PHONE</label><input id="ec-tel" type="tel" placeholder="0690 00 00 00" style="width:100%;padding:.7rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/></div>
+        <div><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.3rem;font-weight:600">STATUT PRO</label><select id="ec-statut" style="width:100%;padding:.7rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box;background:#fff" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"><option>Salari&eacute;(e)</option><option>Demandeur d'emploi</option><option>Entrepreneur / Ind&eacute;pendant</option><option>&Eacute;tudiant(e)</option><option>Retrait&eacute;(e)</option><option>Autre</option></select></div>
+        <div><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.3rem;font-weight:600">PRESTATION</label><select id="ec-prestation" style="width:100%;padding:.7rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box;background:#fff" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"><option value="">&mdash; &Agrave; d&eacute;finir &mdash;</option><option>Entretien initial (80&euro;)</option><option>Coaching 3 s&eacute;ances (210&euro;)</option><option>Coaching 5 s&eacute;ances (330&euro;)</option><option>Pack Essentiel Cr&eacute;ation</option><option>Pack Business Plan</option><option>Pack Financement</option><option>Pack Global</option><option>Je ne sais pas encore</option></select></div>
       </div>
-      <div class="ec-tabs" style="margin-bottom:2rem">
-        <button class="ec-tab active" onclick="switchDash('dossier')" id="dash-tab-dossier">Mon dossier</button>
-        <button class="ec-tab" onclick="switchDash('boutique')" id="dash-tab-boutique">Nos offres</button>
-        <button class="ec-tab" onclick="switchDash('quiz')" id="dash-tab-quiz">Quiz personnalisé</button>
-      </div>
-
-      <div id="dash-dossier" class="ec-section active">
-        <div class="ec-card"><h3>Informations personnelles</h3><div class="ec-form-grid" id="dossier-info"></div></div>
-        <div class="ec-card"><h3>Votre projet</h3><p id="dossier-projet" style="color:var(--gris);line-height:1.7"></p></div>
-      </div>
-
-      <div id="dash-boutique" class="ec-section">
-        <div class="ec-card">
-          <h3>Choisissez vos prestations</h3>
-          <p style="color:var(--gris);margin-bottom:1.5rem;font-size:.88rem">Sélectionnez une ou plusieurs offres puis validez votre commande.</p>
-          <div class="offres-grid">
-            <div class="offre-card" onclick="toggleOffre(this,'Diagnostic de projet',80)"><div class="offre-check">✓</div><div class="offre-nom">Diagnostic de projet</div><div class="offre-prix">80 €</div><div class="offre-desc">Analyse complète de votre idée. 1 séance avec plan d'action.</div></div>
-            <div class="offre-card" onclick="toggleOffre(this,'Coaching 3 séances',240)"><div class="offre-check">✓</div><div class="offre-nom">Coaching 3 séances</div><div class="offre-prix">240 €</div><div class="offre-desc">3 séances de coaching structuré pour avancer méthodiquement.</div></div>
-            <div class="offre-card" onclick="toggleOffre(this,'Coaching 5 séances',380)"><div class="offre-check">✓</div><div class="offre-nom">Coaching 5 séances</div><div class="offre-prix">380 €</div><div class="offre-desc">Accompagnement approfondi sur la durée.</div></div>
-            <div class="offre-card" onclick="toggleOffre(this,'Pack Essentiel Création',590)"><div class="offre-check">✓</div><div class="offre-nom">Pack Essentiel Création</div><div class="offre-prix">590 €</div><div class="offre-desc">Diagnostic + accompagnement complet + formalités.</div></div>
-            <div class="offre-card" onclick="toggleOffre(this,'Business Plan',450)"><div class="offre-check">✓</div><div class="offre-nom">Business Plan</div><div class="offre-prix">450 €</div><div class="offre-desc">Rédaction complète de votre business plan professionnel.</div></div>
-            <div class="offre-card" onclick="toggleOffre(this,'Prévisionnel financier',350)"><div class="offre-check">✓</div><div class="offre-nom">Prévisionnel financier</div><div class="offre-prix">350 €</div><div class="offre-desc">Projections financières sur 3 ans.</div></div>
-            <div class="offre-card" onclick="toggleOffre(this,'Pack Financement',890)"><div class="offre-check">✓</div><div class="offre-nom">Pack Financement</div><div class="offre-prix">890 €</div><div class="offre-desc">Business plan + prévisionnel + dossier financement.</div></div>
-            <div class="offre-card" onclick="toggleOffre(this,'Pack Global',1290)"><div class="offre-check">✓</div><div class="offre-nom">Pack Global</div><div class="offre-prix">1 290 €</div><div class="offre-desc">L'accompagnement complet de A à Z.</div></div>
-          </div>
-          <div class="panier-total" id="panier-total" style="display:none">
-            <div id="panier-lignes"></div>
-            <div class="panier-ligne-total"><span>Total</span><span id="panier-montant">0 €</span></div>
-          </div>
-          <div id="paiement-section" style="display:none;margin-top:1.5rem">
-            <label class="ec-label">Méthode de paiement</label>
-            <select class="ec-input" id="methode-paiement" style="margin-bottom:1rem"><option value="">— Choisir —</option><option value="virement">Virement bancaire</option><option value="cheque">Chèque</option><option value="especes">Espèces</option><option value="carte">Carte (en cabinet)</option></select>
-            <div id="commande-msg"></div>
-            <button class="ec-btn ec-btn-primary" onclick="passerCommande()">Valider ma commande</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="dash-quiz" class="ec-section">
-        <div class="ec-card">
-          <div id="quiz-container">
-            <div style="text-align:center;margin-bottom:2rem"><h3 style="margin:0">Quiz d'orientation</h3><p style="color:var(--gris);font-size:.88rem;margin-top:.5rem">10 questions pour identifier les prestations adaptées.</p></div>
-            <div class="quiz-progress"><div class="quiz-progress-bar" id="quiz-progress-bar" style="width:0%"></div></div>
-            <div id="quiz-question-num" style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gris);margin-bottom:.5rem"></div>
-            <div class="quiz-question" id="quiz-question-text"></div>
-            <div class="quiz-options" id="quiz-options"></div>
-            <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
-              <button class="ec-btn ec-btn-outline" id="quiz-prev" onclick="quizNav(-1)" style="display:none">← Précédent</button>
-              <button class="ec-btn ec-btn-primary" id="quiz-next" onclick="quizNav(1)" style="margin-left:auto">Suivant →</button>
-            </div>
-          </div>
-          <div id="quiz-result" style="display:none">
-            <div class="quiz-result">
-              <div class="quiz-result-profil" id="res-emoji"></div>
-              <p style="color:var(--marine);font-size:1.1rem;font-weight:500;margin-bottom:.5rem">Votre projet mérite d'aboutir.</p>
-              <p style="color:var(--gris);margin-bottom:.5rem;font-size:.85rem">Votre profil :</p>
-              <h3 id="res-profil" style="font-family:var(--display);font-size:1.6rem;color:var(--marine);margin-bottom:1.5rem"></h3>
-              <div class="quiz-result-reco"><p style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gris);margin-bottom:.8rem">Nos recommandations</p><div id="res-reco" style="color:var(--marine-fonce);line-height:1.8"></div></div>
-              <div id="res-msg"></div>
-              <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
-                <button class="ec-btn ec-btn-primary" onclick="switchDash('boutique')">Voir les offres recommandées</button>
-                <button class="ec-btn ec-btn-outline" onclick="showPage('contact')">Prendre rendez-vous</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div style="margin-top:1rem"><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.3rem;font-weight:600">D&Eacute;CRIVEZ VOTRE PROJET</label><textarea id="ec-projet" rows="4" placeholder="D&eacute;crivez votre projet, situation actuelle, objectifs..." style="width:100%;padding:.7rem .9rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box;resize:vertical" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"></textarea></div>
+      <div id="ec-msg" style="margin-top:.8rem"></div>
+      <button id="ec-btn" onclick="ecEnvoyer()" style="margin-top:1.4rem;width:100%;padding:.9rem;background:#1a365d;color:#fff;border:none;border-radius:10px;font-size:1rem;font-family:inherit;font-weight:600;cursor:pointer" onmouseover="this.style.background='#c9a84c'" onmouseout="this.style.background='#1a365d'">&#10003; Cr&eacute;er mon dossier</button>
+      <p style="text-align:center;font-size:.78rem;color:#9ca3af;margin-top:.7rem">Vous serez recontact&eacute;(e) sous 48h ouvrées</p>
+    </div>
+    <div id="ec-success" style="display:none;text-align:center;padding:3.5rem 2rem;background:#fff;border-radius:16px;box-shadow:0 4px 32px rgba(26,54,93,.10);border:1px solid #e8ecf4">
+      <div style="width:60px;height:60px;background:#10b981;border-radius:50%;margin:0 auto 1.2rem;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff">&#10003;</div>
+      <h2 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1.5rem;margin-bottom:.7rem">Demande bien re&ccedil;ue !</h2>
+      <p style="color:#6b7280;font-size:.95rem;max-width:400px;margin:0 auto 1.8rem;line-height:1.6">Votre dossier a &eacute;t&eacute; transmis au cabinet SIMELE. Nous vous recontacterons sous <strong>48h ouvr&eacute;es</strong>.</p>
+      <button onclick="showPage('accueil')" style="padding:.75rem 2rem;background:#1a365d;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-family:inherit;font-weight:600;cursor:pointer">Retour &agrave; l'accueil</button>
     </div>
   </div>
 </div>
 <script>
-(function(){
-var CRM='https://ccs-gc-logi.up.railway.app';
-var _pt=localStorage.getItem('pt');
-var _pu=null;
-try{_pu=JSON.parse(localStorage.getItem('pu')||'null');}catch(ex){}
-var _pan=[];
-
-window.switchAuth=function(t){
-  document.getElementById('auth-login').style.display=t==='login'?'':'none';
-  document.getElementById('auth-register').style.display=t==='register'?'':'none';
-  document.getElementById('tab-login').classList.toggle('active',t==='login');
-  document.getElementById('tab-register').classList.toggle('active',t==='register');
-};
-
-window.portalLogin=async function(){
-  var e=document.getElementById('login-email').value.trim();
-  var p=document.getElementById('login-password').value;
-  var m=document.getElementById('login-msg');
-  if(!e||!p){m.innerHTML='<div class="ec-msg ec-msg-error">Email et mot de passe requis.</div>';return;}
-  try{
-    var r=await fetch(CRM+'/api/portal/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,password:p})});
-    var d=await r.json();
-    if(!r.ok){m.innerHTML='<div class="ec-msg ec-msg-error">'+(d.error||'Identifiants incorrects')+'</div>';return;}
-    _pt=d.token;_pu=d;localStorage.setItem('pt',_pt);localStorage.setItem('pu',JSON.stringify(_pu));
-    _showDash();
-  }catch(err){m.innerHTML='<div class="ec-msg ec-msg-error">Erreur de connexion.</div>';}
-};
-
-window.portalRegister=async function(){
-  var m=document.getElementById('register-msg');
-  var b={prenom:document.getElementById('reg-prenom').value.trim(),nom:document.getElementById('reg-nom').value.trim(),email:document.getElementById('reg-email').value.trim(),tel:document.getElementById('reg-tel').value.trim(),situation_fam:document.getElementById('reg-sitfam').value,adresse:document.getElementById('reg-adresse').value.trim(),date_nais:document.getElementById('reg-datenais').value,lieu_nais:document.getElementById('reg-lieunais').value.trim(),projet:document.getElementById('reg-projet').value.trim()};
-  if(!b.prenom||!b.nom||!b.email){m.innerHTML='<div class="ec-msg ec-msg-error">Prenom, nom et email obligatoires.</div>';return;}
-  try{
-    var r=await fetch(CRM+'/api/portal/inscription',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
-    var d=await r.json();
-    if(!r.ok){m.innerHTML='<div class="ec-msg ec-msg-error">'+(d.error||'Erreur')+'</div>';return;}
-    m.innerHTML='<div class="ec-msg ec-msg-success">Demande envoyee. Vous recevrez vos identifiants par email apres validation.</div>';
-  }catch(err){m.innerHTML='<div class="ec-msg ec-msg-error">Erreur serveur. Reessayez.</div>';}
-};
-
-window.portalLogout=function(){
-  _pt=null;_pu=null;localStorage.removeItem('pt');localStorage.removeItem('pu');
-  document.getElementById('ec-dashboard').style.display='none';
-  document.getElementById('ec-auth').style.display='';
-};
-
-function _showDash(){
-  document.getElementById('ec-auth').style.display='none';
-  document.getElementById('ec-dashboard').style.display='';
-  var un=document.getElementById('ec-username');
-  var ui=document.getElementById('ec-identifiant');
-  if(un)un.textContent=(_pu.prenom||'')+' '+(_pu.nom||'');
-  if(ui)ui.textContent=_pu.identifiant||'';
-  _loadDossier();_initQuiz();
-}
-window.afficherDashboard=_showDash;
-
-async function _loadDossier(){
-  try{
-    var r=await fetch(CRM+'/api/portal/mon-dossier',{headers:{'Authorization':'Bearer '+_pt}});
-    if(r.status===401){window.portalLogout();return;}
-    var d=await r.json();if(!d.inscription)return;
-    var i=d.inscription;
-    var fields=[['Prenom',i.prenom||'-'],['Nom',i.nom||'-'],['Email',i.email||'-'],['Telephone',i.tel||'-'],['Adresse',i.adresse||'-'],['Date naissance',i.date_nais||'-'],['Lieu naissance',i.lieu_nais||'-'],['Situation',i.situation_fam||'-']];
-    var di=document.getElementById('dossier-info');
-    if(di)di.innerHTML=fields.map(function(f){return '<div><p style="font-size:.7rem;text-transform:uppercase;color:var(--gris);margin-bottom:.2rem">'+f[0]+'</p><p>'+f[1]+'</p></div>';}).join('');
-    var dp=document.getElementById('dossier-projet');
-    if(dp)dp.textContent=i.projet||'Aucun projet renseigne.';
-  }catch(err){}
-}
-
-window.switchDash=function(t){
-  ['dossier','boutique','quiz'].forEach(function(s){
-    var el=document.getElementById('dash-'+s);
-    var bt=document.getElementById('dash-tab-'+s);
-    if(el)el.classList.toggle('active',s===t);
-    if(bt)bt.classList.toggle('active',s===t);
-  });
-};
-
-window.toggleOffre=function(el,nom,prix){
-  el.classList.toggle('selected');
-  var idx=_pan.findIndex(function(o){return o.nom===nom;});
-  if(idx>=0)_pan.splice(idx,1);else _pan.push({nom:nom,prix:prix});
-  _updatePanier();
-};
-
-function _updatePanier(){
-  var total=_pan.reduce(function(s,o){return s+o.prix;},0);
-  var p=document.getElementById('panier-total');var ps=document.getElementById('paiement-section');
-  if(!_pan.length){if(p)p.style.display='none';if(ps)ps.style.display='none';return;}
-  if(p)p.style.display='';if(ps)ps.style.display='';
-  var pl=document.getElementById('panier-lignes');var pm=document.getElementById('panier-montant');
-  if(pl)pl.innerHTML=_pan.map(function(o){return '<div class="panier-ligne"><span>'+o.nom+'</span><span>'+o.prix+' eur</span></div>';}).join('');
-  if(pm)pm.textContent=total+' eur';
-}
-window.updatePanier=_updatePanier;
-
-window.passerCommande=async function(){
-  var meth=document.getElementById('methode-paiement').value;
-  var msg=document.getElementById('commande-msg');
-  if(!meth){msg.innerHTML='<div class="ec-msg ec-msg-error">Choisissez une methode.</div>';return;}
-  if(!_pan.length){msg.innerHTML='<div class="ec-msg ec-msg-error">Panier vide.</div>';return;}
-  try{
-    var total=_pan.reduce(function(s,o){return s+o.prix;},0);
-    var r=await fetch(CRM+'/api/portal/commande',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+_pt},body:JSON.stringify({offres:_pan,total:total,methode_paiement:meth})});
-    var d=await r.json();
-    if(!r.ok){msg.innerHTML='<div class="ec-msg ec-msg-error">'+(d.error||'Erreur')+'</div>';return;}
-    msg.innerHTML='<div class="ec-msg ec-msg-success">Commande enregistree. Le cabinet vous contactera.</div>';
-    _pan=[];document.querySelectorAll('.offre-card.selected').forEach(function(c){c.classList.remove('selected');});_updatePanier();
-  }catch(err){msg.innerHTML='<div class="ec-msg ec-msg-error">Erreur serveur.</div>';}
-};
-
-var QUIZ=[{q:"Ou en es-tu dans ton projet ?",opts:[["A","Idee non structuree",1],["B","Reflexion serieuse",2],["C","Projet avance",3],["D","Pret a lancer",4]]},{q:"Projet clairement defini ?",opts:[["A","Non",1],["B","Partiellement",2],["C","Oui",3]]},{q:"Cible client identifiee ?",opts:[["A","Non",1],["B","En partie",2],["C","Oui",3]]},{q:"Offre definie ?",opts:[["A","Non",1],["B","En reflexion",2],["C","Oui",3]]},{q:"Business plan travaille ?",opts:[["A","Non",1],["B","En cours",2],["C","Oui",3]]},{q:"Vision claire des finances ?",opts:[["A","Non",1],["B","Approximative",2],["C","Oui",3]]},{q:"Besoins financement identifies ?",opts:[["A","Non",1],["B","Partiellement",2],["C","Oui",3]]},{q:"Capable d avancer seul(e) ?",opts:[["A","Non",1],["B","Partiellement",2],["C","Oui",3]]},{q:"Niveau d urgence ?",opts:[["A","Pas urgent",1],["B","Prochains mois",2],["C","Tres urgent",3]]},{q:"Principal blocage ?",opts:[["A","Par ou commencer",1],["B","Manque methode",2],["C","Besoin de structurer",3],["D","Besoin financement",3],["E","Accompagnement global",4]]}];
-var _qs=0,_qr=[];
-
-function _initQuiz(){
-  _qs=0;_qr=new Array(QUIZ.length).fill(null);
-  var qc=document.getElementById('quiz-container');
-  var qr=document.getElementById('quiz-result');
-  if(qc)qc.style.display='';if(qr)qr.style.display='none';
-  _renderQuiz();
-}
-window.initQuiz=_initQuiz;
-
-function _renderQuiz(){
-  var q=QUIZ[_qs];
-  var pb=document.getElementById('quiz-progress-bar');
-  var qn=document.getElementById('quiz-question-num');
-  var qt=document.getElementById('quiz-question-text');
-  var qo=document.getElementById('quiz-options');
-  var qprev=document.getElementById('quiz-prev');
-  var qnext=document.getElementById('quiz-next');
-  if(pb)pb.style.width=((_qs/QUIZ.length)*100)+'%';
-  if(qn)qn.textContent='Question '+(_qs+1)+' / '+QUIZ.length;
-  if(qt)qt.textContent=q.q;
-  if(qo)qo.innerHTML=q.opts.map(function(o){var s=_qr[_qs]===o[2]?' selected':'';return '<div class="quiz-option'+s+'" onclick="selectOpt(this,'+o[2]+')"><div class="quiz-option-letter">'+o[0]+'</div><div>'+o[1]+'</div></div>';}).join('');
-  if(qprev)qprev.style.display=_qs>0?'':'none';
-  if(qnext)qnext.textContent=_qs<QUIZ.length-1?'Suivant':'Voir resultat';
-}
-
-window.selectOpt=function(el,score){
-  document.querySelectorAll('#quiz-options .quiz-option').forEach(function(o){o.classList.remove('selected');});
-  el.classList.add('selected');_qr[_qs]=score;
-};
-
-window.quizNav=function(dir){
-  if(dir===1&&_qr[_qs]===null){alert('Veuillez selectionner une reponse.');return;}
-  _qs+=dir;
-  if(_qs>=QUIZ.length){_afficherResultat();return;}
-  _renderQuiz();
-};
-
-async function _afficherResultat(){
-  var total=_qr.reduce(function(s,v){return s+(v||0);},0);
-  var profil,reco;
-  if(total<=16){profil='Profil 1 - A structurer';reco='Diagnostic de projet + Coaching individuel 3 seances. Pour clarifier votre vision et poser des bases solides.';}
-  else if(total<=23){profil='Profil 2 - A accompagner';reco='Coaching individuel 5 seances + Pack Essentiel Creation. Accompagnement structure pour passer a l action.';}
-  else{profil='Profil 3 - Pret(e) a investir';reco='Business Plan + Previsionnel financier + Pack Financement ou Pack Global. Il est temps de formaliser votre projet.';}
-  var qc=document.getElementById('quiz-container');
-  var qr=document.getElementById('quiz-result');
-  if(qc)qc.style.display='none';if(qr)qr.style.display='';
-  var rp=document.getElementById('res-profil');var rr=document.getElementById('res-reco');var rm=document.getElementById('res-msg');
-  if(rp)rp.textContent=profil;if(rr)rr.textContent=reco;
-  try{
-    await fetch(CRM+'/api/portal/quiz',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+_pt},body:JSON.stringify({reponses:_qr,score:total,profil:profil,recommandations:reco})});
-    if(rm)rm.innerHTML='<div class="ec-msg ec-msg-success" style="margin-top:1rem">Profil enregistre.</div>';
-  }catch(err){}
-}
-
-var _origSP=window.showPage;
-window.showPage=function(page){
-  if(_origSP)_origSP(page);
-  if(page==='espace-client'&&_pt&&_pu){setTimeout(_showDash,50);}
-};
-window.addEventListener('load',function(){if(_pt&&_pu&&window.location.hash==='#espace-client')_showDash();});
-})();
+window.ecEnvoyer=async function(){var n=document.getElementById('ec-nom').value.trim(),p=document.getElementById('ec-prenom').value.trim(),e=document.getElementById('ec-email').value.trim(),t=document.getElementById('ec-tel').value.trim(),s=document.getElementById('ec-statut').value,pr=document.getElementById('ec-prestation').value,pj=document.getElementById('ec-projet').value.trim(),m=document.getElementById('ec-msg'),b=document.getElementById('ec-btn');if(!n||!p||!e){m.innerHTML='<div style="background:#fef2f2;color:#dc2626;padding:.7rem 1rem;border-radius:8px;font-size:.88rem">Nom, prénom et email obligatoires.</div>';return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){m.innerHTML='<div style="background:#fef2f2;color:#dc2626;padding:.7rem 1rem;border-radius:8px;font-size:.88rem">Email invalide.</div>';return;}b.disabled=true;b.textContent='Envoi...';m.innerHTML='';try{var r=await fetch('https://ccs-gc-logi.up.railway.app/api/portal/inscription',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nom:n,prenom:p,email:e,tel:t,situation_fam:s,prestation:pr,projet:pj})});var d=await r.json();if(!r.ok){m.innerHTML='<div style="background:#fef2f2;color:#dc2626;padding:.7rem 1rem;border-radius:8px;font-size:.88rem">'+(d.error||'Erreur')+'</div>';b.disabled=false;b.textContent='\u2713 Créer mon dossier';return;}document.getElementById('ec-form-wrap').style.display='none';document.getElementById('ec-success').style.display='';}catch(err){m.innerHTML='<div style="background:#fef2f2;color:#dc2626;padding:.7rem 1rem;border-radius:8px;font-size:.88rem">Erreur de connexion.</div>';b.disabled=false;b.textContent='\u2713 Créer mon dossier';}};
+window.mobToggle=function(){var m=document.getElementById('mob-menu'),o=document.getElementById('mob-overlay'),b=document.getElementById('nav-ham'),op=m.classList.contains('open');if(op){m.classList.remove('open');o.classList.remove('open');b.classList.remove('open');document.body.style.overflow='';}else{m.classList.add('open');o.classList.add('open');b.classList.add('open');document.body.style.overflow='hidden';}};
+window.mobClose=function(){document.getElementById('mob-menu').classList.remove('open');document.getElementById('mob-overlay').classList.remove('open');document.getElementById('nav-ham').classList.remove('open');document.body.style.overflow='';};
+window.mobNav=function(p){mobClose();setTimeout(function(){showPage(p);},220);};
 </script>
 </body>
 </html>
