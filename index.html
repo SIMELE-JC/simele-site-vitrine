@@ -954,9 +954,18 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     <div id="dd-mdp" style="display:none">
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
         <h3 style="font-family:'Playfair Display',serif;color:#1a365d;margin:0 0 1.4rem;font-size:1.1rem">Modifier mon mot de passe</h3>
-        <div style="margin-bottom:1rem"><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.35rem;font-weight:600">MOT DE PASSE ACTUEL</label><input id="ec-mdp-ancien" type="password" placeholder="••••••••" style="width:100%;padding:.75rem 1rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/></div>
-        <div style="margin-bottom:1rem"><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.35rem;font-weight:600">NOUVEAU MOT DE PASSE</label><input id="ec-mdp-nouveau" type="password" placeholder="Minimum 6 caractères" style="width:100%;padding:.75rem 1rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/></div>
-        <div style="margin-bottom:1rem"><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.35rem;font-weight:600">CONFIRMER LE NOUVEAU MOT DE PASSE</label><input id="ec-mdp-confirm" type="password" placeholder="••••••••" style="width:100%;padding:.75rem 1rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/></div>
+        <div style="margin-bottom:1rem"><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.35rem;font-weight:600">MOT DE PASSE ACTUEL</label><div style="position:relative;display:flex;align-items:center">
+          <input id="ec-mdp-ancien" type="password" style="width:100%;padding:.75rem 3rem .75rem 1rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/>
+          <button type="button" onclick="toggleMdp('ec-mdp-ancien',this)" title="Afficher/masquer" style="position:absolute;right:.75rem;background:none;border:none;cursor:pointer;padding:0;color:#9ca3af;font-size:1.1rem;line-height:1;user-select:none">&#128065;</button>
+        </div></div>
+        <div style="margin-bottom:1rem"><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.35rem;font-weight:600">NOUVEAU MOT DE PASSE</label><div style="position:relative;display:flex;align-items:center">
+          <input id="ec-mdp-nouveau" type="password" style="width:100%;padding:.75rem 3rem .75rem 1rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/>
+          <button type="button" onclick="toggleMdp('ec-mdp-nouveau',this)" title="Afficher/masquer" style="position:absolute;right:.75rem;background:none;border:none;cursor:pointer;padding:0;color:#9ca3af;font-size:1.1rem;line-height:1;user-select:none">&#128065;</button>
+        </div></div>
+        <div style="margin-bottom:1rem"><label style="display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:.35rem;font-weight:600">CONFIRMER LE NOUVEAU MOT DE PASSE</label><div style="position:relative;display:flex;align-items:center">
+          <input id="ec-mdp-confirm" type="password" style="width:100%;padding:.75rem 3rem .75rem 1rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.95rem;font-family:inherit;outline:none;box-sizing:border-box" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#d1d5db'"/>
+          <button type="button" onclick="toggleMdp('ec-mdp-confirm',this)" title="Afficher/masquer" style="position:absolute;right:.75rem;background:none;border:none;cursor:pointer;padding:0;color:#9ca3af;font-size:1.1rem;line-height:1;user-select:none">&#128065;</button>
+        </div></div>
         <div id="ec-mdp-msg" style="margin-bottom:.8rem"></div>
         <button onclick="ecChangerMdp()" style="width:100%;padding:.9rem;background:#1a365d;color:#fff;border:none;border-radius:10px;font-size:1rem;font-family:inherit;font-weight:600;cursor:pointer" onmouseover="this.style.background='#c9a84c'" onmouseout="this.style.background='#1a365d'">Mettre à jour le mot de passe</button>
       </div>
@@ -1046,6 +1055,14 @@ window.ecDashTab=function(t){
     if(el)el.style.display=active?'':'none';
     if(bt){bt.style.color=active?'#1a365d':'#9ca3af';bt.style.fontWeight=active?'700':'500';bt.style.borderBottomColor=active?'#1a365d':'transparent';}
   });
+};
+window.toggleMdp=function(id,btn){
+  var inp=document.getElementById(id);
+  if(!inp)return;
+  var isHidden=inp.type==='password';
+  inp.type=isHidden?'text':'password';
+  btn.innerHTML=isHidden?'&#128064;':'&#128065;';
+  btn.title=isHidden?'Masquer':'Afficher';
 };
 window.ecChangerMdp=async function(){
   var ancien=document.getElementById('ec-mdp-ancien').value;
