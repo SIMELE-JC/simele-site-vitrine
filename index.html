@@ -931,8 +931,12 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       <button onclick="ecLogout()" style="padding:.6rem 1.2rem;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;font-family:inherit;font-size:.85rem;cursor:pointer">Déconnexion</button>
     </div>
     <div style="display:flex;border-bottom:2px solid #e8ecf4;margin-bottom:1.5rem;overflow-x:auto">
-      <button id="dt-dossier" onclick="ecDashTab('dossier')" style="padding:.7rem 1.2rem;background:none;border:none;font-family:inherit;font-size:.9rem;font-weight:700;color:#1a365d;cursor:pointer;border-bottom:2px solid #1a365d;margin-bottom:-2px;white-space:nowrap">Mon dossier</button>
-      <button id="dt-mdp" onclick="ecDashTab('mdp')" style="padding:.7rem 1.2rem;background:none;border:none;font-family:inherit;font-size:.9rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Mot de passe</button>
+      <button id="dt-dossier" onclick="ecDashTab('dossier')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:700;color:#1a365d;cursor:pointer;border-bottom:2px solid #1a365d;margin-bottom:-2px;white-space:nowrap">Mon dossier</button>
+      <button id="dt-prestations" onclick="ecDashTab('prestations')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">📋 Prestations</button>
+      <button id="dt-documents" onclick="ecDashTab('documents')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">📁 Documents</button>
+      <button id="dt-envoyer" onclick="ecDashTab('envoyer')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">📤 Envoyer</button>
+      <button id="dt-finances" onclick="ecDashTab('finances')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">💶 Finances</button>
+      <button id="dt-mdp" onclick="ecDashTab('mdp')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Mot de passe</button>
     </div>
     <div id="dd-dossier">
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
@@ -969,6 +973,75 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <div id="ec-mdp-msg" style="margin-bottom:.8rem"></div>
         <button onclick="ecChangerMdp()" style="width:100%;padding:.9rem;background:#1a365d;color:#fff;border:none;border-radius:10px;font-size:1rem;font-family:inherit;font-weight:600;cursor:pointer" onmouseover="this.style.background='#c9a84c'" onmouseout="this.style.background='#1a365d'">Mettre à jour le mot de passe</button>
       </div>
+    <!-- PRESTATIONS TAB -->
+    <div id="dd-prestations" style="display:none">
+      <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1.1rem;margin:0 0 .5rem">Choisir ma prestation</h3>
+        <p style="color:#6b7280;font-size:.88rem;margin:0 0 1.2rem">Sélectionnez la prestation correspondant à votre projet. Le cabinet vous recontactera pour confirmer.</p>
+        <div id="ec-current-prestation" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.8rem 1rem;margin-bottom:1rem;color:#166534;font-size:.88rem"></div>
+        <div id="ec-services-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem">
+          <div style="text-align:center;padding:1rem;color:#9ca3af;grid-column:1/-1">Chargement...</div>
+        </div>
+        <div style="margin-bottom:1rem">
+          <label style="font-size:.78rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:.4rem">Message (optionnel)</label>
+          <textarea id="ec-prestation-msg" rows="2" placeholder="Décrivez votre projet, vos questions..." style="width:100%;padding:.7rem .9rem;border:1.5px solid #e8ecf4;border-radius:8px;font-family:inherit;font-size:.88rem;resize:vertical;outline:none;box-sizing:border-box"></textarea>
+        </div>
+        <button onclick="ecEnvoyerPrestation()" style="width:100%;padding:.85rem;background:#c9a84c;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer">📨 Envoyer ma demande</button>
+        <div id="ec-prestation-result" style="margin-top:.8rem"></div>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS TAB -->
+    <div id="dd-documents" style="display:none">
+      <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1.1rem;margin:0 0 1.2rem">Mes documents</h3>
+        <div id="ec-docs-list">
+          <div style="text-align:center;padding:2rem;color:#9ca3af;font-size:.88rem">Chargement...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENVOYER TAB -->
+    <div id="dd-envoyer" style="display:none">
+      <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1.1rem;margin:0 0 .5rem">Transmettre un document</h3>
+        <p style="color:#6b7280;font-size:.88rem;margin:0 0 1.2rem">Envoyez vos documents au cabinet. Ils seront examinés et ajoutés à votre dossier après validation.</p>
+        <div id="ec-upload-zone" onclick="document.getElementById('ec-file-input').click()" ondragover="event.preventDefault();this.style.borderColor='#1a365d'" ondragleave="this.style.borderColor='#c8d4e8'" ondrop="ecHandleDrop(event)" style="border:2px dashed #c8d4e8;border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:border-color .2s;margin-bottom:1rem">
+          <div style="font-size:2.5rem;margin-bottom:.5rem">📎</div>
+          <div style="font-size:.9rem;color:#374151;font-weight:600">Cliquez ou glissez votre fichier ici</div>
+          <div style="font-size:.8rem;color:#9ca3af;margin-top:.3rem">PDF, Word, Excel, Images — Max 20 Mo</div>
+        </div>
+        <input type="file" id="ec-file-input" style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.txt,.zip" onchange="ecFileSelect(this)">
+        <div id="ec-file-selected" style="display:none;background:#f0f4ff;border:1px solid #c8d4e8;border-radius:8px;padding:.8rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.8rem">
+          <span style="font-size:1.4rem">📄</span>
+          <div style="flex:1"><div id="ec-file-name" style="font-size:.88rem;font-weight:600;color:#1a365d"></div><div id="ec-file-size" style="font-size:.78rem;color:#9ca3af"></div></div>
+          <button onclick="ecFileClear()" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:1.2rem">✕</button>
+        </div>
+        <div style="margin-bottom:1rem">
+          <label style="font-size:.78rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:.4rem">Commentaire (optionnel)</label>
+          <textarea id="ec-upload-comment" rows="2" placeholder="Ex: Justificatif d'identité, RIB, Kbis..." style="width:100%;padding:.7rem .9rem;border:1.5px solid #e8ecf4;border-radius:8px;font-family:inherit;font-size:.88rem;resize:vertical;outline:none;box-sizing:border-box"></textarea>
+        </div>
+        <button onclick="ecEnvoyerDoc()" style="width:100%;padding:.85rem;background:#1a365d;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer">📨 Envoyer le document</button>
+        <div id="ec-upload-result" style="margin-top:.8rem"></div>
+      </div>
+      <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1rem">Mes envois</h3>
+        <div id="ec-mes-envois"><div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.88rem">Aucun envoi.</div></div>
+      </div>
+    </div>
+
+    <!-- FINANCES TAB -->
+    <div id="dd-finances" style="display:none">
+      <div style="background:#1a365d;border-radius:16px;padding:1.8rem;margin-bottom:1.2rem;color:#fff">
+        <p style="font-size:.78rem;opacity:.7;text-transform:uppercase;letter-spacing:.1em;margin:0 0 .4rem">Total mes prestations</p>
+        <div id="ec-finance-total" style="font-size:2.2rem;font-weight:700;font-family:'Playfair Display',serif;margin:.3rem 0;color:#c9a84c">–</div>
+        <div id="ec-finance-prestation" style="font-size:.88rem;opacity:.8"></div>
+      </div>
+      <div id="ec-finance-detail" style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1rem">Détail</h3>
+        <div id="ec-finance-content"><div style="text-align:center;padding:1.5rem;color:#9ca3af;font-size:.88rem">Choisissez une prestation pour voir le détail financier.</div></div>
+      </div>
+    </div>
     </div>
   </div>
 </div>
@@ -1050,11 +1123,15 @@ window.ecLogout=function(){
   ecTab('login');
 };
 window.ecDashTab=function(t){
-  ['dossier','mdp'].forEach(function(s){
+  ['dossier','prestations','documents','envoyer','finances','mdp'].forEach(function(s){
     var el=document.getElementById('dd-'+s),bt=document.getElementById('dt-'+s),active=s===t;
     if(el)el.style.display=active?'':'none';
     if(bt){bt.style.color=active?'#1a365d':'#9ca3af';bt.style.fontWeight=active?'700':'500';bt.style.borderBottomColor=active?'#1a365d':'transparent';}
   });
+  if(t==='prestations' && !window._servicesLoaded) ecLoadServices();
+  if(t==='documents') ecLoadDocuments();
+  if(t==='envoyer') ecLoadEnvois();
+  if(t==='finances') ecLoadFinances();
 };
 window.toggleMdp=function(id,btn){
   var inp=document.getElementById(id);
@@ -1099,6 +1176,198 @@ window.ecEnvoyer=async function(){
     window.showPage=function(pg){if(origSP)origSP(pg);if(pg==='espace-client')setTimeout(ecShowDashboard,50);};
   }
 })();
+
+
+/* ── Nouvelles fonctions portail client ── */
+var _ecSelectedService = null;
+var _ecSelectedFile = null;
+
+/* Services / Prestations */
+async function ecLoadServices() {
+  window._servicesLoaded = true;
+  var grid = document.getElementById('ec-services-grid');
+  if (!grid) return;
+  try {
+    var r = await fetch(_CRM + '/api/portal/services');
+    var d = await r.json();
+    var SERVICES = d.services || [];
+
+    // Check current prestation
+    var r2 = await fetch(_CRM + '/api/portal/dashboard', {headers:{'Authorization':'Bearer '+_ecToken}});
+    var dash = await r2.json();
+    var currentPrest = dash.prestation_choisie || (dash.client && dash.client.prestation) || '';
+    if (currentPrest) {
+      var cpEl = document.getElementById('ec-current-prestation');
+      if (cpEl) { cpEl.style.display=''; cpEl.textContent = '✅ Prestation actuelle : ' + currentPrest; }
+    }
+
+    grid.innerHTML = SERVICES.map(function(s) {
+      var sel = s.label === currentPrest;
+      if (sel) _ecSelectedService = s;
+      return '<div onclick="ecSelectService(this,'' + s.id + '','' + s.label.replace(/'/g,'') + '',' + (s.prix||'null') + ')" style="border:2px solid ' + (sel?'#c9a84c':'#e8ecf4') + ';border-radius:10px;padding:1rem;cursor:pointer;transition:all .2s;background:' + (sel?'#fffbeb':'#fff') + '">'
+        + '<div style="font-size:1.1rem;font-weight:700;color:#c9a84c">' + (s.prix ? s.prix + ' €' : 'Sur devis') + '</div>'
+        + '<div style="font-size:.85rem;font-weight:600;color:#1a365d;margin:.3rem 0">' + s.label + '</div>'
+        + '<div style="font-size:.78rem;color:#9ca3af">' + s.desc + '</div>'
+        + (sel ? '<div style="margin-top:.5rem;background:#c9a84c;color:#fff;border-radius:6px;padding:2px 8px;font-size:.72rem;font-weight:700;display:inline-block">✓ Choisi</div>' : '')
+        + '</div>';
+    }).join('');
+  } catch(e) { if(grid) grid.innerHTML = '<div style="color:#dc2626;font-size:.88rem">Erreur de chargement.</div>'; }
+}
+window.ecSelectService = function(el, id, label, prix) {
+  document.querySelectorAll('#ec-services-grid > div').forEach(function(c) {
+    c.style.border='2px solid #e8ecf4'; c.style.background='#fff';
+  });
+  el.style.border='2px solid #c9a84c'; el.style.background='#fffbeb';
+  _ecSelectedService = {id:id, label:label, prix:prix};
+};
+window.ecEnvoyerPrestation = async function() {
+  if (!_ecSelectedService) { alert('Veuillez sélectionner une prestation.'); return; }
+  var msg = document.getElementById('ec-prestation-msg').value;
+  var res = document.getElementById('ec-prestation-result');
+  try {
+    var r = await fetch(_CRM + '/api/portal/choisir-prestation', {
+      method:'POST', headers:{'Authorization':'Bearer '+_ecToken,'Content-Type':'application/json'},
+      body: JSON.stringify({service_id:_ecSelectedService.id, service_label:_ecSelectedService.label, prix:_ecSelectedService.prix, message:msg})
+    });
+    var d = await r.json();
+    if (d.success) {
+      res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.8rem;color:#166534;font-size:.88rem;margin-top:.5rem">✅ ' + d.message + '</div>';
+      var cp = document.getElementById('ec-current-prestation');
+      if (cp) { cp.style.display=''; cp.textContent='✅ Demande envoyée : ' + _ecSelectedService.label; }
+    } else {
+      res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.88rem">❌ ' + (d.error||'Erreur') + '</div>';
+    }
+  } catch(e) { res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.88rem">❌ Erreur de connexion.</div>'; }
+};
+
+/* Documents */
+async function ecLoadDocuments() {
+  var list = document.getElementById('ec-docs-list');
+  if (!list) return;
+  list.innerHTML = '<div style="text-align:center;padding:2rem;color:#9ca3af;font-size:.88rem">Chargement...</div>';
+  try {
+    var r = await fetch(_CRM + '/api/portal/mes-documents-dossier', {headers:{'Authorization':'Bearer '+_ecToken}});
+    var d = await r.json();
+    if (!d.documents || !d.documents.length) {
+      list.innerHTML = '<div style="text-align:center;padding:2rem"><div style="font-size:2.5rem;margin-bottom:.8rem">📭</div><p style="color:#9ca3af;font-size:.88rem">Aucun document disponible.<br>Le cabinet publiera vos documents ici.</p></div>';
+      return;
+    }
+    var COLORS = {fiche:'#9b59b6',devis:'#3498db',contrat:'#2ecc71',identite:'#e67e22',siege:'#1abc9c',activite:'#e74c3c',gestion:'#95a5a6',autre:'#95a5a6',document:'#95a5a6'};
+    var ICONS = {pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',jpg:'🖼️',jpeg:'🖼️',png:'🖼️',html:'🌐',txt:'📃'};
+    list.innerHTML = d.documents.map(function(doc) {
+      var ext = (doc.nom||'').split('.').pop().toLowerCase();
+      var icon = ICONS[ext] || '📁';
+      var color = COLORS[doc.type] || '#95a5a6';
+      var size = doc.taille > 0 ? (doc.taille > 1048576 ? (doc.taille/1048576).toFixed(1)+'Mo' : Math.round(doc.taille/1024)+'Ko') : '';
+      var date = (doc.created_at||'').slice(0,10);
+      return '<div style="display:flex;align-items:center;gap:.8rem;padding:.9rem;border:1px solid #e8ecf4;border-left:4px solid '+color+';border-radius:8px;margin-bottom:.6rem">'
+        + '<span style="font-size:1.4rem">'+icon+'</span>'
+        + '<div style="flex:1;min-width:0"><div style="font-size:.88rem;font-weight:600;color:#1a365d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+doc.nom+'</div>'
+        + '<div style="font-size:.75rem;color:#9ca3af;margin-top:.2rem"><span style="background:'+color+';color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem">'+doc.type+'</span>'+(size?' · '+size:'')+(date?' · '+date:'')+'</div></div>'
+        + '<a href="'+_CRM+'/api/documents/'+doc.id+'/download" target="_blank" style="background:#e8f4fd;border:1px solid #3498db;border-radius:6px;padding:.4rem .8rem;font-size:.8rem;color:#3498db;text-decoration:none;white-space:nowrap">⬇ Télécharger</a>'
+        + '</div>';
+    }).join('');
+  } catch(e) { list.innerHTML = '<div style="color:#dc2626;font-size:.88rem;padding:1rem">Erreur: '+e.message+'</div>'; }
+}
+
+/* Upload de documents */
+window.ecFileSelect = function(input) {
+  var file = input.files[0]; if(!file) return;
+  _ecSelectedFile = file;
+  document.getElementById('ec-upload-zone').style.display='none';
+  var sel = document.getElementById('ec-file-selected');
+  sel.style.display='flex';
+  document.getElementById('ec-file-name').textContent = file.name;
+  document.getElementById('ec-file-size').textContent = file.size > 1048576 ? (file.size/1048576).toFixed(1)+' Mo' : Math.round(file.size/1024)+' Ko';
+};
+window.ecHandleDrop = function(e) {
+  e.preventDefault();
+  document.getElementById('ec-upload-zone').style.borderColor='#c8d4e8';
+  var file = e.dataTransfer.files[0]; if(!file) return;
+  _ecSelectedFile = file;
+  document.getElementById('ec-upload-zone').style.display='none';
+  var sel = document.getElementById('ec-file-selected');
+  sel.style.display='flex';
+  document.getElementById('ec-file-name').textContent = file.name;
+  document.getElementById('ec-file-size').textContent = file.size > 1048576 ? (file.size/1048576).toFixed(1)+' Mo' : Math.round(file.size/1024)+' Ko';
+};
+window.ecFileClear = function() {
+  _ecSelectedFile = null;
+  document.getElementById('ec-file-input').value = '';
+  document.getElementById('ec-file-selected').style.display = 'none';
+  document.getElementById('ec-upload-zone').style.display = '';
+};
+window.ecEnvoyerDoc = async function() {
+  if (!_ecSelectedFile) { alert('Veuillez sélectionner un fichier.'); return; }
+  var comment = document.getElementById('ec-upload-comment').value;
+  var res = document.getElementById('ec-upload-result');
+  res.innerHTML = '<div style="text-align:center;padding:.8rem;color:#6b7280;font-size:.88rem">⏳ Envoi en cours...</div>';
+  var fd = new FormData();
+  fd.append('fichier', _ecSelectedFile, _ecSelectedFile.name);
+  fd.append('commentaire', comment);
+  try {
+    var r = await fetch(_CRM + '/api/portal/envoyer-document', {method:'POST', headers:{'Authorization':'Bearer '+_ecToken}, body:fd});
+    var d = await r.json();
+    if (d.success) {
+      res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.8rem;color:#166534;font-size:.88rem">✅ ' + d.message + '</div>';
+      ecFileClear(); document.getElementById('ec-upload-comment').value='';
+      ecLoadEnvois();
+    } else {
+      res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.88rem">❌ ' + (d.error||'Erreur') + '</div>';
+    }
+  } catch(e) { res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.88rem">❌ Erreur de connexion.</div>'; }
+};
+async function ecLoadEnvois() {
+  var list = document.getElementById('ec-mes-envois'); if(!list) return;
+  try {
+    var r = await fetch(_CRM + '/api/portal/dashboard', {headers:{'Authorization':'Bearer '+_ecToken}});
+    var d = await r.json();
+    var envois = d.mes_uploads || [];
+    if (!envois.length) { list.innerHTML='<div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.88rem">Aucun document envoyé.</div>'; return; }
+    var STATUS = {en_attente:'⏳ En attente de validation', valide:'✅ Ajouté au dossier', rejete:'❌ Non retenu'};
+    var COLORS = {en_attente:'#fffbeb;border:1px solid #f59e0b', valide:'#f0fdf4;border:1px solid #86efac', rejete:'#fef2f2;border:1px solid #fca5a5'};
+    list.innerHTML = envois.map(function(u) {
+      return '<div style="background:'+COLORS[u.statut]+';border-radius:8px;padding:.8rem 1rem;margin-bottom:.5rem">'
+        + '<div style="font-size:.88rem;font-weight:600;color:#374151">'+u.nom_original+'</div>'
+        + '<div style="font-size:.78rem;color:#6b7280;margin-top:.2rem">'+(STATUS[u.statut]||u.statut)+'</div>'
+        + '<div style="font-size:.72rem;color:#9ca3af">'+(u.created_at||'').slice(0,10)+'</div>'
+        + '</div>';
+    }).join('');
+  } catch(e) {}
+}
+
+/* Finances */
+async function ecLoadFinances() {
+  try {
+    var r = await fetch(_CRM + '/api/portal/dashboard', {headers:{'Authorization':'Bearer '+_ecToken}});
+    var d = await r.json();
+    var total = d.total_prestations || 0;
+    var prest = d.prestation_choisie || (d.client && d.client.prestation) || '';
+    var totEl = document.getElementById('ec-finance-total');
+    var prestEl = document.getElementById('ec-finance-prestation');
+    var contentEl = document.getElementById('ec-finance-content');
+    if (totEl) totEl.textContent = total > 0 ? total.toFixed(2).replace('.',',') + ' €' : 'À définir';
+    if (prestEl) prestEl.textContent = prest || 'Aucune prestation sélectionnée';
+    if (contentEl) {
+      var commandes = d.commandes || [];
+      if (commandes.length) {
+        contentEl.innerHTML = commandes.map(function(c) {
+          var offres = JSON.parse(c.offres||'[]');
+          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;border:1px solid #e8ecf4;border-radius:8px;margin-bottom:.5rem">'
+            + '<div><div style="font-size:.88rem;font-weight:600;color:#1a365d">'+offres.map(function(o){return o.label||o;}).join(', ')+'</div>'
+            + '<div style="font-size:.75rem;color:#9ca3af">'+(c.created_at||'').slice(0,10)+'</div></div>'
+            + '<div style="font-size:1rem;font-weight:700;color:#c9a84c">'+(c.total?c.total.toFixed(2).replace('.',',')+' €':'Sur devis')+'</div>'
+            + '</div>';
+        }).join('');
+      } else if (prest) {
+        contentEl.innerHTML = '<div style="padding:.8rem;background:#f8f9fa;border-radius:8px;font-size:.88rem;color:#374151"><strong>Prestation demandée :</strong> '+prest+'<br><span style="color:#9ca3af;font-size:.78rem">Montant confirmé à la validation par le cabinet.</span></div>';
+      } else {
+        contentEl.innerHTML = '<div style="text-align:center;padding:1.5rem;color:#9ca3af;font-size:.88rem">Choisissez une prestation pour voir le détail financier.</div>';
+      }
+    }
+  } catch(e) {}
+}
+
 </script>
 </body>
 </html>
