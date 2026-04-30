@@ -1204,7 +1204,8 @@ async function ecLoadServices() {
     grid.innerHTML = SERVICES.map(function(s) {
       var sel = s.label === currentPrest;
       if (sel) _ecSelectedService = s;
-      return '<div onclick="ecSelectService(this,'' + s.id + '','' + s.label.replace(/'/g,'') + '',' + (s.prix||'null') + ')" style="border:2px solid ' + (sel?'#c9a84c':'#e8ecf4') + ';border-radius:10px;padding:1rem;cursor:pointer;transition:all .2s;background:' + (sel?'#fffbeb':'#fff') + '">'
+      var safeLabel = s.label.replace(/'/g,'').replace(/"/g,'');
+      return '<div onclick="ecSelectService(this,\'' + s.id + '\',\'' + safeLabel + '\',' + (s.prix||'null') + ')" style="border:2px solid ' + (sel?'#c9a84c':'#e8ecf4') + ';border-radius:10px;padding:1rem;cursor:pointer;transition:all .2s;background:' + (sel?'#fffbeb':'#fff') + '">'
         + '<div style="font-size:1.1rem;font-weight:700;color:#c9a84c">' + (s.prix ? s.prix + ' €' : 'Sur devis') + '</div>'
         + '<div style="font-size:.85rem;font-weight:600;color:#1a365d;margin:.3rem 0">' + s.label + '</div>'
         + '<div style="font-size:.78rem;color:#9ca3af">' + s.desc + '</div>'
