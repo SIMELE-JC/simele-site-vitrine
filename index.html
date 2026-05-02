@@ -936,6 +936,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       <button id="dt-documents" onclick="ecDashTab('documents')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">📁 Documents</button>
       <button id="dt-envoyer" onclick="ecDashTab('envoyer')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">📤 Envoyer</button>
       <button id="dt-finances" onclick="ecDashTab('finances')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">💶 Finances</button>
+      <button id="dt-subventions" onclick="ecDashTab('subventions')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">🎯 Subventions</button>
       <button id="dt-mdp" onclick="ecDashTab('mdp')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Mot de passe</button>
     </div>
     <div id="dd-dossier">
@@ -955,6 +956,375 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <p style="margin:0;color:#374151;font-size:.9rem;line-height:1.5">Pour toute question, contactez le cabinet : <strong>ccs.guadeloupe@outlook.fr</strong></p>
       </div>
     </div>
+    <!-- SUBVENTIONS TAB -->
+    <div id="dd-subventions" style="display:none">
+
+      <!-- Choix du dispositif -->
+      <div id="sub-choix" style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1.1rem;margin:0 0 .4rem">Demande de subvention</h3>
+        <p style="color:#6b7280;font-size:.85rem;margin:0 0 1.4rem">Choisissez le dispositif d'aide pour lequel vous souhaitez déposer un dossier.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
+          <div onclick="ecShowFormSubvention('pij')" style="border:2px solid #e8ecf4;border-radius:12px;padding:1.2rem;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#1a365d'" onmouseout="this.style.borderColor='#e8ecf4'">
+            <div style="font-size:1.5rem;margin-bottom:.5rem">🌟</div>
+            <div style="font-weight:700;color:#1a365d;font-size:.95rem;margin-bottom:.3rem">PIJ</div>
+            <div style="font-size:.78rem;color:#6b7280">Prime à l'Installation des Jeunes — pour les 18-35 ans qui créent leur entreprise</div>
+          </div>
+          <div style="border:2px dashed #e8ecf4;border-radius:12px;padding:1.2rem;opacity:.5;cursor:not-allowed">
+            <div style="font-size:1.5rem;margin-bottom:.5rem">⏳</div>
+            <div style="font-weight:700;color:#9ca3af;font-size:.95rem;margin-bottom:.3rem">ARICE</div>
+            <div style="font-size:.78rem;color:#9ca3af">Disponible prochainement</div>
+          </div>
+          <div style="border:2px dashed #e8ecf4;border-radius:12px;padding:1.2rem;opacity:.5;cursor:not-allowed">
+            <div style="font-size:1.5rem;margin-bottom:.5rem">⏳</div>
+            <div style="font-weight:700;color:#9ca3af;font-size:.95rem;margin-bottom:.3rem">ARDDA</div>
+            <div style="font-size:.78rem;color:#9ca3af">Disponible prochainement</div>
+          </div>
+          <div style="border:2px dashed #e8ecf4;border-radius:12px;padding:1.2rem;opacity:.5;cursor:not-allowed">
+            <div style="font-size:1.5rem;margin-bottom:.5rem">⏳</div>
+            <div style="font-weight:700;color:#9ca3af;font-size:.95rem;margin-bottom:.3rem">ARDDI</div>
+            <div style="font-size:.78rem;color:#9ca3af">Disponible prochainement</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire PIJ -->
+      <div id="sub-form-pij" style="display:none">
+
+        <!-- Header retour -->
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem">
+          <button onclick="ecShowSubventions()" style="background:none;border:1px solid #e8ecf4;border-radius:8px;padding:.5rem .9rem;font-family:inherit;font-size:.82rem;color:#6b7280;cursor:pointer">← Retour</button>
+          <div>
+            <div style="font-weight:700;color:#1a365d;font-size:1rem">🌟 Dossier PIJ — Prime à l'Installation des Jeunes</div>
+            <div style="font-size:.78rem;color:#9ca3af">Remplissez les informations ci-dessous. Vos réponses sont transmises directement à votre conseiller SIMELE.</div>
+          </div>
+        </div>
+
+        <!-- Barre de progression -->
+        <div style="background:#f0f4ff;border-radius:10px;padding:.8rem 1.2rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-size:.82rem;color:#1a365d;font-weight:600" id="pij-step-label">Étape 1 sur 6 — Qui êtes-vous ?</div>
+          <div style="display:flex;gap:.3rem">
+            <div id="pij-dot-1" style="width:10px;height:10px;border-radius:50%;background:#1a365d"></div>
+            <div id="pij-dot-2" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
+            <div id="pij-dot-3" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
+            <div id="pij-dot-4" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
+            <div id="pij-dot-5" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
+            <div id="pij-dot-6" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
+          </div>
+        </div>
+
+        <!-- ═══════════ ÉTAPE 1 : IDENTITÉ ═══════════ -->
+        <div id="pij-step-1">
+          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">👤 Vos informations personnelles</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div><label class="pij-label">Nom de famille</label><input id="pij-nom" class="pij-input" placeholder="DUPONT"></div>
+              <div><label class="pij-label">Prénom</label><input id="pij-prenom" class="pij-input" placeholder="Marie"></div>
+              <div><label class="pij-label">Date de naissance</label><input id="pij-ddn" type="date" class="pij-input"><div class="pij-hint">Vous devez avoir entre 18 et 35 ans</div></div>
+              <div><label class="pij-label">Lieu de naissance (ville)</label><input id="pij-lieu-nais" class="pij-input" placeholder="Pointe-à-Pitre"></div>
+              <div><label class="pij-label">Nationalité</label><input id="pij-nationalite" class="pij-input" placeholder="Française"></div>
+              <div><label class="pij-label">Numéro de téléphone</label><input id="pij-tel" class="pij-input" placeholder="0690 00 00 00"></div>
+              <div style="grid-column:1/-1"><label class="pij-label">Adresse complète</label><input id="pij-adresse" class="pij-input" placeholder="12 rue des Flamboyants, Lotissement..."></div>
+              <div><label class="pij-label">Code postal</label><input id="pij-cp" class="pij-input" placeholder="97100"></div>
+              <div><label class="pij-label">Commune</label><input id="pij-commune" class="pij-input" placeholder="Basse-Terre"></div>
+              <div style="grid-column:1/-1"><label class="pij-label">Adresse email</label><input id="pij-email" type="email" class="pij-input" placeholder="marie.dupont@email.fr"></div>
+            </div>
+            <div style="margin-top:1.2rem;padding:1rem;background:#fffbeb;border-radius:10px;border:1px solid #fde68a">
+              <p style="font-size:.82rem;color:#92400e;margin:0">💡 <strong>Votre situation actuelle</strong></p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem">
+                <div><label class="pij-label">Situation (avant de créer votre entreprise)</label>
+                  <select id="pij-situation" class="pij-input">
+                    <option value="">-- Sélectionnez --</option>
+                    <option>Demandeur d'emploi</option>
+                    <option>Salarié(e)</option>
+                    <option>Étudiant(e)</option>
+                    <option>Inactif(ve)</option>
+                    <option>Déjà chef d'entreprise</option>
+                  </select>
+                </div>
+                <div><label class="pij-label">Niveau d'études le plus élevé</label>
+                  <select id="pij-diplome" class="pij-input">
+                    <option value="">-- Sélectionnez --</option>
+                    <option>Sans diplôme</option>
+                    <option>Brevet des collèges (3ème)</option>
+                    <option>CAP / BEP</option>
+                    <option>Baccalauréat</option>
+                    <option>BTS / DUT (Bac+2)</option>
+                    <option>Licence (Bac+3)</option>
+                    <option>Master / Ingénieur (Bac+5)</option>
+                    <option>Doctorat (Bac+8)</option>
+                  </select>
+                </div>
+              </div>
+              <div style="margin-top:.8rem"><label class="pij-label">Avez-vous suivi une formation à la création d'entreprise ?</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-formation" value="oui"> Oui</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-formation" value="non"> Non</label>
+                </div>
+              </div>
+              <div style="margin-top:.8rem" id="pij-formation-detail-wrap">
+                <label class="pij-label">Si oui, précisez le nom et la durée</label>
+                <input id="pij-formation-detail" class="pij-input" placeholder="Ex: Formation BGE - 3 jours">
+              </div>
+            </div>
+          </div>
+          <div class="pij-nav"><div></div><button class="pij-btn-next" onclick="pijGoStep(2)">Suivant →</button></div>
+        </div>
+
+        <!-- ═══════════ ÉTAPE 2 : VOTRE PROJET ═══════════ -->
+        <div id="pij-step-2" style="display:none">
+          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">💡 Votre projet d'entreprise</h4>
+            <div style="display:grid;gap:1rem">
+              <div><label class="pij-label">Comment s'appelle votre future entreprise ?</label><input id="pij-raison-sociale" class="pij-input" placeholder="Ex: Marie Dupont Services, MDS Conseil..."></div>
+              <div><label class="pij-label">En quelques mots, que fera votre entreprise ?</label><textarea id="pij-activite-desc" class="pij-input" rows="3" style="resize:vertical" placeholder="Ex: Je vends des plats cuisinés faits maison livrés à domicile. Je propose aussi des plateaux repas pour les entreprises..."></textarea>
+                <div class="pij-hint">Expliquez simplement ce que vous allez vendre ou proposer comme service</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                <div><label class="pij-label">Quel type d'activité ?</label>
+                  <select id="pij-type-activite" class="pij-input">
+                    <option value="">-- Sélectionnez --</option>
+                    <option>Commerce (achat/vente de produits)</option>
+                    <option>Prestation de services</option>
+                    <option>Artisanat (fabrication / réparation)</option>
+                    <option>Agriculture / pêche</option>
+                    <option>Professions libérales (médecin, avocat...)</option>
+                    <option>Industrie / production</option>
+                    <option>Numérique / tech</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div><label class="pij-label">Votre code APE / NAF (si vous le connaissez)</label><input id="pij-ape" class="pij-input" placeholder="Ex: 5610A"><div class="pij-hint">Laissez vide si vous ne savez pas</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                <div><label class="pij-label">Forme juridique choisie</label>
+                  <select id="pij-forme-juridique" class="pij-input">
+                    <option value="">-- Sélectionnez --</option>
+                    <option>Micro-entreprise (auto-entrepreneur)</option>
+                    <option>EURL (entreprise individuelle à responsabilité limitée)</option>
+                    <option>SASU (société par actions simplifiée unipersonnelle)</option>
+                    <option>SARL (société à responsabilité limitée)</option>
+                    <option>SAS (société par actions simplifiée)</option>
+                    <option>EI (entreprise individuelle classique)</option>
+                    <option>Je ne sais pas encore</option>
+                  </select>
+                </div>
+                <div><label class="pij-label">Date de création ou date prévue</label><input id="pij-date-creation" type="date" class="pij-input"></div>
+              </div>
+              <div><label class="pij-label">Adresse de votre future entreprise</label><input id="pij-adresse-entreprise" class="pij-input" placeholder="Si différente de votre domicile"></div>
+              <div><label class="pij-label">Où exercerez-vous votre activité ?</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem;flex-wrap:wrap">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="domicile"> À mon domicile</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="local"> Dans un local / boutique</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="deplacement"> Chez les clients (déplacement)</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="internet"> Sur internet</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="mixte"> Plusieurs de ces options</label>
+                </div>
+              </div>
+              <div><label class="pij-label">À qui allez-vous vendre / proposer vos services ?</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem;flex-wrap:wrap">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="particuliers"> Des particuliers</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="entreprises"> Des entreprises</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="collectivites"> Des collectivités (mairie, conseil régional...)</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="associations"> Des associations</label>
+                </div>
+              </div>
+              <div><label class="pij-label">Quels sont vos principaux concurrents (si vous en connaissez) ?</label>
+                <input id="pij-concurrents" class="pij-input" placeholder="Ex: Les restaurants du quartier, les traiteurs locaux...">
+                <div class="pij-hint">Laissez vide si vous n'en connaissez pas encore</div>
+              </div>
+              <div><label class="pij-label">Qu'est-ce qui vous distingue de la concurrence ? Pourquoi les clients viendraient chez vous ?</label>
+                <textarea id="pij-avantages" class="pij-input" rows="2" style="resize:vertical" placeholder="Ex: Je propose des prix plus accessibles, des produits 100% locaux, un service à domicile que personne ne propose dans ma commune..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(1)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(3)">Suivant →</button></div>
+        </div>
+
+        <!-- ═══════════ ÉTAPE 3 : INVESTISSEMENTS ═══════════ -->
+        <div id="pij-step-3" style="display:none">
+          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">🛒 Ce que vous devez acheter pour démarrer</h4>
+            <p style="font-size:.82rem;color:#6b7280;margin:0 0 1.2rem">Listez tout ce dont vous avez besoin pour créer et faire fonctionner votre entreprise (matériel, local, véhicule, stock, site internet...)</p>
+            <div id="pij-investissements-liste" style="margin-bottom:.8rem"></div>
+            <button onclick="pijAjouterInvestissement()" style="background:#f0f4ff;border:1px dashed #1a365d;border-radius:8px;padding:.6rem 1.2rem;font-family:inherit;font-size:.82rem;color:#1a365d;cursor:pointer;width:100%;margin-bottom:1.2rem">+ Ajouter un élément</button>
+            <div style="background:#f0f9ff;border-radius:10px;padding:1rem;border:1px solid #bae6fd">
+              <div style="display:flex;justify-content:space-between;font-size:.9rem;font-weight:700;color:#1a365d">
+                <span>💰 Total des investissements</span>
+                <span id="pij-total-invest">0 €</span>
+              </div>
+            </div>
+            <div style="margin-top:1.2rem;padding:1rem;background:#fffbeb;border-radius:10px;border:1px solid #fde68a">
+              <p style="font-size:.82rem;font-weight:700;color:#92400e;margin:0 0 .8rem">📋 Comment allez-vous financer ces achats ?</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+                <div><label class="pij-label">Votre argent personnel (apport)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-apport-perso" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
+                <div><label class="pij-label">Prêt bancaire demandé</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-pret-bancaire" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
+                <div><label class="pij-label">Aides et subventions attendues (hors PIJ)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-autres-aides" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
+                <div><label class="pij-label">PIJ demandé (max 8 000 €)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-montant-demande" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" max="8000" oninput="pijCalcFinancement()"></div></div>
+              </div>
+              <div style="margin-top:.8rem;padding:.7rem 1rem;background:white;border-radius:8px;border:1px solid #e8ecf4;display:flex;justify-content:space-between;font-size:.85rem">
+                <span style="color:#6b7280">Écart (total - financement)</span>
+                <span id="pij-ecart-financement" style="font-weight:700;color:#1a365d">0 €</span>
+              </div>
+            </div>
+          </div>
+          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(2)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(4)">Suivant →</button></div>
+        </div>
+
+        <!-- ═══════════ ÉTAPE 4 : PRÉVISIONS FINANCIÈRES ═══════════ -->
+        <div id="pij-step-4" style="display:none">
+          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">📊 Vos estimations financières</h4>
+            <p style="font-size:.82rem;color:#6b7280;margin:0 0 1.2rem">Ne vous inquiétez pas si vous n'êtes pas sûr(e) — donnez votre meilleure estimation. Ces chiffres nous aident à construire votre dossier.</p>
+            <div style="display:grid;gap:1.2rem">
+              <div style="padding:1rem;background:#f8f9fa;border-radius:10px">
+                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">💵 Vos revenus prévus</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem">
+                  <div><label class="pij-label">Chiffre d'affaires Année 1</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca1" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div><div class="pij-hint">Total des ventes prévues</div></div>
+                  <div><label class="pij-label">Chiffre d'affaires Année 2</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca2" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div></div>
+                  <div><label class="pij-label">Chiffre d'affaires Année 3</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca3" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div></div>
+                </div>
+              </div>
+              <div style="padding:1rem;background:#f8f9fa;border-radius:10px">
+                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">💸 Vos dépenses mensuelles prévues</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+                  <div><label class="pij-label">Loyer du local (si applicable)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-loyer" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
+                  <div><label class="pij-label">Salaire que vous comptez vous verser</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-remuneration" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
+                  <div><label class="pij-label">Charges sociales estimées</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-charges-sociales" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div><div class="pij-hint">~22% du CA pour micro-entrepreneur</div></div>
+                  <div><label class="pij-label">Achats (matières premières, stock...)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-achats" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
+                  <div><label class="pij-label">Téléphone / Internet / Abonnements</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-telecom" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
+                  <div><label class="pij-label">Carburant / Transport</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-transport" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
+                </div>
+              </div>
+              <div><label class="pij-label">Combien de personnes comptez-vous employer ? (en dehors de vous)</label>
+                <select id="pij-emplois" class="pij-input">
+                  <option value="0">Aucun salarié pour l'instant</option>
+                  <option value="1">1 salarié</option>
+                  <option value="2">2 salariés</option>
+                  <option value="3">3 salariés ou plus</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(3)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(5)">Suivant →</button></div>
+        </div>
+
+        <!-- ═══════════ ÉTAPE 5 : SITUATION PERSONNELLE ═══════════ -->
+        <div id="pij-step-5" style="display:none">
+          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">🏠 Votre situation personnelle et familiale</h4>
+            <div style="display:grid;gap:1rem">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                <div><label class="pij-label">Situation familiale</label>
+                  <select id="pij-situation-fam" class="pij-input">
+                    <option value="">-- Sélectionnez --</option>
+                    <option>Célibataire</option>
+                    <option>Marié(e) / Pacsé(e)</option>
+                    <option>En concubinage</option>
+                    <option>Divorcé(e)</option>
+                    <option>Veuf / Veuve</option>
+                  </select>
+                </div>
+                <div><label class="pij-label">Nombre d'enfants à charge</label>
+                  <select id="pij-enfants" class="pij-input">
+                    <option value="0">Aucun</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4+">4 ou plus</option>
+                  </select>
+                </div>
+              </div>
+              <div><label class="pij-label">Êtes-vous propriétaire ou locataire ?</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-logement" value="proprietaire"> Propriétaire</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-logement" value="locataire"> Locataire</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-logement" value="heberge"> Hébergé(e) gratuitement</label>
+                </div>
+              </div>
+              <div><label class="pij-label">Quelles aides sociales percevez-vous actuellement ? (cochez tout ce qui s'applique)</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem;flex-wrap:wrap">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="rsa"> RSA</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="are"> ARE (Pôle Emploi)</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="apl"> APL</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="af"> Allocations familiales</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="aucune"> Aucune</label>
+                </div>
+              </div>
+              <div><label class="pij-label">Avez-vous un compte bancaire professionnel (ou prévu) ?</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-compte-pro" value="oui"> Oui</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-compte-pro" value="non"> Non, pas encore</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-compte-pro" value="encours"> En cours d'ouverture</label>
+                </div>
+              </div>
+              <div><label class="pij-label">Avez-vous des dettes ou des crédits en cours ?</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-dettes" value="non"> Non</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-dettes" value="oui"> Oui (crédit voiture, conso...)</label>
+                </div>
+              </div>
+              <div id="pij-dettes-detail-wrap">
+                <label class="pij-label">Si oui, montant mensuel total de vos remboursements</label>
+                <div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-dettes-montant" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(4)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(6)">Suivant →</button></div>
+        </div>
+
+        <!-- ═══════════ ÉTAPE 6 : MOTIVATION & ENVOI ═══════════ -->
+        <div id="pij-step-6" style="display:none">
+          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">✍️ Votre motivation et informations complémentaires</h4>
+            <div style="display:grid;gap:1rem">
+              <div><label class="pij-label">Pourquoi voulez-vous créer cette entreprise ? Qu'est-ce qui vous a poussé à ce choix ?</label>
+                <textarea id="pij-motivation" class="pij-input" rows="4" style="resize:vertical" placeholder="Exprimez-vous librement : votre parcours, votre passion, le besoin que vous avez identifié sur votre territoire, ce qui vous a décidé à vous lancer..."></textarea>
+              </div>
+              <div><label class="pij-label">Avez-vous déjà des clients potentiels ou des commandes confirmées ?</label>
+                <div style="display:flex;gap:1rem;margin-top:.4rem">
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-clients-potentiels" value="oui"> Oui</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-clients-potentiels" value="non"> Non</label>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-clients-potentiels" value="prospection"> Je suis en prospection</label>
+                </div>
+              </div>
+              <div><label class="pij-label">Si oui, décrivez ces premiers contacts commerciaux</label>
+                <textarea id="pij-premiers-clients" class="pij-input" rows="2" style="resize:vertical" placeholder="Ex: J'ai déjà 3 entreprises qui m'ont confirmé des commandes, une mairie qui attend mon devis..."></textarea>
+              </div>
+              <div><label class="pij-label">Avez-vous des partenaires professionnels ou des fournisseurs identifiés ?</label>
+                <textarea id="pij-partenaires" class="pij-input" rows="2" style="resize:vertical" placeholder="Ex: Accord avec un fournisseur de matières premières, partenariat avec une autre entreprise..."></textarea>
+                <div class="pij-hint">Laissez vide si pas encore</div>
+              </div>
+              <div><label class="pij-label">Quels risques identifiez-vous pour votre projet ? Comment comptez-vous les surmonter ?</label>
+                <textarea id="pij-risques" class="pij-input" rows="3" style="resize:vertical" placeholder="Ex: La concurrence est forte dans mon secteur, mais je me démarque par... / Le démarrage sera lent, j'ai prévu de compléter avec..."></textarea>
+              </div>
+              <div><label class="pij-label">Informations complémentaires pour votre conseiller SIMELE</label>
+                <textarea id="pij-infos-supp" class="pij-input" rows="2" style="resize:vertical" placeholder="Tout ce que vous souhaitez ajouter..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Récapitulatif -->
+          <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:16px;padding:1.4rem;margin-bottom:1.2rem">
+            <p style="font-size:.85rem;font-weight:700;color:#0369a1;margin:0 0 .6rem">✅ Avant d'envoyer, vérifiez :</p>
+            <ul style="font-size:.82rem;color:#374151;margin:0;padding-left:1.2rem;line-height:1.8">
+              <li>Toutes vos informations personnelles sont correctes</li>
+              <li>Votre projet est bien décrit</li>
+              <li>Vos investissements et financements sont renseignés</li>
+              <li>Votre motivation est exprimée</li>
+            </ul>
+            <p style="font-size:.78rem;color:#6b7280;margin:.8rem 0 0">📌 Votre conseiller SIMELE recevra ce formulaire et vous contactera pour finaliser le dossier PIJ et vous accompagner dans les démarches.</p>
+          </div>
+
+          <div id="pij-submit-result" style="margin-bottom:.8rem"></div>
+          <div class="pij-nav">
+            <button class="pij-btn-prev" onclick="pijGoStep(5)">← Précédent</button>
+            <button onclick="pijEnvoyer()" style="padding:.9rem 2rem;background:#c9a84c;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(201,168,76,.3)">📨 Envoyer mon dossier PIJ</button>
+          </div>
+        </div>
+
+      </div><!-- /sub-form-pij -->
+    </div><!-- /dd-subventions -->
+
     <div id="dd-mdp" style="display:none">
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
         <h3 style="font-family:'Playfair Display',serif;color:#1a365d;margin:0 0 1.4rem;font-size:1.1rem">Modifier mon mot de passe</h3>
@@ -1123,7 +1493,7 @@ window.ecLogout=function(){
   ecTab('login');
 };
 window.ecDashTab=function(t){
-  ['dossier','prestations','documents','envoyer','finances','mdp'].forEach(function(s){
+  ['dossier','prestations','documents','envoyer','finances','subventions','mdp'].forEach(function(s){
     var el=document.getElementById('dd-'+s),bt=document.getElementById('dt-'+s),active=s===t;
     if(el)el.style.display=active?'':'none';
     if(bt){bt.style.color=active?'#1a365d':'#9ca3af';bt.style.fontWeight=active?'700':'500';bt.style.borderBottomColor=active?'#1a365d':'transparent';}
@@ -1132,6 +1502,7 @@ window.ecDashTab=function(t){
   if(t==='documents') ecLoadDocuments();
   if(t==='envoyer') ecLoadEnvois();
   if(t==='finances') ecLoadFinances();
+  if(t==='subventions') ecShowSubventions();
 };
 window.toggleMdp=function(id,btn){
   var inp=document.getElementById(id);
@@ -1368,6 +1739,282 @@ async function ecLoadFinances() {
     }
   } catch(e) {}
 }
+
+
+/* ══════════════════════════════════════════════════════
+   PIJ — Formulaire Demande de Subvention
+══════════════════════════════════════════════════════ */
+
+/* CSS injecté dynamiquement */
+(function() {
+  var style = document.createElement('style');
+  style.textContent = `
+    .pij-label { font-size:.78rem; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:.04em; display:block; margin-bottom:.35rem; }
+    .pij-input { width:100%; padding:.65rem .9rem; border:1.5px solid #e8ecf4; border-radius:8px; font-family:inherit; font-size:.88rem; outline:none; box-sizing:border-box; transition:border-color .2s; background:#fff; }
+    .pij-input:focus { border-color:#1a365d; }
+    .pij-hint { font-size:.72rem; color:#9ca3af; margin-top:.25rem; }
+    .pij-nav { display:flex; justify-content:space-between; align-items:center; margin-top:1.2rem; padding-top:1rem; border-top:1px solid #f0f0f0; }
+    .pij-btn-prev { padding:.7rem 1.4rem; background:#f0f4ff; border:1px solid #e8ecf4; border-radius:8px; font-family:inherit; font-size:.88rem; color:#1a365d; cursor:pointer; font-weight:600; }
+    .pij-btn-next { padding:.7rem 1.8rem; background:#1a365d; color:#fff; border:none; border-radius:8px; font-family:inherit; font-size:.88rem; font-weight:700; cursor:pointer; }
+    .pij-invest-row { display:grid; grid-template-columns:2fr 1fr 1fr auto; gap:.6rem; align-items:center; margin-bottom:.5rem; }
+    @media(max-width:600px) {
+      .pij-invest-row { grid-template-columns:1fr 1fr; }
+      .pij-nav { flex-wrap:wrap; gap:.5rem; }
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
+/* ── Affichage espace subventions ── */
+window.ecShowSubventions = function() {
+  document.getElementById('sub-choix').style.display = '';
+  document.getElementById('sub-form-pij').style.display = 'none';
+};
+window.ecShowFormSubvention = function(type) {
+  document.getElementById('sub-choix').style.display = 'none';
+  if (type === 'pij') {
+    document.getElementById('sub-form-pij').style.display = '';
+    pijGoStep(1);
+    pijPreRemplir();
+  }
+};
+
+/* ── Pré-remplir depuis les données du dashboard ── */
+function pijPreRemplir() {
+  try {
+    var userData = JSON.parse(localStorage.getItem('ec_user') || '{}');
+    if (userData.prenom) { var el = document.getElementById('pij-prenom'); if(el && !el.value) el.value = userData.prenom; }
+    if (userData.nom) { var el2 = document.getElementById('pij-nom'); if(el2 && !el2.value) el2.value = userData.nom; }
+    if (userData.email) { var el3 = document.getElementById('pij-email'); if(el3 && !el3.value) el3.value = userData.email; }
+    if (userData.tel) { var el4 = document.getElementById('pij-tel'); if(el4 && !el4.value) el4.value = userData.tel; }
+    if (userData.adresse) { var el5 = document.getElementById('pij-adresse'); if(el5 && !el5.value) el5.value = userData.adresse; }
+    if (userData.situation_fam) {
+      var sel = document.getElementById('pij-situation');
+      if (sel && !sel.value) {
+        for (var i=0; i<sel.options.length; i++) {
+          if (sel.options[i].text.toLowerCase().includes((userData.situation_fam||'').toLowerCase())) {
+            sel.selectedIndex = i; break;
+          }
+        }
+      }
+    }
+    // Load extended data from CRM if token available
+    if (_ecToken) {
+      fetch(_CRM + '/api/portal/dashboard', {headers:{'Authorization':'Bearer '+_ecToken}})
+        .then(r => r.json()).then(d => {
+          if (d.client) {
+            var c = d.client;
+            var nomEl = document.getElementById('pij-nom');
+            var prenomEl = document.getElementById('pij-prenom');
+            var emailEl = document.getElementById('pij-email');
+            if (nomEl && !nomEl.value && c.nom) nomEl.value = c.nom;
+            if (prenomEl && !prenomEl.value && c.prenom) prenomEl.value = c.prenom;
+            if (emailEl && !emailEl.value && c.email) emailEl.value = c.email;
+            // Activity from prestation
+            var actEl = document.getElementById('pij-activite-desc');
+            if (actEl && !actEl.value && c.prestation) actEl.value = c.prestation;
+          }
+        }).catch(() => {});
+    }
+  } catch(e) {}
+}
+
+/* ── Navigation entre étapes ── */
+var PIJ_STEP_LABELS = [
+  '', 'Étape 1 sur 6 — Qui êtes-vous ?',
+  'Étape 2 sur 6 — Votre projet',
+  'Étape 3 sur 6 — Vos investissements',
+  'Étape 4 sur 6 — Vos prévisions financières',
+  'Étape 5 sur 6 — Votre situation personnelle',
+  'Étape 6 sur 6 — Motivation & envoi'
+];
+window.pijGoStep = function(n) {
+  for (var i=1; i<=6; i++) {
+    var el = document.getElementById('pij-step-' + i);
+    if (el) el.style.display = (i === n) ? '' : 'none';
+    var dot = document.getElementById('pij-dot-' + i);
+    if (dot) dot.style.background = i <= n ? '#1a365d' : '#e8ecf4';
+  }
+  var lbl = document.getElementById('pij-step-label');
+  if (lbl) lbl.textContent = PIJ_STEP_LABELS[n] || '';
+  // Scroll to top of form
+  var form = document.getElementById('sub-form-pij');
+  if (form) form.scrollIntoView({behavior:'smooth', block:'start'});
+  // Init invest rows if step 3
+  if (n === 3 && !window._pijInvestInit) {
+    window._pijInvestInit = true;
+    window._pijInvestissements = [];
+    pijAjouterInvestissement();
+  }
+};
+
+/* ── Gestion investissements dynamiques ── */
+window._pijInvestissements = [];
+window.pijAjouterInvestissement = function() {
+  window._pijInvestissements.push({desc:'', qte:1, pu:0});
+  pijRenderInvestissements();
+};
+window.pijSupprimerInvest = function(idx) {
+  window._pijInvestissements.splice(idx, 1);
+  pijRenderInvestissements();
+  pijCalcFinancement();
+};
+window.pijUpdateInvest = function(idx, field, val) {
+  if (window._pijInvestissements[idx]) {
+    window._pijInvestissements[idx][field] = val;
+    pijCalcFinancement();
+    // Update total for this row
+    var row = document.getElementById('pij-invest-total-' + idx);
+    if (row) {
+      var t = (window._pijInvestissements[idx].qte||1) * (window._pijInvestissements[idx].pu||0);
+      row.textContent = t.toFixed(2).replace('.',',') + ' €';
+    }
+  }
+};
+function pijRenderInvestissements() {
+  var container = document.getElementById('pij-investissements-liste');
+  if (!container) return;
+  container.innerHTML = '';
+  if (!window._pijInvestissements.length) return;
+
+  // Header
+  var hdr = document.createElement('div');
+  hdr.className = 'pij-invest-row';
+  hdr.style.cssText = 'margin-bottom:.3rem';
+  hdr.innerHTML = '<div class="pij-label" style="margin:0">Description de l\'achat</div>'
+    + '<div class="pij-label" style="margin:0;text-align:center">Qté</div>'
+    + '<div class="pij-label" style="margin:0;text-align:right">Prix unit. (€)</div>'
+    + '<div class="pij-label" style="margin:0;text-align:right">Total</div>';
+  container.appendChild(hdr);
+
+  window._pijInvestissements.forEach(function(inv, i) {
+    var row = document.createElement('div');
+    row.className = 'pij-invest-row';
+    row.id = 'pij-invest-row-' + i;
+    var total = (inv.qte||1) * (inv.pu||0);
+    row.innerHTML = '<input class="pij-input" placeholder="Achat, materiel, vehicule, stock..." value="' + (inv.desc||'') + '" oninput="pijUpdateInvest(' + i + ',\'desc\',this.value)" style="grid-column:1">'
+      + '<input type="number" class="pij-input" value="' + (inv.qte||1) + '" min="1" oninput="pijUpdateInvest(' + i + ',\'qte\',parseFloat(this.value)||1)" style="text-align:center">'
+      + '<input type="number" class="pij-input" value="' + (inv.pu||'') + '" min="0" oninput="pijUpdateInvest(' + i + ',\'pu\',parseFloat(this.value)||0)" style="text-align:right" placeholder="0">'
+      + '<div style="display:flex;align-items:center;gap:.4rem;justify-content:flex-end">'
+      + '<span id="pij-invest-total-' + i + '" style="font-size:.85rem;font-weight:600;color:#1a365d;white-space:nowrap">' + total.toFixed(2).replace('.',',') + ' €</span>'
+      + '<button onclick="pijSupprimerInvest(' + i + ')" style="background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;border-radius:6px;padding:3px 8px;font-size:.8rem;cursor:pointer;flex-shrink:0">✕</button>'
+      + '</div>';
+    container.appendChild(row);
+  });
+}
+window.pijCalcFinancement = function() {
+  var totalInvest = (window._pijInvestissements||[]).reduce(function(a,b){ return a + (b.qte||1)*(b.pu||0); }, 0);
+  var el = document.getElementById('pij-total-invest');
+  if (el) el.textContent = totalInvest.toFixed(2).replace('.',',') + ' €';
+
+  var apport = parseFloat(document.getElementById('pij-apport-perso')?.value||0) || 0;
+  var pret = parseFloat(document.getElementById('pij-pret-bancaire')?.value||0) || 0;
+  var autres = parseFloat(document.getElementById('pij-autres-aides')?.value||0) || 0;
+  var pij = parseFloat(document.getElementById('pij-montant-demande')?.value||0) || 0;
+  var totalFinancement = apport + pret + autres + pij;
+  var ecart = totalInvest - totalFinancement;
+  var ecartEl = document.getElementById('pij-ecart-financement');
+  if (ecartEl) {
+    ecartEl.textContent = ecart.toFixed(2).replace('.',',') + ' €';
+    ecartEl.style.color = Math.abs(ecart) < 1 ? '#16a34a' : ecart > 0 ? '#dc2626' : '#6b7280';
+  }
+};
+
+/* ── Collecte des données PIJ ── */
+function pijCollecterDonnees() {
+  var getVal = id => (document.getElementById(id)?.value || '').trim();
+  var getRadio = name => {
+    var els = document.querySelectorAll('input[name="' + name + '"]:checked');
+    return els.length ? els[0].value : '';
+  };
+  var getCheckboxes = name => [...document.querySelectorAll('input[name="' + name + '"]:checked')].map(e => e.value).join(', ');
+  
+  return {
+    type: 'PIJ',
+    // Identité
+    nom: getVal('pij-nom'), prenom: getVal('pij-prenom'),
+    date_naissance: getVal('pij-ddn'), lieu_naissance: getVal('pij-lieu-nais'),
+    nationalite: getVal('pij-nationalite'), telephone: getVal('pij-tel'),
+    adresse: getVal('pij-adresse'), cp: getVal('pij-cp'), commune: getVal('pij-commune'),
+    email: getVal('pij-email'), situation_avant: getVal('pij-situation'),
+    diplome: getVal('pij-diplome'), formation: getRadio('pij-formation'),
+    formation_detail: getVal('pij-formation-detail'),
+    // Projet
+    raison_sociale: getVal('pij-raison-sociale'), activite_desc: getVal('pij-activite-desc'),
+    type_activite: getVal('pij-type-activite'), ape: getVal('pij-ape'),
+    forme_juridique: getVal('pij-forme-juridique'), date_creation: getVal('pij-date-creation'),
+    adresse_entreprise: getVal('pij-adresse-entreprise'),
+    lieu_exercice: getRadio('pij-lieu-exercice'),
+    clients_cibles: getCheckboxes('pij-clients'),
+    concurrents: getVal('pij-concurrents'), avantages: getVal('pij-avantages'),
+    // Investissements
+    investissements: window._pijInvestissements || [],
+    apport_perso: getVal('pij-apport-perso'), pret_bancaire: getVal('pij-pret-bancaire'),
+    autres_aides: getVal('pij-autres-aides'), montant_pij_demande: getVal('pij-montant-demande'),
+    // Prévisions
+    ca_an1: getVal('pij-ca1'), ca_an2: getVal('pij-ca2'), ca_an3: getVal('pij-ca3'),
+    loyer: getVal('pij-loyer'), remuneration: getVal('pij-remuneration'),
+    charges_sociales: getVal('pij-charges-sociales'), achats: getVal('pij-achats'),
+    telecom: getVal('pij-telecom'), transport: getVal('pij-transport'),
+    emplois_prevus: getVal('pij-emplois'),
+    // Situation perso
+    situation_familiale: getVal('pij-situation-fam'), nb_enfants: getVal('pij-enfants'),
+    logement: getRadio('pij-logement'),
+    aides_sociales: getCheckboxes('pij-aides-sociales'),
+    compte_pro: getRadio('pij-compte-pro'), dettes: getRadio('pij-dettes'),
+    dettes_montant: getVal('pij-dettes-montant'),
+    // Motivation
+    motivation: getVal('pij-motivation'),
+    clients_potentiels: getRadio('pij-clients-potentiels'),
+    premiers_clients: getVal('pij-premiers-clients'),
+    partenaires: getVal('pij-partenaires'), risques: getVal('pij-risques'),
+    infos_supp: getVal('pij-infos-supp'),
+    // Meta
+    date_soumission: new Date().toISOString()
+  };
+}
+
+/* ── Envoi du formulaire PIJ ── */
+window.pijEnvoyer = async function() {
+  var res = document.getElementById('pij-submit-result');
+  res.innerHTML = '<div style="text-align:center;padding:.8rem;color:#6b7280;font-size:.85rem">⏳ Envoi en cours...</div>';
+  var data = pijCollecterDonnees();
+  
+  // Validation minimale
+  if (!data.nom || !data.prenom) {
+    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ Veuillez remplir au moins votre nom et prénom (étape 1).</div>';
+    return;
+  }
+
+  try {
+    // Build a readable summary for the notification
+    var summary = 'PIJ: ' + data.prenom + ' ' + data.nom + ' - ' + (data.raison_sociale||'') + ' - ' + (data.montant_pij_demande||'?') + ' EUR';
+
+    var formData = new FormData();
+    var jsonBlob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+    var fname = 'PIJ_' + data.nom + '_' + data.prenom + '_' + new Date().toISOString().slice(0,10) + '.json';
+    formData.append('fichier', jsonBlob, fname);
+    formData.append('commentaire', summary);
+    
+    var r2 = await fetch(_CRM + '/api/portal/envoyer-document', {
+      method: 'POST',
+      headers: {'Authorization': 'Bearer ' + _ecToken},
+      body: formData
+    });
+    var d2 = await r2.json();
+
+    if (d2.success || d2.upload_id) {
+      res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:1rem;color:#166534">'
+        + '<div style="font-weight:700;font-size:.95rem;margin-bottom:.3rem">✅ Votre dossier PIJ a bien été transmis !</div>'
+        + '<div style="font-size:.82rem">Votre conseiller SIMELE va etudier votre dossier et vous recontactera sous 48h. Vous pouvez suivre l\'avancement dans l\'onglet "Envoyer".</div>'
+        + '</div>';
+    } else {
+      throw new Error(d2.error || 'Erreur inconnue');
+    }
+  } catch(e) {
+    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ Erreur lors de l\'envoi : ' + e.message + '. Veuillez réessayer ou contacter directement le cabinet.</div>';
+  }
+};
 
 </script>
 </body>
