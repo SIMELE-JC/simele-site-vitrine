@@ -4547,6 +4547,55 @@ async function ecLoadEnvois() {
   }
 })();
 
+
+/* ================================================================
+   MENU MOBILE — Hamburger navigation
+   ================================================================ */
+function mobToggle() {
+  var menu = document.getElementById('mob-menu');
+  var overlay = document.getElementById('mob-overlay');
+  var btn = document.getElementById('nav-ham');
+  if (!menu) return;
+  var isOpen = menu.style.right === '0px';
+  if (isOpen) {
+    menu.style.right = '-310px';
+    if (overlay) overlay.style.display = 'none';
+    if (btn) btn.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    menu.style.right = '0px';
+    if (overlay) overlay.style.display = 'block';
+    if (btn) btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function mobClose() {
+  var menu = document.getElementById('mob-menu');
+  var overlay = document.getElementById('mob-overlay');
+  var btn = document.getElementById('nav-ham');
+  if (menu) menu.style.right = '-310px';
+  if (overlay) overlay.style.display = 'none';
+  if (btn) btn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function mobNav(page) {
+  mobClose();
+  if (typeof showPage === 'function') {
+    showPage(page);
+  } else {
+    // Fallback: show the page div directly
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    var target = document.getElementById(page);
+    if (target) target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+}
+// Close menu on overlay click
+document.addEventListener('DOMContentLoaded', function() {
+  var overlay = document.getElementById('mob-overlay');
+  if (overlay) overlay.addEventListener('click', mobClose);
+});
+
 </script>
 </body>
 </html>
