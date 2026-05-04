@@ -4512,6 +4512,41 @@ async function ecLoadEnvois() {
   };
 })();
 
+
+/* ── DOM Structure Fix: ensure dd-* panels are siblings of ec-dashboard ── */
+(function fixDashboardStructure() {
+  var espaceClientPage = document.getElementById('espace-client');
+  if (!espaceClientPage) return;
+  
+  var panelIds = ['dd-dossier', 'dd-prestations', 'dd-documents', 'dd-envoyer', 'dd-finances', 'dd-subventions'];
+  
+  panelIds.forEach(function(id) {
+    var panel = document.getElementById(id);
+    if (!panel) return;
+    
+    // Check if panel is inside dd-mdp (wrong)
+    var parent = panel.parentElement;
+    if (parent && parent.id === 'dd-mdp') {
+      // Move panel to be sibling of dd-mdp (inside espace-client page)
+      var ddMdp = document.getElementById('dd-mdp');
+      if (ddMdp && ddMdp.parentElement) {
+        ddMdp.parentElement.insertBefore(panel, ddMdp.nextSibling);
+        console.log('[FIX] Moved ' + id + ' out of dd-mdp');
+      }
+    }
+  });
+  
+  // Also fix the tabs row and dashboard visibility
+  var dash = document.getElementById('ec-dashboard');
+  var tabsRow = document.querySelector('#espace-client > div[style*="border-bottom"]');
+  
+  // If tabs row is inside dash (wrong), move it after dash
+  if (tabsRow && dash && tabsRow.parentElement === dash) {
+    dash.parentElement.insertBefore(tabsRow, dash.nextSibling);
+    console.log('[FIX] Moved tabs row out of ec-dashboard');
+  }
+})();
+
 </script>
 </body>
 </html>
