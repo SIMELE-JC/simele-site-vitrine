@@ -412,6 +412,115 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 .mob-cta-li{border:none!important;margin-top:1.2rem}
 .mob-cta-li a{background:var(--marine-fonce,#1a365d)!important;color:#fff!important;border-radius:10px;text-align:center;font-weight:700!important;font-size:.9rem!important;padding:1rem!important}
 @media(max-width:960px){.nav-hamburger{display:flex!important}}
+
+/* ══════════════════════════════════════════════════
+   SIMULATEUR DE RÉMUNÉRATION
+══════════════════════════════════════════════════ */
+.nav-simulateur {
+  color: var(--or, #c9a84c) !important;
+  font-weight: 600 !important;
+}
+.sim-card {
+  background: #fff;
+  border: 1.5px solid #ddd5ca;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 16px rgba(27,20,100,.07);
+}
+.sim-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--marine-fonce, #1a365d);
+  margin-bottom: 10px;
+}
+.sim-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+.sim-label { font-size: 13px; color: #7a7a9a; }
+.sim-value { font-size: 16px; font-weight: 700; color: var(--marine-fonce, #1a365d); }
+.sim-range {
+  -webkit-appearance: none;
+  width: 100%; height: 3px;
+  background: var(--marine-fonce, #1a365d);
+  border-radius: 2px;
+  cursor: pointer;
+  margin: 6px 0 12px;
+  outline: none;
+}
+.sim-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2.5px solid var(--marine-fonce, #1a365d);
+  box-shadow: 0 2px 6px rgba(0,0,0,.18);
+  cursor: pointer;
+}
+.sim-range::-moz-range-thumb {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fff; border: 2.5px solid var(--marine-fonce, #1a365d); cursor: pointer;
+}
+.sim-first {
+  background: #fff;
+  border: 2px solid var(--marine-fonce, #1a365d);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 16px rgba(27,20,100,.07);
+}
+.sim-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.sim-result-card {
+  background: #fff;
+  border: 1.5px solid #ddd5ca;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 16px rgba(27,20,100,.07);
+}
+.sim-medal-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.sim-medal { font-size: 24px; }
+.sim-struct { font-size: 16px; font-weight: 800; color: var(--marine-fonce, #1a365d); }
+.sim-rsn-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 0; font-size: 13px; color: #7a7a9a;
+}
+.sim-amount { font-size: 14px; font-weight: 700; color: var(--marine-fonce, #1a365d); }
+.sim-amount-big { font-size: 22px; font-weight: 800; color: var(--marine-fonce, #1a365d); }
+.sim-detail {
+  margin-top: 14px;
+  border-top: 1px solid #ddd5ca;
+  padding-top: 12px;
+}
+.sim-det-title {
+  font-size: 11px; font-weight: 700; color: #7a7a9a;
+  text-transform: uppercase; letter-spacing: .6px;
+  margin-bottom: 6px; margin-top: 10px;
+}
+.sim-det-title:first-child { margin-top: 0; }
+.sim-det-row {
+  display: flex; justify-content: space-between;
+  padding: 4px 0; font-size: 12px; color: #374151;
+  border-bottom: 1px solid rgba(0,0,0,.04);
+}
+.sim-det-row:last-child { border-bottom: none; }
+.sim-det-row.total { font-weight: 700; color: var(--marine-fonce, #1a365d); font-size: 13px; }
+.sim-det-label { color: #7a7a9a; }
+.sim-det-row.total .sim-det-label { color: var(--marine-fonce, #1a365d); }
+.sim-neg { color: #c0392b; font-weight: 600; }
+.sim-pos { color: #1a7a4a; font-weight: 600; }
+.sim-zero { color: #9ca3af; }
+@media (max-width: 480px) {
+  .sim-grid { grid-template-columns: 1fr; }
+  .sim-card, .sim-first { padding: 14px; }
+}
 </style>
 </head>
 <body>
@@ -430,7 +539,9 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     <li><a onclick="showPage('services')">Services</a></li>
     <li><a onclick="showPage('apropos')">À Propos</a></li>
     <li><a onclick="showPage('tunnel')">Diagnostic</a></li>
-    <li><a onclick="showPage('espace-client')" class="nav-espace-client">Mon Espace</a></li>
+    <li><a onclick="showPage('simulateur')">Simulateur</a></li>
+    <li><a onclick="showPage('simulateur')" class="nav-simulateur">Simulateur</a>
+  <a onclick="showPage('espace-client')" class="nav-espace-client">Mon Espace</a></li>
     <li><a onclick="showPage('contact')" class="nav-cta">Prendre RDV</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-ham" onclick="mobToggle()" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -863,6 +974,87 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
   </section>
 
 
+</div>
+
+<!-- PAGE SIMULATEUR -->
+<div id="simulateur" class="page">
+  <section style="padding:2.5rem 1.2rem 4rem;max-width:780px;margin:0 auto">
+
+    <!-- Titre section -->
+    <div style="text-align:center;margin-bottom:1.8rem">
+      <p style="font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--or,#c9a84c);margin-bottom:.5rem">OUTIL GRATUIT</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--marine-fonce,#1a365d);line-height:1.2;margin-bottom:.8rem">Simulateur de rémunération</h2>
+      <p style="color:#6b7280;font-size:.95rem;max-width:520px;margin:0 auto">Comparez votre revenu net selon votre statut juridique : Micro-Entreprise, EURL ou SASU. Ajustez les curseurs et observez l'impact en temps réel.</p>
+    </div>
+
+    <!-- Encadré conseil -->
+    <div style="background:#f0f4ff;border:1px solid #c8d4f0;border-left:4px solid var(--marine-fonce,#1a365d);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.8rem;font-size:.85rem;color:#374151">
+      <strong style="color:var(--marine-fonce,#1a365d)">💡 Ce simulateur est un outil d'orientation.</strong>
+      Les résultats sont des estimations basées sur des hypothèses standard (célibataire, activité libérale, barème IR 2024). Pour une analyse personnalisée de votre situation, <a onclick="showPage('tunnel')" style="color:var(--or,#c9a84c);font-weight:700;cursor:pointer;text-decoration:underline">prenez rendez-vous avec le Cabinet SIMELE</a>.
+    </div>
+
+    <!-- ── SIMULATOR EMBED ── -->
+    <div id="sim-root">
+
+      <!-- Inputs -->
+      <div class="sim-card">
+        <div class="sim-section-title">📊 Activité</div>
+        <div class="sim-input-row">
+          <span class="sim-label">Chiffre d'affaires HT</span>
+          <span class="sim-value" id="lbl-ca">30 000 €</span>
+        </div>
+        <input type="range" class="sim-range" id="sl-ca" min="0" max="250000" step="1000" value="30000">
+
+        <div class="sim-input-row">
+          <span class="sim-label">Charges professionnelles</span>
+          <span class="sim-value" id="lbl-charges">3 000 €</span>
+        </div>
+        <input type="range" class="sim-range" id="sl-charges" min="0" max="80000" step="500" value="3000">
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-section-title">🏢 EURL — Rémunération mensuelle</div>
+        <div class="sim-input-row">
+          <span class="sim-label">Rémunération gérant</span>
+          <span class="sim-value"><span id="lbl-eurl-remun">1 597</span> €/mois</span>
+        </div>
+        <input type="range" class="sim-range" id="sl-eurl-remun" min="0" max="20000" step="100" value="1597">
+
+        <div class="sim-section-title" style="margin-top:1rem">🏢 SASU — Rémunération mensuelle</div>
+        <div class="sim-input-row">
+          <span class="sim-label">Salaire brut mensuel</span>
+          <span class="sim-value"><span id="lbl-sasu-sal">1 236</span> €/mois</span>
+        </div>
+        <input type="range" class="sim-range" id="sl-sasu-sal" min="0" max="20000" step="100" value="1236">
+
+        <div class="sim-input-row" style="margin-top:.6rem">
+          <span class="sim-label">Dividendes distribués</span>
+          <span class="sim-value" id="lbl-sasu-divs">0 €</span>
+        </div>
+        <input type="range" class="sim-range" id="sl-sasu-divs" min="0" max="0" step="100" value="0">
+
+        <p style="font-size:.75rem;color:#9ca3af;margin-top:.6rem;padding-top:.6rem;border-top:1px solid #e8ecf4">Célibataire · 0 enfants · Activité libérale · Barème IR 2024</p>
+      </div>
+
+      <!-- Résultats -->
+      <div id="sim-results"></div>
+
+      <!-- Bouton détail -->
+      <button id="sim-toggle-btn" onclick="simToggleDetail()" style="width:100%;background:transparent;border:1.5px solid #ddd5ca;border-radius:10px;padding:11px;font-family:inherit;font-size:.88rem;font-weight:600;color:#7a7a9a;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s;margin-top:4px">
+        <span>👁</span> <span id="sim-toggle-lbl">Afficher le détail</span>
+      </button>
+
+    </div><!-- /sim-root -->
+
+    <!-- CTA bas -->
+    <div style="text-align:center;margin-top:2.5rem;padding:1.8rem;background:linear-gradient(135deg,var(--marine-fonce,#1a365d) 0%,#2d4a8a 100%);border-radius:14px;color:#fff">
+      <p style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem">Vous souhaitez aller plus loin ?</p>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:.8rem">Optimisez votre structure juridique avec SIMELE</h3>
+      <p style="font-size:.88rem;opacity:.85;margin-bottom:1.2rem">Nos conseillers analysent votre situation réelle et vous accompagnent dans le choix du statut le plus avantageux.</p>
+      <a onclick="showPage('tunnel')" style="display:inline-block;background:#c9a84c;color:#fff;border-radius:8px;padding:.7rem 1.8rem;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none">Prendre rendez-vous →</a>
+    </div>
+
+  </section>
 </div>
 
 <!-- FOOTER -->
@@ -1474,6 +1666,9 @@ function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const t = document.getElementById(id);
   if (t) { t.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  if (id === 'simulateur' && typeof window.simUpdate === 'function') {
+    setTimeout(window.simUpdate, 50);
+  }
 }
 </script>
 <script>
@@ -2453,6 +2648,217 @@ document.addEventListener('DOMContentLoaded', function() {
   var overlay = document.getElementById('mob-overlay');
   if (overlay) overlay.addEventListener('click', mobClose);
 });
+
+
+/* ══════════════════════════════════════════════════
+   SIMULATEUR — Logique de calcul
+══════════════════════════════════════════════════ */
+(function() {
+  var simShowDetail = false;
+
+  var fr = function(n) { return Math.round(n).toLocaleString('fr-FR'); };
+  var eur = function(n) { return fr(n) + ' €'; };
+
+  function calcIR(revenu) {
+    if (revenu <= 0) return 0;
+    var tranches = [
+      [0, 11497, 0],
+      [11497, 29315, 0.11],
+      [29315, 83823, 0.30],
+      [83823, 180294, 0.41],
+      [180294, Infinity, 0.45]
+    ];
+    return Math.round(tranches.reduce(function(ir, t) {
+      return revenu > t[0] ? ir + (Math.min(revenu, t[1]) - t[0]) * t[2] : ir;
+    }, 0));
+  }
+
+  function calcIS(ben) {
+    if (ben <= 0) return 0;
+    var SEUIL = 42500;
+    return ben <= SEUIL ? Math.round(ben * 0.15) : Math.round(SEUIL * 0.15 + (ben - SEUIL) * 0.25);
+  }
+
+  function calcMicro(ca, charges) {
+    var COT_RATE = 0.232, ABATT = 0.34;
+    var cotis = Math.round(ca * COT_RATE);
+    var revFisc = Math.round(ca * (1 - ABATT));
+    var ir = calcIR(revFisc);
+    var rsn = Math.max(0, ca - cotis - ir - charges);
+    return {
+      nom: 'Micro-Entreprise', rsn: rsn, tresorerie: 0,
+      detail: {
+        entreprise: [
+          { label: "Chiffre d'affaires", val: ca },
+          { label: "Abattement forfaitaire (34%)", val: -Math.round(ca * ABATT) },
+          { label: "Cotisations sociales (23,2%)", val: -cotis },
+          { label: "Trésorerie", val: 0, total: true }
+        ],
+        dirigeant: [
+          { label: "Base imposable", val: revFisc },
+          { label: "Impôt sur le revenu", val: -ir },
+          { label: "Charges professionnelles", val: -charges },
+          { label: "Revenu super net", val: rsn, total: true }
+        ]
+      }
+    };
+  }
+
+  function calcEURL(ca, charges, remunMens) {
+    var remunAnn = remunMens * 12;
+    var cotis = Math.round(remunAnn * 0.41);
+    var benefice = ca - charges - remunAnn - cotis;
+    var is = calcIS(Math.max(0, benefice));
+    var tresorerie = Math.max(0, Math.max(0, benefice) - is);
+    var revIR = Math.max(0, remunAnn - cotis);
+    var ir = calcIR(revIR);
+    var rsn = Math.max(0, remunAnn - ir);
+    return {
+      nom: 'EURL', rsn: rsn, tresorerie: Math.max(0, tresorerie),
+      detail: {
+        entreprise: [
+          { label: "Chiffre d'affaires", val: ca },
+          { label: "Dépenses professionnelles", val: -charges },
+          { label: "Rémunération annuelle", val: -remunAnn },
+          { label: "Cotisations TNS (41%)", val: -cotis },
+          { label: "Impôt sur les sociétés", val: -is },
+          { label: "Trésorerie", val: Math.max(0, tresorerie), total: true }
+        ],
+        dirigeant: [
+          { label: "Rémunération brute", val: remunAnn },
+          { label: "Cotisations déductibles", val: -cotis },
+          { label: "Impôt sur le revenu", val: -ir },
+          { label: "Revenu super net", val: rsn, total: true }
+        ]
+      }
+    };
+  }
+
+  function calcSASU(ca, charges, salMens, divsBruts) {
+    var salAnn = salMens * 12;
+    var chPatro = Math.round(salAnn * 0.42);
+    var chSalar = Math.round(salAnn * 0.22);
+    var salNet = salAnn - chSalar;
+    var benefice = ca - charges - salAnn - chPatro;
+    var is = calcIS(Math.max(0, benefice));
+    var disponible = Math.max(0, Math.max(0, benefice) - is);
+    var divsDist = Math.min(divsBruts, disponible);
+    var divsNets = Math.round(divsDist * 0.70);
+    var treso = disponible - divsDist;
+    var ir = calcIR(salNet * 0.90);
+    var rsn = Math.max(0, salNet - ir + divsNets);
+    return {
+      nom: 'SASU', rsn: rsn, tresorerie: treso, disponibleDivs: disponible,
+      detail: {
+        entreprise: [
+          { label: "Chiffre d'affaires", val: ca },
+          { label: "Dépenses professionnelles", val: -charges },
+          { label: "Salaire brut annuel", val: -salAnn },
+          { label: "Charges patronales (42%)", val: -chPatro },
+          { label: "Impôt sur les sociétés", val: -is },
+          { label: "Dividendes distribués", val: -divsDist },
+          { label: "Trésorerie", val: treso, total: true }
+        ],
+        dirigeant: [
+          { label: "Salaire net", val: salNet },
+          { label: "Dividendes nets (PFU 30%)", val: divsNets },
+          { label: "Impôt sur le revenu", val: -ir },
+          { label: "Revenu super net", val: rsn, total: true }
+        ]
+      }
+    };
+  }
+
+  function renderDetail(detail) {
+    if (!simShowDetail) return '';
+    var rows = function(arr) {
+      return arr.map(function(r) {
+        var v = Math.round(r.val);
+        var cls = r.total ? '' : (v === 0 ? 'sim-zero' : (v < 0 ? 'sim-neg' : 'sim-pos'));
+        var sign = v < 0 ? '−' : '';
+        return '<div class="sim-det-row' + (r.total ? ' total' : '') + '">'
+          + '<span class="sim-det-label">' + r.label + '</span>'
+          + '<span class="' + cls + '">' + sign + fr(Math.abs(v)) + ' €</span>'
+          + '</div>';
+      }).join('');
+    };
+    return '<div class="sim-detail">'
+      + '<div class="sim-det-title">🏢 Entreprise</div>' + rows(detail.entreprise)
+      + '<div class="sim-det-title">👤 Dirigeant</div>' + rows(detail.dirigeant)
+      + '</div>';
+  }
+
+  function renderFirst(s, idx) {
+    var medals = ['🥇','🥈','🥉'];
+    var treso = s.tresorerie > 0
+      ? '<div class="sim-rsn-row"><span>🏦 Trésorerie disponible</span><span class="sim-amount">' + eur(s.tresorerie) + '</span></div>'
+      : '';
+    return '<div class="sim-first">'
+      + '<div class="sim-medal-row"><span class="sim-medal">' + medals[idx] + '</span><span class="sim-struct">' + s.nom + '</span></div>'
+      + '<div class="sim-rsn-row"><span>👤 Revenu super net / an</span><span class="sim-amount-big">' + eur(s.rsn) + '</span></div>'
+      + treso + renderDetail(s.detail) + '</div>';
+  }
+
+  function renderCard(s, idx) {
+    var medals = ['🥇','🥈','🥉'];
+    var treso = s.tresorerie > 0
+      ? '<div class="sim-rsn-row"><span>🏦 Trésorerie</span><span class="sim-amount">' + eur(s.tresorerie) + '</span></div>'
+      : '';
+    return '<div class="sim-result-card">'
+      + '<div class="sim-medal-row"><span class="sim-medal">' + medals[idx] + '</span><span class="sim-struct">' + s.nom + '</span></div>'
+      + '<div class="sim-rsn-row"><span>👤 Revenu net</span><span class="sim-amount">' + eur(s.rsn) + '</span></div>'
+      + treso + renderDetail(s.detail) + '</div>';
+  }
+
+  window.simToggleDetail = function() {
+    simShowDetail = !simShowDetail;
+    var lbl = document.getElementById('sim-toggle-lbl');
+    if (lbl) lbl.textContent = simShowDetail ? 'Masquer le détail' : 'Afficher le détail';
+    simUpdate();
+  };
+
+  window.simUpdate = function() {
+    var ca = +(document.getElementById('sl-ca') || {}).value || 0;
+    var charges = +(document.getElementById('sl-charges') || {}).value || 0;
+    var eurlR = +(document.getElementById('sl-eurl-remun') || {}).value || 0;
+    var sasuS = +(document.getElementById('sl-sasu-sal') || {}).value || 0;
+    var sasuD = +(document.getElementById('sl-sasu-divs') || {}).value || 0;
+
+    document.getElementById('lbl-ca').textContent = eur(ca);
+    document.getElementById('lbl-charges').textContent = eur(charges);
+    document.getElementById('lbl-eurl-remun').textContent = fr(eurlR);
+    document.getElementById('lbl-sasu-sal').textContent = fr(sasuS);
+    document.getElementById('lbl-sasu-divs').textContent = eur(sasuD);
+
+    var micro = calcMicro(ca, charges);
+    var eurl = calcEURL(ca, charges, eurlR);
+    var sasu = calcSASU(ca, charges, sasuS, sasuD);
+
+    var slDiv = document.getElementById('sl-sasu-divs');
+    if (slDiv) {
+      slDiv.max = sasu.disponibleDivs || 0;
+      if (+slDiv.value > (sasu.disponibleDivs || 0)) slDiv.value = sasu.disponibleDivs || 0;
+    }
+
+    var all = [micro, eurl, sasu];
+    all.sort(function(a, b) { return b.rsn - a.rsn; });
+
+    var zone = document.getElementById('sim-results');
+    if (zone) {
+      zone.innerHTML = renderFirst(all[0], 0)
+        + '<div class="sim-grid">' + renderCard(all[1], 1) + renderCard(all[2], 2) + '</div>';
+    }
+  };
+
+  // Init listeners quand la page est prête
+  document.addEventListener('DOMContentLoaded', function() {
+    ['sl-ca','sl-charges','sl-eurl-remun','sl-sasu-sal','sl-sasu-divs'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', window.simUpdate);
+    });
+    window.simUpdate();
+  });
+})();
 
 </script>
 </body>
