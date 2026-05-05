@@ -517,6 +517,20 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 .sim-neg { color: #c0392b; font-weight: 600; }
 .sim-pos { color: #1a7a4a; font-weight: 600; }
 .sim-zero { color: #9ca3af; }
+.sim-select {
+  background: #fff;
+  border: 1.5px solid #ddd5ca;
+  border-radius: 8px;
+  padding: .35rem .65rem;
+  font-family: inherit;
+  font-size: .85rem;
+  color: var(--marine-fonce, #1a365d);
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  max-width: 230px;
+}
+.sim-select:focus { border-color: var(--marine-fonce, #1a365d); }
 @media (max-width: 480px) {
   .sim-grid { grid-template-columns: 1fr; }
   .sim-card, .sim-first { padding: 14px; }
@@ -1033,7 +1047,36 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         </div>
         <input type="range" class="sim-range" id="sl-sasu-divs" min="0" max="0" step="100" value="0">
 
-        <p style="font-size:.75rem;color:#9ca3af;margin-top:.6rem;padding-top:.6rem;border-top:1px solid #e8ecf4">Célibataire · 0 enfants · Activité libérale · Barème IR 2024</p>
+      </div>
+
+      <div class="sim-card">
+        <div class="sim-section-title">👤 Situation personnelle</div>
+
+        <div class="sim-input-row" style="margin-bottom:.6rem">
+          <span class="sim-label">Situation familiale</span>
+          <select id="sl-situation" class="sim-select">
+            <option value="celibataire">Célibataire / Divorcé(e)</option>
+            <option value="marie">Marié(e) / Pacsé(e)</option>
+            <option value="veuf">Veuf / Veuve</option>
+          </select>
+        </div>
+
+        <div class="sim-input-row">
+          <span class="sim-label">Enfants à charge</span>
+          <span class="sim-value" id="lbl-enfants">0</span>
+        </div>
+        <input type="range" class="sim-range" id="sl-enfants" min="0" max="6" step="1" value="0">
+
+        <div class="sim-input-row" style="margin-top:.4rem">
+          <span class="sim-label">Autres revenus imposables</span>
+          <span class="sim-value" id="lbl-autres">0 €</span>
+        </div>
+        <input type="range" class="sim-range" id="sl-autres" min="0" max="100000" step="500" value="0">
+        <p style="font-size:.72rem;color:#9ca3af;margin-top:.2rem">Salaires, revenus locatifs, pensions perçues hors activité...</p>
+
+        <div id="sim-parts-info" style="font-size:.75rem;color:#6b7280;margin-top:.8rem;padding:.5rem .7rem;background:#f8f9fa;border-radius:6px;line-height:1.4">
+          📋 Célibataire · 0 enfant · 1,0 part · IR 2024
+        </div>
       </div>
 
       <!-- Résultats -->
@@ -2659,18 +2702,33 @@ document.addEventListener('DOMContentLoaded', function() {
   var fr = function(n) { return Math.round(n).toLocaleString('fr-FR'); };
   var eur = function(n) { return fr(n) + ' €'; };
 
-  function calcIR(revenu) {
+  function calcIRBrut(rev) {
+    if (rev <= 0) return 0;
+    var t = [[0,11497,0],[11497,29315,.11],[29315,83823,.30],[83823,180294,.41],[180294,Infinity,.45]];
+    return Math.round(t.reduce(function(ir,b){ return rev>b[0]?ir+(Math.min(rev,b[1])-b[0])*b[2]:ir; },0));
+  }
+
+  function getNbParts(situ, enf) {
+    var base = situ==='marie' ? 2 : situ==='veuf' ? 1.5 : 1;
+    var n = parseInt(enf)||0;
+    var p = n>=1 ? 0.5 : 0;
+    if (n>=2) p += 0.5;
+    if (n>=3) p += (n-2)*1;
+    return base + p;
+  }
+
+  function calcIR(revenu, situ, enf) {
     if (revenu <= 0) return 0;
-    var tranches = [
-      [0, 11497, 0],
-      [11497, 29315, 0.11],
-      [29315, 83823, 0.30],
-      [83823, 180294, 0.41],
-      [180294, Infinity, 0.45]
-    ];
-    return Math.round(tranches.reduce(function(ir, t) {
-      return revenu > t[0] ? ir + (Math.min(revenu, t[1]) - t[0]) * t[2] : ir;
-    }, 0));
+    var parts = getNbParts(situ||'celibataire', enf||0);
+    var irQF = Math.round(calcIRBrut(revenu / parts) * parts);
+    /* Plafonnement avantage QF : 1 759 € par demi-part au-delà de la base */
+    var baseRef = situ==='marie' ? 2 : 1;
+    var demiSup = (parts - baseRef) * 2;
+    if (demiSup > 0) {
+      var irSansQF = Math.round(calcIRBrut(revenu / baseRef) * baseRef);
+      irQF = Math.max(irQF, irSansQF - Math.round(demiSup * 1759));
+    }
+    return Math.max(0, irQF);
   }
 
   function calcIS(ben) {
@@ -2679,11 +2737,11 @@ document.addEventListener('DOMContentLoaded', function() {
     return ben <= SEUIL ? Math.round(ben * 0.15) : Math.round(SEUIL * 0.15 + (ben - SEUIL) * 0.25);
   }
 
-  function calcMicro(ca, charges) {
+  function calcMicro(ca, charges, situ, enf, autresRev) {
     var COT_RATE = 0.232, ABATT = 0.34;
     var cotis = Math.round(ca * COT_RATE);
-    var revFisc = Math.round(ca * (1 - ABATT));
-    var ir = calcIR(revFisc);
+    var revFisc = Math.round(ca * (1 - ABATT)) + (autresRev||0);
+    var ir = calcIR(revFisc, situ, enf);
     var rsn = Math.max(0, ca - cotis - ir - charges);
     return {
       nom: 'Micro-Entreprise', rsn: rsn, tresorerie: 0,
@@ -2704,14 +2762,14 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  function calcEURL(ca, charges, remunMens) {
+  function calcEURL(ca, charges, remunMens, situ, enf, autresRev) {
     var remunAnn = remunMens * 12;
     var cotis = Math.round(remunAnn * 0.41);
     var benefice = ca - charges - remunAnn - cotis;
     var is = calcIS(Math.max(0, benefice));
     var tresorerie = Math.max(0, Math.max(0, benefice) - is);
-    var revIR = Math.max(0, remunAnn - cotis);
-    var ir = calcIR(revIR);
+    var revIR = Math.max(0, remunAnn - cotis) + (autresRev||0);
+    var ir = calcIR(revIR, situ, enf);
     var rsn = Math.max(0, remunAnn - ir);
     return {
       nom: 'EURL', rsn: rsn, tresorerie: Math.max(0, tresorerie),
@@ -2734,7 +2792,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  function calcSASU(ca, charges, salMens, divsBruts) {
+  function calcSASU(ca, charges, salMens, divsBruts, situ, enf, autresRev) {
     var salAnn = salMens * 12;
     var chPatro = Math.round(salAnn * 0.42);
     var chSalar = Math.round(salAnn * 0.22);
@@ -2745,7 +2803,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var divsDist = Math.min(divsBruts, disponible);
     var divsNets = Math.round(divsDist * 0.70);
     var treso = disponible - divsDist;
-    var ir = calcIR(salNet * 0.90);
+    var ir = calcIR(salNet * 0.90 + (autresRev||0), situ, enf);
     var rsn = Math.max(0, salNet - ir + divsNets);
     return {
       nom: 'SASU', rsn: rsn, tresorerie: treso, disponibleDivs: disponible,
@@ -2830,9 +2888,27 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('lbl-sasu-sal').textContent = fr(sasuS);
     document.getElementById('lbl-sasu-divs').textContent = eur(sasuD);
 
-    var micro = calcMicro(ca, charges);
-    var eurl = calcEURL(ca, charges, eurlR);
-    var sasu = calcSASU(ca, charges, sasuS, sasuD);
+    /* ── Situation personnelle ── */
+    var situ = (document.getElementById('sl-situation')||{value:'celibataire'}).value||'celibataire';
+    var enf  = +(document.getElementById('sl-enfants')||{value:0}).value||0;
+    var autresRev = +(document.getElementById('sl-autres')||{value:0}).value||0;
+
+    var enfEl = document.getElementById('lbl-enfants');
+    if (enfEl) enfEl.textContent = String(enf);
+    var arEl = document.getElementById('lbl-autres');
+    if (arEl) arEl.textContent = eur(autresRev);
+
+    var parts = getNbParts(situ, enf);
+    var situMap = {celibataire:'Célibataire', marie:'Marié(e)/Pacsé(e)', veuf:'Veuf/Veuve'};
+    var infoEl = document.getElementById('sim-parts-info');
+    if (infoEl) infoEl.innerHTML = '📋 <strong>' + (situMap[situ]||situ) + '</strong> · '
+      + enf + ' enfant(s) · <strong>' + parts.toFixed(1) + ' part(s)</strong>'
+      + (autresRev > 0 ? ' · +' + eur(autresRev) + ' hors activité' : '')
+      + ' · Barème IR 2024';
+
+    var micro = calcMicro(ca, charges, situ, enf, autresRev);
+    var eurl  = calcEURL(ca, charges, eurlR, situ, enf, autresRev);
+    var sasu  = calcSASU(ca, charges, sasuS, sasuD, situ, enf, autresRev);
 
     var slDiv = document.getElementById('sl-sasu-divs');
     if (slDiv) {
@@ -2852,10 +2928,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Init listeners quand la page est prête
   document.addEventListener('DOMContentLoaded', function() {
-    ['sl-ca','sl-charges','sl-eurl-remun','sl-sasu-sal','sl-sasu-divs'].forEach(function(id) {
+    ['sl-ca','sl-charges','sl-eurl-remun','sl-sasu-sal','sl-sasu-divs','sl-enfants','sl-autres'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.addEventListener('input', window.simUpdate);
     });
+    var slSit = document.getElementById('sl-situation');
+    if (slSit) slSit.addEventListener('change', window.simUpdate);
+    var slSit = document.getElementById('sl-situation');
+    if (slSit) slSit.addEventListener('change', window.simUpdate);
     window.simUpdate();
   });
 })();
