@@ -347,6 +347,66 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .cta-section, .tunnel-hero, .tunnel-cta-section { padding: 4rem 1.5rem; }
   .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+  /* ── Page contact / RDV responsive ── */
+  .page-hero { padding: 3.5rem 1.2rem !important; }
+  .contact-grid { gap: 2rem; }
+  .contact-infos { padding-top: 0; }
+  .contact-info-item { gap: .8rem; }
+}
+
+@media (max-width: 520px) {
+  /* ── Prévenir tout overflow horizontal ── */
+  body { overflow-x: hidden; }
+  * { max-width: 100%; }
+  img, svg { max-width: 100%; }
+
+  /* ── Page contact ── */
+  .page-hero { padding: 2.8rem 1rem !important; }
+  .page-hero h1 { font-size: 1.7rem; }
+  .section { padding: 2.5rem 1rem !important; }
+  .t-pale, .t-dark, .t-white { padding: 2.5rem 1rem !important; }
+  .container, .container-narrow { padding: 0 1rem; }
+
+  /* ── Formulaire ── */
+  .form-input, .form-textarea, .form-select {
+    font-size: 16px !important; /* empêche zoom iOS */
+    padding: .7rem .8rem;
+  }
+  .form-group { margin-bottom: 1.1rem; }
+  #rdv-submit-btn { font-size: .9rem; padding: .8rem 1rem; }
+
+  /* ── Checkboxes intérêts ── */
+  .rdv-interests-grid { grid-template-columns: 1fr !important; gap: 6px; }
+  .rdv-interest-item { padding: 9px 10px; font-size: .83rem; }
+  .rdv-interest-item small { font-size: .7rem; }
+
+  /* ── Tooltip info-btn : forcer vers la gauche ── */
+  .rdv-info-btn::after {
+    right: auto !important;
+    left: auto !important;
+    bottom: calc(100% + 8px);
+    transform: translateX(-80%);
+    width: 210px;
+  }
+  .rdv-info-btn::before {
+    right: auto !important;
+    left: 4px !important;
+  }
+
+  /* ── Contact infos ── */
+  .contact-infos { padding-top: 0; }
+  .contact-info-item { flex-direction: row; gap: .8rem; }
+  .contact-info-icon { width: 32px; height: 32px; min-width: 32px; }
+
+  /* ── Carte et packs ── */
+  .carte-grid, .packs-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Footer ── */
+  .footer-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Tunnel ── */
+  .tunnel-hero, .cta-section, .tunnel-cta-section { padding: 3rem 1rem !important; }
 }
 
 
@@ -1108,7 +1168,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
           <span class="label">Coordonnées</span>
           <h3 style="font-family:var(--display); color:var(--marine-fonce); margin-bottom:2rem;">Comment me joindre</h3>
           <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6z"/><circle cx="10" cy="8" r="2"/></svg></div><div><p class="contact-info-title">Localisation</p><p class="contact-info-text">Guadeloupe<br>Interventions sur tout le territoire</p></div></div>
-          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="10" height="16" rx="2"/><path d="M9 15h2"/></svg></div><div><p class="contact-info-title">WhatsApp & Téléphone</p><p class="contact-info-text">Disponible pour un premier échange<br>Réponse sous 24h</p></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="10" height="16" rx="2"/><path d="M9 15h2"/></svg></div><div><p class="contact-info-title"><a href="https://wa.me/590690322346" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(26,54,93,0.25);transition:border-color .15s" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='rgba(26,54,93,0.25)'">WhatsApp</a> &amp; Téléphone</p><p class="contact-info-text">Disponible pour un premier échange<br>Réponse sous 24h</p></div></div>
           <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h2l2-3h8l2 3h2v10H2V7z"/><circle cx="10" cy="12" r="3"/></svg></div><div><p class="contact-info-title"><a href="https://www.instagram.com/ccs.guadeloupe" target="_blank" rel="noopener noreferrer">Instagram</a></p><p class="contact-info-text">Suivez SIMELE pour des conseils<br>et actualités sur l'entrepreneuriat</p></div></div>
           <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg></div><div><p class="contact-info-title">Disponibilités</p><p class="contact-info-text">Lundi – Vendredi : 8h – 18h<br>Samedi sur rendez-vous</p></div></div>
           <div class="garantie-box"><p><strong>Ma promesse :</strong> Chaque échange est traité avec sérieux et confidentialité. Votre projet est entre de bonnes mains.</p></div>
