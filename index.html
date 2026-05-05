@@ -531,9 +531,93 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
   max-width: 230px;
 }
 .sim-select:focus { border-color: var(--marine-fonce, #1a365d); }
+
+/* ── Formulaire RDV — Centres d'intérêt multi-sélection ── */
+.rdv-interests-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.rdv-interest-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  font-size: .88rem;
+  color: #374151;
+  background: #fff;
+  line-height: 1.3;
+}
+.rdv-interest-item:hover { border-color: #1a365d; background: #f8f9ff; }
+.rdv-interest-item input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: #1a365d;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.rdv-interest-item span { flex: 1; font-weight: 500; }
+.rdv-interest-item small {
+  font-size: .75rem; color: #c9a84c; font-weight: 700;
+  background: #fef9ec; padding: 1px 5px; border-radius: 4px;
+}
+.rdv-interest-item:has(input:checked) {
+  border-color: #1a365d;
+  background: #f0f4ff;
+  color: #1a365d;
+}
+.rdv-interest-full { grid-column: 1 / -1; }
+@media (max-width: 480px) {
+  .rdv-interests-grid { grid-template-columns: 1fr; }
+}
 @media (max-width: 480px) {
   .sim-grid { grid-template-columns: 1fr; }
   .sim-card, .sim-first { padding: 14px; }
+}
+
+/* ── Formulaire RDV — Centres d'intérêt multi-sélection ── */
+.rdv-interests-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.rdv-interest-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  font-size: .88rem;
+  color: #374151;
+  background: #fff;
+  line-height: 1.3;
+}
+.rdv-interest-item:hover { border-color: var(--marine-fonce,#1a365d); background: #f8f9ff; }
+.rdv-interest-item input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: var(--marine-fonce,#1a365d);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.rdv-interest-item span { flex: 1; font-weight: 500; }
+.rdv-interest-item small {
+  font-size: .74rem; color: var(--or,#c9a84c); font-weight: 700;
+  background: #fef9ec; padding: 1px 6px; border-radius: 4px;
+}
+.rdv-interest-item:has(input:checked) {
+  border-color: var(--marine-fonce,#1a365d);
+  background: #f0f4ff;
+  color: var(--marine-fonce,#1a365d);
+}
+.rdv-interest-full { grid-column: 1 / -1; }
+@media (max-width: 520px) {
+  .rdv-interests-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -738,10 +822,10 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       <div class="divider"></div>
       <p class="text-gris" style="max-width:540px; margin-bottom:2.5rem; font-size:0.9rem;">Vous savez ce qu'il vous faut ? Commandez la prestation précise qui correspond à votre étape.</p>
       <div class="carte-grid">
-        <div class="carte-item"><div class="carte-icon">📄</div><h3>Business Plan</h3><p>Rédaction professionnelle de votre plan d'affaires complet</p></div>
-        <div class="carte-item"><div class="carte-icon">📊</div><h3>Prévisionnel Financier</h3><p>Tableaux sur 3 ans, bilans prévisionnels et plans de trésorerie</p></div>
-        <div class="carte-item"><div class="carte-icon">💼</div><h3>Dossier de Financement</h3><p>Constitution et mise en forme de votre dossier bancaire ou institutionnel</p></div>
-        <div class="carte-item"><div class="carte-icon">🔍</div><h3>Recherche de Subventions</h3><p>Identification et aide à la constitution des dossiers adaptés à votre projet</p></div>
+        <div class="carte-item"><div class="carte-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h8l4 4v10H4V4z"/><path d="M12 4v4h4"/></svg></div><h3>Business Plan</h3><p>Rédaction professionnelle de votre plan d'affaires complet</p></div>
+        <div class="carte-item"><div class="carte-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="10" width="3" height="7"/><rect x="8.5" y="6" width="3" height="11"/><rect x="14" y="3" width="3" height="14"/></svg></div><h3>Prévisionnel Financier</h3><p>Tableaux sur 3 ans, bilans prévisionnels et plans de trésorerie</p></div>
+        <div class="carte-item"><div class="carte-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="16" height="11" rx="1.5"/><path d="M7 7V5a2 2 0 014 0v2"/></svg></div><h3>Dossier de Financement</h3><p>Constitution et mise en forme de votre dossier bancaire ou institutionnel</p></div>
+        <div class="carte-item"><div class="carte-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8.5" cy="8.5" r="5"/><path d="M15 15l-3-3"/></svg></div><h3>Recherche de Subventions</h3><p>Identification et aide à la constitution des dossiers adaptés à votre projet</p></div>
       </div>
       <span class="label">Offres packagées</span>
       <h2>Choisissez votre <span class="italic text-marine">pack</span></h2>
@@ -792,12 +876,12 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <div class="divider divider-center"></div>
       </div>
       <div class="valeurs-grid">
-        <div class="valeur-item"><div class="valeur-icon">🎯</div><h3>Rigueur</h3><p>Chaque analyse, chaque document, chaque recommandation est produit avec le niveau d'exigence d'un professionnel du conseil.</p></div>
-        <div class="valeur-item"><div class="valeur-icon">🏗️</div><h3>Structuration</h3><p>Nous croyons que la méthode fait la différence. Un projet bien structuré, c'est un projet qui résiste à l'épreuve du réel.</p></div>
-        <div class="valeur-item"><div class="valeur-icon">💎</div><h3>Exigence</h3><p>Nous ne vous disons pas ce que vous voulez entendre. Nous vous disons ce que vous devez savoir — avec bienveillance et franchise.</p></div>
-        <div class="valeur-item"><div class="valeur-icon">🤝</div><h3>Proximité</h3><p>Un accompagnement vraiment personnalisé, adapté à votre réalité, vos ressources et vos ambitions.</p></div>
-        <div class="valeur-item"><div class="valeur-icon">🧭</div><h3>Stratégie</h3><p>Voir plus loin que l'immédiat. Anticiper les obstacles, saisir les opportunités, construire pour durer.</p></div>
-        <div class="valeur-item"><div class="valeur-icon">🌺</div><h3>Ancrage Local</h3><p>Connaissance approfondie du tissu économique guadeloupéen, des réseaux et des financements locaux.</p></div>
+        <div class="valeur-item"><div class="valeur-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r="1.5" fill="currentColor" stroke="none"/></svg></div><h3>Rigueur</h3><p>Chaque analyse, chaque document, chaque recommandation est produit avec le niveau d'exigence d'un professionnel du conseil.</p></div>
+        <div class="valeur-item"><div class="valeur-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16V8l6-4 6 4v8"/><path d="M8 16v-5h4v5"/><path d="M4 8h12"/></svg></div><h3>Structuration</h3><p>Nous croyons que la méthode fait la différence. Un projet bien structuré, c'est un projet qui résiste à l'épreuve du réel.</p></div>
+        <div class="valeur-item"><div class="valeur-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3l6 4-6 10L4 7l6-4z"/><path d="M4 7h12"/></svg></div><h3>Exigence</h3><p>Nous ne vous disons pas ce que vous voulez entendre. Nous vous disons ce que vous devez savoir — avec bienveillance et franchise.</p></div>
+        <div class="valeur-item"><div class="valeur-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10c0-3.9 3.1-7 7-7s7 3.1 7 7-3.1 7-7 7-7-3.1-7-7z"/><path d="M7 10l2 2 4-4"/></svg></div><h3>Proximité</h3><p>Un accompagnement vraiment personnalisé, adapté à votre réalité, vos ressources et vos ambitions.</p></div>
+        <div class="valeur-item"><div class="valeur-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2"/><path d="M7 7l2 2 3-3"/></svg></div><h3>Stratégie</h3><p>Voir plus loin que l'immédiat. Anticiper les obstacles, saisir les opportunités, construire pour durer.</p></div>
+        <div class="valeur-item"><div class="valeur-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="2.5"/><ellipse cx="10" cy="5" rx="2" ry="2.5"/><ellipse cx="10" cy="15" rx="2" ry="2.5"/><ellipse cx="5" cy="10" rx="2.5" ry="2"/><ellipse cx="15" cy="10" rx="2.5" ry="2"/></svg></div><h3>Ancrage Local</h3><p>Connaissance approfondie du tissu économique guadeloupéen, des réseaux et des financements locaux.</p></div>
       </div>
     </div>
   </section>
@@ -843,11 +927,22 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
           <div class="form-group"><label class="form-label">Prénom & Nom *</label><input type="text" class="form-input" placeholder="Marie Dupont"></div>
           <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" placeholder="marie@exemple.com"></div>
           <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" placeholder="+590 6 90 00 00 00"></div>
-          <div class="form-group"><label class="form-label">Ce qui vous intéresse *</label>
-            <select class="form-select">
-              <option value="">— Choisissez une option —</option>
-              <option>Diagnostic de projet (80€)</option><option>Coaching individuel (3 séances)</option><option>Coaching individuel (5 séances)</option><option>Business Plan</option><option>Prévisionnel financier</option><option>Dossier de financement</option><option>Pack Essentiel</option><option>Pack Création</option><option>Pack Financement</option><option>Pack Global</option><option>Je ne sais pas encore — conseil SVP</option>
-            </select>
+          <div class="form-group">
+            <label class="form-label">Ce qui vous intéresse <span style="color:#c9a84c">*</span></label>
+            <p style="font-size:.78rem;color:#9ca3af;margin:.2rem 0 .8rem">Sélectionnez une ou plusieurs options</p>
+            <div class="rdv-interests-grid">
+              <label class="rdv-interest-item"><input type="checkbox" value="Diagnostic de projet (80€)"><span>Diagnostic de projet</span><small>80€</small></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Coaching individuel (3 séances)"><span>Coaching (3 séances)</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Coaching individuel (5 séances)"><span>Coaching (5 séances)</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Business Plan"><span>Business Plan</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Prévisionnel financier"><span>Prévisionnel financier</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Dossier de financement"><span>Dossier de financement</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Pack Essentiel"><span>Pack Essentiel</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Pack Création"><span>Pack Création</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Pack Financement"><span>Pack Financement</span></label>
+              <label class="rdv-interest-item"><input type="checkbox" value="Pack Global"><span>Pack Global</span></label>
+              <label class="rdv-interest-item rdv-interest-full"><input type="checkbox" value="Conseil personnalisé"><span>Je ne sais pas encore — conseil SVP</span></label>
+            </div>
           </div>
           <div class="form-group"><label class="form-label">Décrivez brièvement votre projet</label><textarea class="form-textarea" placeholder="En quelques lignes, parlez-moi de votre idée, votre secteur d'activité et là où vous en êtes..."></textarea></div>
           <a class="btn-primary" style="width:100%; text-align:center; display:block;">Envoyer ma demande</a>
@@ -856,11 +951,11 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <div class="contact-infos">
           <span class="label">Coordonnées</span>
           <h3 style="font-family:var(--display); color:var(--marine-fonce); margin-bottom:2rem;">Comment me joindre</h3>
-          <div class="contact-info-item"><div class="contact-info-icon">📍</div><div><p class="contact-info-title">Localisation</p><p class="contact-info-text">Guadeloupe<br>Interventions sur tout le territoire</p></div></div>
-          <div class="contact-info-item"><div class="contact-info-icon">📱</div><div><p class="contact-info-title">WhatsApp & Téléphone</p><p class="contact-info-text">Disponible pour un premier échange<br>Réponse sous 24h</p></div></div>
-          <div class="contact-info-item"><div class="contact-info-icon">📸</div><div><p class="contact-info-title"><a href="https://www.instagram.com/ccs.guadeloupe" target="_blank" rel="noopener noreferrer">Instagram</a></p><p class="contact-info-text">Suivez SIMELE pour des conseils<br>et actualités sur l'entrepreneuriat</p></div></div>
-          <div class="contact-info-item"><div class="contact-info-icon">🕐</div><div><p class="contact-info-title">Disponibilités</p><p class="contact-info-text">Lundi – Vendredi : 8h – 18h<br>Samedi sur rendez-vous</p></div></div>
-          <div class="garantie-box"><p>✨ <strong>Ma promesse :</strong> Chaque échange est traité avec sérieux et confidentialité. Votre projet est entre de bonnes mains.</p></div>
+          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6z"/><circle cx="10" cy="8" r="2"/></svg></div><div><p class="contact-info-title">Localisation</p><p class="contact-info-text">Guadeloupe<br>Interventions sur tout le territoire</p></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="10" height="16" rx="2"/><path d="M9 15h2"/></svg></div><div><p class="contact-info-title">WhatsApp & Téléphone</p><p class="contact-info-text">Disponible pour un premier échange<br>Réponse sous 24h</p></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h2l2-3h8l2 3h2v10H2V7z"/><circle cx="10" cy="12" r="3"/></svg></div><div><p class="contact-info-title"><a href="https://www.instagram.com/ccs.guadeloupe" target="_blank" rel="noopener noreferrer">Instagram</a></p><p class="contact-info-text">Suivez SIMELE pour des conseils<br>et actualités sur l'entrepreneuriat</p></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg></div><div><p class="contact-info-title">Disponibilités</p><p class="contact-info-text">Lundi – Vendredi : 8h – 18h<br>Samedi sur rendez-vous</p></div></div>
+          <div class="garantie-box"><p><strong>Ma promesse :</strong> Chaque échange est traité avec sérieux et confidentialité. Votre projet est entre de bonnes mains.</p></div>
         </div>
       </div>
     </div>
@@ -881,9 +976,9 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     <div class="container">
       <div style="text-align:center; max-width:540px; margin:0 auto;"><span class="label">Vous vous reconnaissez ?</span><h2>Ces situations vous<br><span class="italic text-marine">parlent-elles…</span></h2><div class="divider divider-center"></div></div>
       <div class="symptomes-grid">
-        <div class="symptome-card"><div class="symptome-icon">🌫️</div><h3>Le projet flou</h3><p>Vous avez une idée, mais elle reste vague. Vous ne savez pas exactement ce que vous voulez créer, ni comment le formuler clairement.</p></div>
-        <div class="symptome-card"><div class="symptome-icon">🔄</div><h3>Le manque de cap</h3><p>Vous tournez en rond. Vous réfléchissez beaucoup, mais avancez peu. Chaque décision semble aussi bonne — ou mauvaise — que la précédente.</p></div>
-        <div class="symptome-card"><div class="symptome-icon">😰</div><h3>La peur d'échouer</h3><p>Vous avez peur de vous lancer, peur de faire les mauvais choix. Alors vous attendez… et vous n'avancez pas.</p></div>
+        <div class="symptome-card"><div class="symptome-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10h14M5 14h10M7 6h6"/></svg></div><h3>Le projet flou</h3><p>Vous avez une idée, mais elle reste vague. Vous ne savez pas exactement ce que vous voulez créer, ni comment le formuler clairement.</p></div>
+        <div class="symptome-card"><div class="symptome-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10a6 6 0 0111-3M16 10a6 6 0 01-11 3"/><path d="M15 4l-.5 3-3-.5M5 16l.5-3 3 .5"/></svg></div><h3>Le manque de cap</h3><p>Vous tournez en rond. Vous réfléchissez beaucoup, mais avancez peu. Chaque décision semble aussi bonne — ou mauvaise — que la précédente.</p></div>
+        <div class="symptome-card"><div class="symptome-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M7 13c.7-1.5 5.3-1.5 6 0"/><circle cx="7.5" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="12.5" cy="8.5" r="1" fill="currentColor" stroke="none"/></svg></div><h3>La peur d'échouer</h3><p>Vous avez peur de vous lancer, peur de faire les mauvais choix. Alors vous attendez… et vous n'avancez pas.</p></div>
       </div>
     </div>
   </section>
@@ -911,9 +1006,9 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     <div class="container">
       <div style="text-align:center; max-width:500px; margin:0 auto;"><span class="label">La solution</span><h2>Le Diagnostic de Projet :<br><span class="italic text-marine">votre point de départ</span></h2><div class="divider divider-center"></div><p class="text-gris" style="font-size:0.9rem;">Une séance d'1h30 avec une experte qui analyse votre projet sous toutes ses dimensions et vous donne un plan d'action concret.</p></div>
       <div class="solution-cards">
-        <div class="solution-card"><div class="solution-icon">🔍</div><h3>Clarté</h3><p>En sortant du diagnostic, vous savez exactement où vous en êtes, ce qui est solide et ce qui doit être retravaillé.</p></div>
-        <div class="solution-card"><div class="solution-icon">🛡️</div><h3>Sécurité</h3><p>Vous identifiez les risques avant qu'ils se réalisent et évitez les erreurs coûteuses que font la plupart des créateurs.</p></div>
-        <div class="solution-card"><div class="solution-icon">🚀</div><h3>Direction</h3><p>Vous repartez avec un plan d'action concret et priorisé — les prochaines étapes sont claires et actionnables immédiatement.</p></div>
+        <div class="solution-card"><div class="solution-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8.5" cy="8.5" r="5"/><path d="M15 15l-3-3"/></svg></div><h3>Clarté</h3><p>En sortant du diagnostic, vous savez exactement où vous en êtes, ce qui est solide et ce qui doit être retravaillé.</p></div>
+        <div class="solution-card"><div class="solution-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V5l7-3z"/><path d="M7 10l2 2 4-4"/></svg></div><h3>Sécurité</h3><p>Vous identifiez les risques avant qu'ils se réalisent et évitez les erreurs coûteuses que font la plupart des créateurs.</p></div>
+        <div class="solution-card"><div class="solution-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3c3-1 6 2 6 7L10 17 4 10c0-5 3-8 6-7z"/><circle cx="10" cy="9" r="2"/></svg></div><h3>Direction</h3><p>Vous repartez avec un plan d'action concret et priorisé — les prochaines étapes sont claires et actionnables immédiatement.</p></div>
       </div>
     </div>
   </section>
@@ -933,9 +1028,9 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     <div class="container">
       <div style="text-align:center; max-width:460px; margin:0 auto;"><span class="label">Ce que vous obtenez</span><h2>Après votre<br><span class="italic text-marine">diagnostic</span></h2><div class="divider divider-center"></div></div>
       <div class="resultats-grid">
-        <div class="resultat-item"><div class="resultat-icon">🧭</div><h3>Une vision claire</h3><p>Vous savez exactement ce que vous voulez créer, pourquoi ça tient la route, et comment le formuler clairement.</p></div>
-        <div class="resultat-item"><div class="resultat-icon">📋</div><h3>Les prochaines étapes</h3><p>Une liste d'actions concrètes, classées par priorité. Vous savez quoi faire dès demain matin.</p></div>
-        <div class="resultat-item"><div class="resultat-icon">💎</div><h3>Une orientation stratégique</h3><p>Des recommandations sur mesure pour structurer votre projet selon vos ressources, votre marché et vos objectifs.</p></div>
+        <div class="resultat-item"><div class="resultat-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2"/><path d="M7 7l2 2 3-3"/></svg></div><h3>Une vision claire</h3><p>Vous savez exactement ce que vous voulez créer, pourquoi ça tient la route, et comment le formuler clairement.</p></div>
+        <div class="resultat-item"><div class="resultat-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="12" height="14" rx="1.5"/><path d="M8 3v2h4V3"/><path d="M7 9h6M7 12h4"/></svg></div><h3>Les prochaines étapes</h3><p>Une liste d'actions concrètes, classées par priorité. Vous savez quoi faire dès demain matin.</p></div>
+        <div class="resultat-item"><div class="resultat-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3l6 4-6 10L4 7l6-4z"/><path d="M4 7h12"/></svg></div><h3>Une orientation stratégique</h3><p>Des recommandations sur mesure pour structurer votre projet selon vos ressources, votre marché et vos objectifs.</p></div>
       </div>
     </div>
   </section>
@@ -947,10 +1042,10 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       <div class="divider"></div>
       <div class="credibilite-grid">
         <ul class="credibilite-points">
-          <li class="credibilite-point"><span class="cp-icon">🎓</span><div class="cp-text"><h3>Formation solide</h3><p>Expertise en gestion d'entreprise, stratégie et accompagnement entrepreneurial.</p></div></li>
-          <li class="credibilite-point"><span class="cp-icon">🗺️</span><div class="cp-text"><h3>Connaissance du terrain guadeloupéen</h3><p>Maîtrise des réalités locales, des financements spécifiques et du tissu économique de l'île.</p></div></li>
-          <li class="credibilite-point"><span class="cp-icon">🔬</span><div class="cp-text"><h3>Méthode structurée</h3><p>Un processus d'analyse rigoureux, testé et affiné sur des dizaines de projets différents.</p></div></li>
-          <li class="credibilite-point"><span class="cp-icon">💬</span><div class="cp-text"><h3>Franchise et bienveillance</h3><p>Je vous dis ce que vous devez entendre, pas ce que vous voulez entendre. Toujours avec respect et constructivité.</p></div></li>
+          <li class="credibilite-point"><span class="cp-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 4L2 8l8 4 8-4-8-4z"/><path d="M6 10v4a6 6 0 008 0v-4"/><path d="M18 8v5"/></svg></span><div class="cp-text"><h3>Formation solide</h3><p>Expertise en gestion d'entreprise, stratégie et accompagnement entrepreneurial.</p></div></li>
+          <li class="credibilite-point"><span class="cp-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5l5 2 6-3 5 2v11l-5-2-6 3-5-2V5z"/><path d="M7 7v9M13 4v9"/></svg></span><div class="cp-text"><h3>Connaissance du terrain guadeloupéen</h3><p>Maîtrise des réalités locales, des financements spécifiques et du tissu économique de l'île.</p></div></li>
+          <li class="credibilite-point"><span class="cp-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3l4 4-5 5-4-4 5-5z"/><path d="M12 7l2 2"/><path d="M5 12l-3 5h16"/></svg></span><div class="cp-text"><h3>Méthode structurée</h3><p>Un processus d'analyse rigoureux, testé et affiné sur des dizaines de projets différents.</p></div></li>
+          <li class="credibilite-point"><span class="cp-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h14a1 1 0 011 1v8a1 1 0 01-1 1H6l-4 3V5a1 1 0 011-1z"/></svg></span><div class="cp-text"><h3>Franchise et bienveillance</h3><p>Je vous dis ce que vous devez entendre, pas ce que vous voulez entendre. Toujours avec respect et constructivité.</p></div></li>
         </ul>
         <div>
           <div class="tunnel-temoignage"><div class="tt-stars">★ ★ ★ ★ ★</div><p class="tt-text">"Le diagnostic du CCS m'a ouvert les yeux sur des aspects de mon projet que je n'avais pas du tout envisagés. Une séance qui m'a évité des mois d'erreurs."</p><p class="tt-auteur">Patricia L. — créatrice d'une agence de services</p></div>
@@ -967,10 +1062,10 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       <div class="divider"></div>
       <p class="text-gris" style="margin-bottom:2.5rem; max-width:480px; font-size:0.88rem;">Le diagnostic est toujours la première étape. Ensuite, chaque client avance à son rythme selon ses besoins.</p>
       <div class="parcours-flow">
-        <div class="parcours-step"><div class="parcours-step-num">1</div><div class="parcours-step-icon">📱</div><h3>Découverte</h3><p><a href="https://www.instagram.com/ccs.guadeloupe" target="_blank" rel="noopener noreferrer">Instagram</a> ou <a href="https://wa.me/590690322346" target="_blank" rel="noopener noreferrer">WhatsApp</a> — vous prenez contact</p><div class="parcours-arrow">→</div></div>
-        <div class="parcours-step"><div class="parcours-step-num">2</div><div class="parcours-step-icon">🎯</div><h3>Diagnostic</h3><p>Analyse complète — 80€</p><div class="parcours-arrow">→</div></div>
-        <div class="parcours-step"><div class="parcours-step-num">3</div><div class="parcours-step-icon">💡</div><h3>Coaching</h3><p>Séances de travail pour avancer</p><div class="parcours-arrow">→</div></div>
-        <div class="parcours-step"><div class="parcours-step-num">4</div><div class="parcours-step-icon">🚀</div><h3>Packs & Prestations</h3><p>Business plan, financement, lancement</p></div>
+        <div class="parcours-step"><div class="parcours-step-num">1</div><div class="parcours-step-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="10" height="16" rx="2"/><path d="M9 15h2"/></svg></div><h3>Découverte</h3><p><a href="https://www.instagram.com/ccs.guadeloupe" target="_blank" rel="noopener noreferrer">Instagram</a> ou <a href="https://wa.me/590690322346" target="_blank" rel="noopener noreferrer">WhatsApp</a> — vous prenez contact</p><div class="parcours-arrow">→</div></div>
+        <div class="parcours-step"><div class="parcours-step-num">2</div><div class="parcours-step-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r="1.5" fill="currentColor" stroke="none"/></svg></div><h3>Diagnostic</h3><p>Analyse complète — 80€</p><div class="parcours-arrow">→</div></div>
+        <div class="parcours-step"><div class="parcours-step-num">3</div><div class="parcours-step-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3a5 5 0 013.5 8.5L13 14H7l-.5-2.5A5 5 0 0110 3z"/><path d="M8 17h4"/></svg></div><h3>Coaching</h3><p>Séances de travail pour avancer</p><div class="parcours-arrow">→</div></div>
+        <div class="parcours-step"><div class="parcours-step-num">4</div><div class="parcours-step-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3c3-1 6 2 6 7L10 17 4 10c0-5 3-8 6-7z"/><circle cx="10" cy="9" r="2"/></svg></div><h3>Packs & Prestations</h3><p>Business plan, financement, lancement</p></div>
       </div>
     </div>
   </section>
@@ -1003,7 +1098,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 
     <!-- Encadré conseil -->
     <div style="background:#f0f4ff;border:1px solid #c8d4f0;border-left:4px solid var(--marine-fonce,#1a365d);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.8rem;font-size:.85rem;color:#374151">
-      <strong style="color:var(--marine-fonce,#1a365d)">💡 Ce simulateur est un outil d'orientation.</strong>
+      <strong style="color:var(--marine-fonce,#1a365d)">Ce simulateur est un outil d'orientation.</strong>
       Les résultats sont des estimations basées sur des hypothèses standard (célibataire, activité libérale, barème IR 2024). Pour une analyse personnalisée de votre situation, <a onclick="showPage('tunnel')" style="color:var(--or,#c9a84c);font-weight:700;cursor:pointer;text-decoration:underline">prenez rendez-vous avec le Cabinet de Conseils SIMELE</a>.
     </div>
 
@@ -1012,7 +1107,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 
       <!-- Inputs -->
       <div class="sim-card">
-        <div class="sim-section-title">📊 Activité</div>
+        <div class="sim-section-title">Activité</div>
         <div class="sim-input-row">
           <span class="sim-label">Chiffre d'affaires HT</span>
           <span class="sim-value" id="lbl-ca">30 000 €</span>
@@ -1027,14 +1122,14 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       </div>
 
       <div class="sim-card">
-        <div class="sim-section-title">🏢 EURL — Rémunération mensuelle</div>
+        <div class="sim-section-title">EURL — Rémunération mensuelle</div>
         <div class="sim-input-row">
           <span class="sim-label">Rémunération gérant</span>
           <span class="sim-value"><span id="lbl-eurl-remun">1 597</span> €/mois</span>
         </div>
         <input type="range" class="sim-range" id="sl-eurl-remun" min="0" max="20000" step="100" value="1597">
 
-        <div class="sim-section-title" style="margin-top:1rem">🏢 SASU — Rémunération mensuelle</div>
+        <div class="sim-section-title" style="margin-top:1rem">SASU — Rémunération mensuelle</div>
         <div class="sim-input-row">
           <span class="sim-label">Salaire brut mensuel</span>
           <span class="sim-value"><span id="lbl-sasu-sal">1 236</span> €/mois</span>
@@ -1050,7 +1145,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       </div>
 
       <div class="sim-card">
-        <div class="sim-section-title">👤 Situation personnelle</div>
+        <div class="sim-section-title">Situation personnelle</div>
 
         <div class="sim-input-row" style="margin-bottom:.6rem">
           <span class="sim-label">Situation familiale</span>
@@ -1075,7 +1170,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <p style="font-size:.72rem;color:#9ca3af;margin-top:.2rem">Salaires, revenus locatifs, pensions perçues hors activité...</p>
 
         <div id="sim-parts-info" style="font-size:.75rem;color:#6b7280;margin-top:.8rem;padding:.5rem .7rem;background:#f8f9fa;border-radius:6px;line-height:1.4">
-          📋 Célibataire · 0 enfant · 1,0 part · IR 2024
+          Célibataire · 0 enfant · 1,0 part · IR 2024
         </div>
       </div>
 
@@ -1084,7 +1179,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 
       <!-- Bouton détail -->
       <button id="sim-toggle-btn" onclick="simToggleDetail()" style="width:100%;background:transparent;border:1.5px solid #ddd5ca;border-radius:10px;padding:11px;font-family:inherit;font-size:.88rem;font-weight:600;color:#7a7a9a;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s;margin-top:4px">
-        <span>👁</span> <span id="sim-toggle-lbl">Afficher le détail</span>
+        <span id="sim-toggle-lbl">Afficher le détail</span>
       </button>
 
     </div><!-- /sim-root -->
@@ -1166,11 +1261,11 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     </div>
     <div style="display:flex;border-bottom:2px solid #e8ecf4;margin-bottom:1.5rem;overflow-x:auto">
       <button id="dt-dossier" onclick="ecDashTab('dossier')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:700;color:#1a365d;cursor:pointer;border-bottom:2px solid #1a365d;margin-bottom:-2px;white-space:nowrap">Mon dossier</button>
-      <button id="dt-prestations" onclick="ecDashTab('prestations')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">📋 Prestations</button>
-      <button id="dt-documents" onclick="ecDashTab('documents')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">📁 Documents</button>
-      <button id="dt-envoyer" onclick="ecDashTab('envoyer')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">💬 Messages</button>
-      <button id="dt-finances" onclick="ecDashTab('finances')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">💶 Finances</button>
-      <button id="dt-subventions" onclick="ecDashTab('subventions')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">🎯 Subventions</button>
+      <button id="dt-prestations" onclick="ecDashTab('prestations')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Prestations</button>
+      <button id="dt-documents" onclick="ecDashTab('documents')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Documents</button>
+      <button id="dt-envoyer" onclick="ecDashTab('envoyer')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Messages</button>
+      <button id="dt-finances" onclick="ecDashTab('finances')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Finances</button>
+      <button id="dt-subventions" onclick="ecDashTab('subventions')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Subventions</button>
       <button id="dt-mdp" onclick="ecDashTab('mdp')" style="padding:.7rem 1rem;background:none;border:none;font-family:inherit;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap">Mot de passe</button>
     </div>
     <div id="dd-dossier">
@@ -1199,7 +1294,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <p style="color:#6b7280;font-size:.85rem;margin:0 0 1.4rem">Choisissez le dispositif d'aide pour lequel vous souhaitez déposer un dossier.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem">
           <div onclick="ecShowFormSubvention('pij')" style="border:2px solid #e8ecf4;border-radius:12px;padding:1.2rem;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#1a365d'" onmouseout="this.style.borderColor='#e8ecf4'">
-            <div style="font-size:1.5rem;margin-bottom:.5rem">🌟</div>
+            <div style="font-size:1.5rem;margin-bottom:.5rem"></div>
             <div style="font-weight:700;color:#1a365d;font-size:.95rem;margin-bottom:.3rem">PIJ</div>
             <div style="font-size:.78rem;color:#6b7280">Prime à l'Installation des Jeunes — pour les 18-35 ans qui créent leur entreprise</div>
           </div>
@@ -1228,7 +1323,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem">
           <button onclick="ecShowSubventions()" style="background:none;border:1px solid #e8ecf4;border-radius:8px;padding:.5rem .9rem;font-family:inherit;font-size:.82rem;color:#6b7280;cursor:pointer">← Retour</button>
           <div>
-            <div style="font-weight:700;color:#1a365d;font-size:1rem">🌟 Dossier PIJ — Prime à l'Installation des Jeunes</div>
+            <div style="font-weight:700;color:#1a365d;font-size:1rem">Dossier PIJ — Prime à l'Installation des Jeunes</div>
             <div style="font-size:.78rem;color:#9ca3af">Remplissez les informations ci-dessous. Vos réponses sont transmises directement à votre conseiller SIMELE.</div>
           </div>
         </div>
@@ -1249,7 +1344,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <!-- ═══════════ ÉTAPE 1 : IDENTITÉ ═══════════ -->
         <div id="pij-step-1">
           <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">👤 Vos informations personnelles</h4>
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Vos informations personnelles</h4>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
               <div><label class="pij-label">Nom de famille</label><input id="pij-nom" class="pij-input" placeholder="DUPONT"></div>
               <div><label class="pij-label">Prénom</label><input id="pij-prenom" class="pij-input" placeholder="Marie"></div>
@@ -1263,7 +1358,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
               <div style="grid-column:1/-1"><label class="pij-label">Adresse email</label><input id="pij-email" type="email" class="pij-input" placeholder="marie.dupont@email.fr"></div>
             </div>
             <div style="margin-top:1.2rem;padding:1rem;background:#fffbeb;border-radius:10px;border:1px solid #fde68a">
-              <p style="font-size:.82rem;color:#92400e;margin:0">💡 <strong>Votre situation actuelle</strong></p>
+              <p style="font-size:.82rem;color:#92400e;margin:0"><strong>Votre situation actuelle</strong></p>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem">
                 <div><label class="pij-label">Situation (avant de créer votre entreprise)</label>
                   <select id="pij-situation" class="pij-input">
@@ -1307,7 +1402,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <!-- ═══════════ ÉTAPE 2 : VOTRE PROJET ═══════════ -->
         <div id="pij-step-2" style="display:none">
           <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">💡 Votre projet d'entreprise</h4>
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Votre projet d'entreprise</h4>
             <div style="display:grid;gap:1rem">
               <div><label class="pij-label">Comment s'appelle votre future entreprise ?</label><input id="pij-raison-sociale" class="pij-input" placeholder="Ex: Marie Dupont Services, MDS Conseil..."></div>
               <div><label class="pij-label">En quelques mots, que fera votre entreprise ?</label><textarea id="pij-activite-desc" class="pij-input" rows="3" style="resize:vertical" placeholder="Ex: Je vends des plats cuisinés faits maison livrés à domicile. Je propose aussi des plateaux repas pour les entreprises..."></textarea>
@@ -1377,18 +1472,18 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <!-- ═══════════ ÉTAPE 3 : INVESTISSEMENTS ═══════════ -->
         <div id="pij-step-3" style="display:none">
           <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">🛒 Ce que vous devez acheter pour démarrer</h4>
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Ce que vous devez acheter pour démarrer</h4>
             <p style="font-size:.82rem;color:#6b7280;margin:0 0 1.2rem">Listez tout ce dont vous avez besoin pour créer et faire fonctionner votre entreprise (matériel, local, véhicule, stock, site internet...)</p>
             <div id="pij-investissements-liste" style="margin-bottom:.8rem"></div>
             <button onclick="pijAjouterInvestissement()" style="background:#f0f4ff;border:1px dashed #1a365d;border-radius:8px;padding:.6rem 1.2rem;font-family:inherit;font-size:.82rem;color:#1a365d;cursor:pointer;width:100%;margin-bottom:1.2rem">+ Ajouter un élément</button>
             <div style="background:#f0f9ff;border-radius:10px;padding:1rem;border:1px solid #bae6fd">
               <div style="display:flex;justify-content:space-between;font-size:.9rem;font-weight:700;color:#1a365d">
-                <span>💰 Total des investissements</span>
+                <span>Total des investissements</span>
                 <span id="pij-total-invest">0 €</span>
               </div>
             </div>
             <div style="margin-top:1.2rem;padding:1rem;background:#fffbeb;border-radius:10px;border:1px solid #fde68a">
-              <p style="font-size:.82rem;font-weight:700;color:#92400e;margin:0 0 .8rem">📋 Comment allez-vous financer ces achats ?</p>
+              <p style="font-size:.82rem;font-weight:700;color:#92400e;margin:0 0 .8rem">Comment allez-vous financer ces achats ?</p>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
                 <div><label class="pij-label">Votre argent personnel (apport)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-apport-perso" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
                 <div><label class="pij-label">Prêt bancaire demandé</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-pret-bancaire" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
@@ -1407,11 +1502,11 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <!-- ═══════════ ÉTAPE 4 : PRÉVISIONS FINANCIÈRES ═══════════ -->
         <div id="pij-step-4" style="display:none">
           <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">📊 Vos estimations financières</h4>
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Vos estimations financières</h4>
             <p style="font-size:.82rem;color:#6b7280;margin:0 0 1.2rem">Ne vous inquiétez pas si vous n'êtes pas sûr(e) — donnez votre meilleure estimation. Ces chiffres nous aident à construire votre dossier.</p>
             <div style="display:grid;gap:1.2rem">
               <div style="padding:1rem;background:#f8f9fa;border-radius:10px">
-                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">💵 Vos revenus prévus</p>
+                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">Vos revenus prévus</p>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem">
                   <div><label class="pij-label">Chiffre d'affaires Année 1</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca1" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div><div class="pij-hint">Total des ventes prévues</div></div>
                   <div><label class="pij-label">Chiffre d'affaires Année 2</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca2" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div></div>
@@ -1419,7 +1514,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
                 </div>
               </div>
               <div style="padding:1rem;background:#f8f9fa;border-radius:10px">
-                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">💸 Vos dépenses mensuelles prévues</p>
+                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">Vos dépenses mensuelles prévues</p>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
                   <div><label class="pij-label">Loyer du local (si applicable)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-loyer" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
                   <div><label class="pij-label">Salaire que vous comptez vous verser</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-remuneration" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
@@ -1445,7 +1540,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <!-- ═══════════ ÉTAPE 5 : SITUATION PERSONNELLE ═══════════ -->
         <div id="pij-step-5" style="display:none">
           <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">🏠 Votre situation personnelle et familiale</h4>
+            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Votre situation personnelle et familiale</h4>
             <div style="display:grid;gap:1rem">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
                 <div><label class="pij-label">Situation familiale</label>
@@ -1546,13 +1641,13 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
               <li>Vos investissements et financements sont renseignés</li>
               <li>Votre motivation est exprimée</li>
             </ul>
-            <p style="font-size:.78rem;color:#6b7280;margin:.8rem 0 0">📌 Votre conseiller SIMELE recevra ce formulaire et vous contactera pour finaliser le dossier PIJ et vous accompagner dans les démarches.</p>
+            <p style="font-size:.78rem;color:#6b7280;margin:.8rem 0 0">Votre conseiller SIMELE recevra ce formulaire et vous contactera pour finaliser le dossier PIJ et vous accompagner dans les démarches.</p>
           </div>
 
           <div id="pij-submit-result" style="margin-bottom:.8rem"></div>
           <div class="pij-nav">
             <button class="pij-btn-prev" onclick="pijGoStep(5)">← Précédent</button>
-            <button onclick="pijEnvoyer()" style="padding:.9rem 2rem;background:#c9a84c;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(201,168,76,.3)">📨 Envoyer mon dossier PIJ</button>
+            <button onclick="pijEnvoyer()" style="padding:.9rem 2rem;background:#c9a84c;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(201,168,76,.3)">Envoyer mon dossier PIJ</button>
           </div>
         </div>
 
@@ -1581,7 +1676,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
     <!-- PRESTATIONS TAB -->
     <div id="dd-prestations" style="display:none">
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
-        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1.1rem;margin:0 0 .4rem">📋 Nos prestations</h3>
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1.1rem;margin:0 0 .4rem">Nos prestations</h3>
         <p style="color:#6b7280;font-size:.85rem;margin:0 0 1.2rem">Sélectionnez la prestation qui vous intéresse. Si le prix est « Sur devis », vous pourrez nous décrire votre besoin et nous vous enverrons un devis personnalisé.</p>
         <div id="ec-current-prestation" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.8rem 1rem;margin-bottom:1rem;color:#166534;font-size:.85rem"></div>
         <div id="ec-services-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem">
@@ -1590,12 +1685,12 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 
         <!-- Formulaire devis si sur devis -->
         <div id="ec-devis-form" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:1.2rem;margin-bottom:1.2rem">
-          <div style="font-weight:700;color:#92400e;font-size:.9rem;margin-bottom:.8rem">📝 Décrivez votre besoin pour obtenir un devis</div>
+          <div style="font-weight:700;color:#92400e;font-size:.9rem;margin-bottom:.8rem">Décrivez votre besoin pour obtenir un devis</div>
           <div id="ec-devis-service-label" style="font-size:.85rem;color:#374151;margin-bottom:.8rem;padding:.5rem .8rem;background:white;border-radius:6px"></div>
           <textarea id="ec-devis-description" rows="4" placeholder="Décrivez en détail votre projet, vos besoins, vos contraintes de temps, votre budget indicatif... Plus vous êtes précis, plus votre devis sera adapté." style="width:100%;padding:.8rem;border:1.5px solid #fde68a;border-radius:8px;font-family:inherit;font-size:.85rem;resize:vertical;outline:none;box-sizing:border-box;background:white"></textarea>
           <div style="display:flex;gap:.8rem;margin-top:.8rem">
             <button onclick="document.getElementById('ec-devis-form').style.display='none'" style="flex:1;padding:.7rem;background:white;border:1px solid #fde68a;border-radius:8px;font-family:inherit;font-size:.85rem;cursor:pointer;color:#92400e">Annuler</button>
-            <button onclick="ecEnvoyerDemandeDevis()" style="flex:2;padding:.7rem;background:#c9a84c;color:white;border:none;border-radius:8px;font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer">📨 Demander ce devis</button>
+            <button onclick="ecEnvoyerDemandeDevis()" style="flex:2;padding:.7rem;background:#c9a84c;color:white;border:none;border-radius:8px;font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer">Demander ce devis</button>
           </div>
         </div>
 
@@ -1605,7 +1700,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
           <textarea id="ec-prestation-message" rows="2" placeholder="Questions, précisions sur votre projet..." style="width:100%;padding:.7rem .9rem;border:1.5px solid #e8ecf4;border-radius:8px;font-family:inherit;font-size:.85rem;resize:vertical;outline:none;box-sizing:border-box"></textarea>
         </div>
 
-        <button id="ec-prestation-submit-btn" onclick="ecEnvoyerPrestation()" style="display:none;width:100%;padding:.85rem;background:#c9a84c;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer">📨 Confirmer ma demande</button>
+        <button id="ec-prestation-submit-btn" onclick="ecEnvoyerPrestation()" style="display:none;width:100%;padding:.85rem;background:#c9a84c;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer">Confirmer ma demande</button>
         <div id="ec-prestation-result" style="margin-top:.8rem"></div>
       </div>
     </div>
@@ -1615,16 +1710,16 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 
       <!-- Upload section (same as CRM) -->
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
-        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem">📤 Envoyer un document au cabinet</h3>
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem">Envoyer un document au cabinet</h3>
         <p style="color:#6b7280;font-size:.82rem;margin:0 0 1rem">Vos documents seront examinés et ajoutés à votre dossier après validation.</p>
         <div id="ec-doc-upload-zone" onclick="document.getElementById('ec-doc-file-input').click()" ondragover="event.preventDefault();this.style.borderColor='#1a365d'" ondragleave="this.style.borderColor='#c8d4e8'" ondrop="ecDocHandleDrop(event)" style="border:2px dashed #c8d4e8;border-radius:12px;padding:1.8rem;text-align:center;cursor:pointer;transition:border-color .2s;background:#fafbfc;margin-bottom:.8rem">
-          <div style="font-size:2.2rem;margin-bottom:.4rem">📎</div>
+          <div style="font-size:2.2rem;margin-bottom:.4rem"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66L9.41 17.41a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
           <div style="font-size:.88rem;color:#374151;font-weight:600">Cliquez ou glissez votre fichier ici</div>
           <div style="font-size:.75rem;color:#9ca3af;margin-top:.2rem">PDF, Word, Excel, Images — Max 20 Mo</div>
         </div>
         <input type="file" id="ec-doc-file-input" style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.txt,.zip" onchange="ecDocFileSelect(this)">
         <div id="ec-doc-file-selected" style="display:none;background:#f0f4ff;border:1px solid #c8d4e8;border-radius:8px;padding:.7rem 1rem;margin-bottom:.8rem;align-items:center;gap:.8rem">
-          <span style="font-size:1.3rem">📄</span>
+          <span style="font-size:1.3rem"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h8l4 4v10H4V4z"/><path d="M12 4v4h4"/></svg></span>
           <div style="flex:1"><div id="ec-doc-file-name" style="font-size:.85rem;font-weight:600;color:#1a365d"></div><div id="ec-doc-file-size" style="font-size:.75rem;color:#9ca3af"></div></div>
           <button onclick="ecDocFileClear()" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:1.1rem">✕</button>
         </div>
@@ -1632,15 +1727,15 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
           <div><label style="font-size:.75rem;font-weight:700;color:#6b7280;text-transform:uppercase;display:block;margin-bottom:.3rem">Nom du document</label><input id="ec-doc-nom" class="pij-input" placeholder="Optionnel (garde le nom du fichier)"></div>
           <div><label style="font-size:.75rem;font-weight:700;color:#6b7280;text-transform:uppercase;display:block;margin-bottom:.3rem">Commentaire</label><input id="ec-doc-comment" class="pij-input" placeholder="Ex: Justificatif d'identité, RIB..."></div>
         </div>
-        <button onclick="ecDocEnvoyer()" style="width:100%;padding:.8rem;background:#1a365d;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer">📨 Envoyer ce document</button>
+        <button onclick="ecDocEnvoyer()" style="width:100%;padding:.8rem;background:#1a365d;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer">Envoyer ce document</button>
         <div id="ec-doc-upload-result" style="margin-top:.6rem"></div>
       </div>
 
       <!-- Documents du dossier -->
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-          <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0">📁 Documents de votre dossier</h3>
-          <button onclick="ecLoadDocuments()" style="background:#f0f4f8;border:1px solid #e0e0e0;border-radius:6px;padding:.3rem .8rem;font-size:.75rem;cursor:pointer;color:#1a365d">🔄 Actualiser</button>
+          <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0">Documents de votre dossier</h3>
+          <button onclick="ecLoadDocuments()" style="background:#f0f4f8;border:1px solid #e0e0e0;border-radius:6px;padding:.3rem .8rem;font-size:.75rem;cursor:pointer;color:#1a365d">Actualiser</button>
         </div>
         <div id="ec-docs-list">
           <div style="text-align:center;padding:1.5rem;color:#9ca3af;font-size:.85rem">Chargement...</div>
@@ -1649,7 +1744,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 
       <!-- Mes envois -->
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1rem">📬 Mes documents envoyés</h3>
+        <h3 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1rem">Mes documents envoyés</h3>
         <div id="ec-mes-envois"><div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.82rem">Aucun envoi.</div></div>
       </div>
     </div>
@@ -1672,7 +1767,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <!-- Messages area -->
         <div id="ec-chat-messages" style="height:380px;overflow-y:auto;padding:1.2rem;background:#f4f6f9;display:flex;flex-direction:column;gap:.7rem">
           <div style="text-align:center;padding:2rem;color:#9ca3af;font-size:.85rem">
-            <div style="font-size:2.5rem;margin-bottom:.6rem">💬</div>
+            <div style="font-size:2.5rem;margin-bottom:.6rem"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h14a1 1 0 011 1v8a1 1 0 01-1 1H6l-4 3V5a1 1 0 011-1z"/></svg></div>
             Chargement de la conversation...
           </div>
         </div>
@@ -1680,7 +1775,7 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
         <div style="padding:1rem;background:white;border-top:1px solid #e8ecf4">
           <div style="display:flex;gap:.7rem;align-items:flex-end">
             <textarea id="ec-chat-input" rows="2" placeholder="Votre message... (Entrée pour envoyer)" style="flex:1;padding:.7rem .9rem;border:1.5px solid #e8ecf4;border-radius:8px;font-family:inherit;font-size:.88rem;resize:none;outline:none;transition:border-color .2s;line-height:1.5" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();ecEnvoyerMessage()}" onfocus="this.style.borderColor='#1a365d'" onblur="this.style.borderColor='#e8ecf4'"></textarea>
-            <button onclick="ecEnvoyerMessage()" style="padding:.7rem 1.4rem;background:#1a365d;color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;white-space:nowrap">📨 Envoyer</button>
+            <button onclick="ecEnvoyerMessage()" style="padding:.7rem 1.4rem;background:#1a365d;color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;white-space:nowrap">Envoyer</button>
           </div>
           <div style="font-size:.72rem;color:#9ca3af;margin-top:.4rem">Maj+Entrée pour aller à la ligne</div>
         </div>
@@ -1921,7 +2016,7 @@ async function ecLoadDocuments() {
       return;
     }
     var COLORS = {fiche:'#9b59b6',devis:'#3498db',contrat:'#2ecc71',identite:'#e67e22',siege:'#1abc9c',activite:'#e74c3c',gestion:'#95a5a6',autre:'#95a5a6',document:'#95a5a6'};
-    var ICONS = {pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',jpg:'🖼️',jpeg:'🖼️',png:'🖼️',html:'🌐',txt:'📃'};
+    var ICONS = {pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',jpg:'️',jpeg:'️',png:'️',html:'🌐',txt:'📃'};
     list.innerHTML = d.documents.map(function(doc) {
       var ext = (doc.nom||'').split('.').pop().toLowerCase();
       var icon = ICONS[ext] || '📁';
@@ -2537,7 +2632,7 @@ window.ecRefreshChat = async function() {
 
     if (!msgs.length) {
       container.innerHTML = '<div style="text-align:center;padding:2rem;color:#9ca3af;font-size:.85rem">'
-        + '<div style="font-size:2.5rem;margin-bottom:.8rem">💬</div>'
+        + '<div style="font-size:2.5rem;margin-bottom:.8rem"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h14a1 1 0 011 1v8a1 1 0 01-1 1H6l-4 3V5a1 1 0 011-1z"/></svg></div>'
         + '<div style="font-weight:600;margin-bottom:.3rem">Démarrez la conversation</div>'
         + '<div>Posez votre première question ci-dessous.<br>Le cabinet vous répondra dans les meilleurs délais.</div>'
         + '</div>';
@@ -2841,8 +2936,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }).join('');
     };
     return '<div class="sim-detail">'
-      + '<div class="sim-det-title">🏢 Entreprise</div>' + rows(detail.entreprise)
-      + '<div class="sim-det-title">👤 Dirigeant</div>' + rows(detail.dirigeant)
+      + '<div class="sim-det-title">Entreprise</div>' + rows(detail.entreprise)
+      + '<div class="sim-det-title">Dirigeant</div>' + rows(detail.dirigeant)
       + '</div>';
   }
 
@@ -2901,7 +2996,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var parts = getNbParts(situ, enf);
     var situMap = {celibataire:'Célibataire', marie:'Marié(e)/Pacsé(e)', veuf:'Veuf/Veuve'};
     var infoEl = document.getElementById('sim-parts-info');
-    if (infoEl) infoEl.innerHTML = '📋 <strong>' + (situMap[situ]||situ) + '</strong> · '
+    if (infoEl) infoEl.innerHTML = '<strong>' + (situMap[situ]||situ) + '</strong> · '
       + enf + ' enfant(s) · <strong>' + parts.toFixed(1) + ' part(s)</strong>'
       + (autresRev > 0 ? ' · +' + eur(autresRev) + ' hors activité' : '')
       + ' · Barème IR 2024';
