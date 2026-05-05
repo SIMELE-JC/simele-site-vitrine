@@ -533,51 +533,6 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 .sim-select:focus { border-color: var(--marine-fonce, #1a365d); }
 
 /* ── Formulaire RDV — Centres d'intérêt multi-sélection ── */
-.rdv-interests-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.rdv-interest-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border: 1.5px solid #e5e7eb;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: border-color .15s, background .15s;
-  font-size: .88rem;
-  color: #374151;
-  background: #fff;
-  line-height: 1.3;
-}
-.rdv-interest-item:hover { border-color: #1a365d; background: #f8f9ff; }
-.rdv-interest-item input[type="checkbox"] {
-  width: 16px; height: 16px;
-  accent-color: #1a365d;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-.rdv-interest-item span { flex: 1; font-weight: 500; }
-.rdv-interest-item small {
-  font-size: .75rem; color: #c9a84c; font-weight: 700;
-  background: #fef9ec; padding: 1px 5px; border-radius: 4px;
-}
-.rdv-interest-item:has(input:checked) {
-  border-color: #1a365d;
-  background: #f0f4ff;
-  color: #1a365d;
-}
-.rdv-interest-full { grid-column: 1 / -1; }
-@media (max-width: 480px) {
-  .rdv-interests-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 480px) {
-  .sim-grid { grid-template-columns: 1fr; }
-  .sim-card, .sim-first { padding: 14px; }
-}
-
 /* ── Formulaire RDV — Centres d'intérêt multi-sélection ── */
 .rdv-interests-grid {
   display: grid;
@@ -618,6 +573,90 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 .rdv-interest-full { grid-column: 1 / -1; }
 @media (max-width: 520px) {
   .rdv-interests-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Badge "Sur devis" ── */
+.rdv-devis {
+  font-size: .74rem; color: #6b7280; font-weight: 600;
+  background: #f3f4f6; padding: 1px 6px; border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ── Bouton info (i) + tooltip ── */
+.rdv-info-btn {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #d1d5db;
+  background: transparent;
+  color: #9ca3af;
+  font-size: .65rem;
+  font-weight: 800;
+  font-style: italic;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  padding: 0;
+  line-height: 1;
+  transition: border-color .15s, color .15s, background .15s;
+  z-index: 1;
+}
+.rdv-info-btn:hover {
+  border-color: var(--marine-fonce, #1a365d);
+  color: var(--marine-fonce, #1a365d);
+  background: #f0f4ff;
+}
+
+/* Tooltip */
+.rdv-info-btn::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: -8px;
+  width: 240px;
+  background: #1a365d;
+  color: #fff;
+  font-size: .78rem;
+  font-weight: 400;
+  font-style: normal;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.45;
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s;
+  white-space: normal;
+  text-align: left;
+  z-index: 100;
+}
+.rdv-info-btn::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  right: 4px;
+  border: 5px solid transparent;
+  border-top-color: #1a365d;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s;
+}
+.rdv-info-btn:hover::after,
+.rdv-info-btn:hover::before { opacity: 1; }
+
+/* Sur mobile : tooltip vers la gauche */
+@media (max-width: 520px) {
+  .rdv-info-btn::after {
+    right: auto;
+    left: -8px;
+    width: 200px;
+  }
+  .rdv-info-btn::before {
+    right: auto;
+    left: 4px;
+  }
 }
 </style>
 </head>
@@ -931,17 +970,83 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
             <label class="form-label">Ce qui vous intéresse <span style="color:#c9a84c">*</span></label>
             <p style="font-size:.78rem;color:#9ca3af;margin:.2rem 0 .8rem">Sélectionnez une ou plusieurs options</p>
             <div class="rdv-interests-grid">
-              <label class="rdv-interest-item"><input type="checkbox" value="Diagnostic de projet (80€)"><span>Diagnostic de projet</span><small>80€</small></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Coaching individuel (3 séances)"><span>Coaching (3 séances)</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Coaching individuel (5 séances)"><span>Coaching (5 séances)</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Business Plan"><span>Business Plan</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Prévisionnel financier"><span>Prévisionnel financier</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Dossier de financement"><span>Dossier de financement</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Pack Essentiel"><span>Pack Essentiel</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Pack Création"><span>Pack Création</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Pack Financement"><span>Pack Financement</span></label>
-              <label class="rdv-interest-item"><input type="checkbox" value="Pack Global"><span>Pack Global</span></label>
-              <label class="rdv-interest-item rdv-interest-full"><input type="checkbox" value="Conseil personnalisé"><span>Je ne sais pas encore — conseil SVP</span></label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Diagnostic de projet (80€)">
+                <span>Diagnostic de projet</span>
+                <small>80€</small>
+                <button type="button" class="rdv-info-btn" data-tip="Analyse approfondie de votre idée : viabilité économique, forces &amp; failles, identification des risques, plan d'action personnalisé.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Coaching individuel — 3 séances (210€)">
+                <span>Coaching 3 séances</span>
+                <small>210€</small>
+                <button type="button" class="rdv-info-btn" data-tip="3 séances d'accompagnement intensif pour structurer votre projet, lever vos blocages et définir vos prochaines étapes.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Coaching individuel — 5 séances (320€)">
+                <span>Coaching 5 séances</span>
+                <small>320€</small>
+                <button type="button" class="rdv-info-btn" data-tip="5 séances de suivi renforcé. Idéal pour les projets complexes nécessitant un accompagnement en profondeur sur la durée.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Business Plan (450€)">
+                <span>Business Plan</span>
+                <small>450€</small>
+                <button type="button" class="rdv-info-btn" data-tip="Rédaction professionnelle complète de votre plan d'affaires : étude de marché, stratégie, modèle économique, projections.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Prévisionnel financier sur 3 ans (350€)">
+                <span>Prévisionnel sur 3 ans</span>
+                <small>350€</small>
+                <button type="button" class="rdv-info-btn" data-tip="Tableaux financiers prévisionnels sur 3 ans : compte de résultat, bilan prévisionnel, plan de trésorerie et seuil de rentabilité.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Pack Essentiel (590€)">
+                <span>Pack Essentiel</span>
+                <small>590€</small>
+                <button type="button" class="rdv-info-btn" data-tip="Business Plan + Prévisionnel financier 3 ans. La base indispensable pour convaincre vos partenaires et démarrer sereinement.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Pack Financement (890€)">
+                <span>Pack Financement</span>
+                <small>890€</small>
+                <button type="button" class="rdv-info-btn" data-tip="Pack Essentiel + Dossier de financement bancaire. Tout le nécessaire pour obtenir un prêt professionnel ou un financement public.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Pack Global (1 290€)">
+                <span>Pack Global</span>
+                <small>1 290€</small>
+                <button type="button" class="rdv-info-btn" data-tip="Accompagnement complet : diagnostic, business plan, prévisionnel, dossier financement et recherche de subventions. La formule tout-en-un.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Dossier de subvention">
+                <span>Dossier de subvention</span>
+                <small class="rdv-devis">Sur devis</small>
+                <button type="button" class="rdv-info-btn" data-tip="Identification des aides disponibles (ARICE, ARDDA, LADOM…), constitution et dépôt de votre dossier de demande de subvention.">i</button>
+              </label>
+
+              <label class="rdv-interest-item">
+                <input type="checkbox" value="Dossier de financement">
+                <span>Dossier de financement</span>
+                <small class="rdv-devis">Sur devis</small>
+                <button type="button" class="rdv-info-btn" data-tip="Montage complet du dossier bancaire, argumentaire financier et accompagnement dans vos démarches auprès des établissements de crédit.">i</button>
+              </label>
+
+              <label class="rdv-interest-item rdv-interest-full">
+                <input type="checkbox" value="Conseil personnalisé">
+                <span>Je ne sais pas encore — conseil SVP</span>
+                <button type="button" class="rdv-info-btn" data-tip="Pas d'inquiétude ! Décrivez votre projet dans le champ ci-dessous et nous vous orientons vers la solution la mieux adaptée.">i</button>
+              </label>
+
             </div>
           </div>
           <div class="form-group"><label class="form-label">Décrivez brièvement votre projet</label><textarea class="form-textarea" placeholder="En quelques lignes, parlez-moi de votre idée, votre secteur d'activité et là où vous en êtes..."></textarea></div>
@@ -3032,6 +3137,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var slSit = document.getElementById('sl-situation');
     if (slSit) slSit.addEventListener('change', window.simUpdate);
     window.simUpdate();
+  });
+
+  /* Info buttons — empêcher le clic de cocher la checkbox parente */
+  document.querySelectorAll('.rdv-info-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) { e.preventDefault(); });
   });
 })();
 
