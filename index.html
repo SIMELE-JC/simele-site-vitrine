@@ -225,6 +225,20 @@ h3 { font-size: 1.35rem; }
 .contact-info-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.8rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--marine-pale); }
 .contact-info-item:last-child { border-bottom: none; }
 .contact-info-icon { font-size: 0.95rem; flex-shrink: 0; margin-top: 0.2rem; opacity: 0.45; }
+.contact-info-icon--brand {
+  opacity: 1 !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  margin-top: 0 !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.contact-info-icon--brand svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 .contact-info-title { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--marine); opacity: 0.65; margin-bottom: 0.3rem; font-weight: 500; }
 .contact-info-text { font-size: 0.85rem; color: var(--gris); line-height: 1.6; }
 .garantie-box { background: var(--marine-pale); border-left: 3px solid var(--marine); padding: 1.5rem; border-radius: 2px; margin-top: 2rem; opacity: 0.85; }
@@ -1168,8 +1182,25 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
           <span class="label">Coordonnées</span>
           <h3 style="font-family:var(--display); color:var(--marine-fonce); margin-bottom:2rem;">Comment me joindre</h3>
           <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2a6 6 0 016 6c0 4-6 10-6 10S4 12 4 8a6 6 0 016-6z"/><circle cx="10" cy="8" r="2"/></svg></div><div><p class="contact-info-title">Localisation</p><p class="contact-info-text">Guadeloupe<br>Interventions sur tout le territoire</p></div></div>
-          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="10" height="16" rx="2"/><path d="M9 15h2"/></svg></div><div><p class="contact-info-title"><a href="https://wa.me/590690322346" target="_blank" rel="noopener noreferrer">WhatsApp</a> &amp; Téléphone</p><p class="contact-info-text">Disponible pour un premier échange<br>Réponse sous 24h</p></div></div>
-          <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h2l2-3h8l2 3h2v10H2V7z"/><circle cx="10" cy="12" r="3"/></svg></div><div><p class="contact-info-title"><a href="https://www.instagram.com/ccs.guadeloupe" target="_blank" rel="noopener noreferrer">Instagram</a></p><p class="contact-info-text">Suivez SIMELE pour des conseils<br>et actualités sur l'entrepreneuriat</p></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon contact-info-icon--brand"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="16" cy="16" r="16" fill="#25D366"/>
+  <path d="M23.5 8.5A10.44 10.44 0 0016 5.5a10.5 10.5 0 00-9.07 15.74L5.5 26.5l5.42-1.42A10.5 10.5 0 0016 26.5a10.5 10.5 0 0010.5-10.5 10.44 10.44 0 00-3-7.5zm-7.5 16.15a8.71 8.71 0 01-4.44-1.21l-.32-.19-3.22.84.86-3.13-.21-.33a8.75 8.75 0 1115.9-4.98 8.74 8.74 0 01-8.57 9zm4.8-6.55c-.26-.13-1.55-.77-1.79-.85s-.41-.13-.59.13-.67.85-.82 1-.3.2-.57.07a7.13 7.13 0 01-2.1-1.3 7.87 7.87 0 01-1.45-1.8c-.15-.26 0-.4.11-.53s.26-.3.39-.46a1.76 1.76 0 00.26-.43.49.49 0 000-.46c-.07-.13-.59-1.42-.8-1.94s-.43-.44-.59-.45h-.5a1 1 0 00-.71.33 2.94 2.94 0 00-.92 2.19 5.11 5.11 0 001.07 2.71 11.69 11.69 0 004.48 3.95c.63.27 1.12.43 1.5.55a3.61 3.61 0 001.66.1 2.7 2.7 0 001.77-1.25 2.19 2.19 0 00.15-1.25c-.06-.11-.24-.17-.5-.3z" fill="#fff"/>
+</svg></div><div><p class="contact-info-title"><a href="https://wa.me/590690322346" target="_blank" rel="noopener noreferrer">WhatsApp</a> &amp; Téléphone</p><p class="contact-info-text">Disponible pour un premier échange<br>Réponse sous 24h</p></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon contact-info-icon--brand"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="ig-grad-a" cx="30%" cy="107%" r="150%">
+      <stop offset="0%" stop-color="#fdf497"/>
+      <stop offset="5%" stop-color="#fdf497"/>
+      <stop offset="45%" stop-color="#fd5949"/>
+      <stop offset="60%" stop-color="#d6249f"/>
+      <stop offset="90%" stop-color="#285AEB"/>
+    </radialGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#ig-grad-a)"/>
+  <rect x="6.5" y="6.5" width="19" height="19" rx="5.5" fill="none" stroke="#fff" stroke-width="2"/>
+  <circle cx="16" cy="16" r="4.5" fill="none" stroke="#fff" stroke-width="2"/>
+  <circle cx="22" cy="10" r="1.2" fill="#fff"/>
+</svg></div><div><p class="contact-info-title"><a href="https://www.instagram.com/ccs.guadeloupe" target="_blank" rel="noopener noreferrer">Instagram</a></p><p class="contact-info-text">Suivez SIMELE pour des conseils<br>et actualités sur l'entrepreneuriat</p></div></div>
           <div class="contact-info-item"><div class="contact-info-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg></div><div><p class="contact-info-title">Disponibilités</p><p class="contact-info-text">Lundi – Vendredi : 8h – 18h<br>Samedi sur rendez-vous</p></div></div>
           <div class="garantie-box"><p><strong>Ma promesse :</strong> Chaque échange est traité avec sérieux et confidentialité. Votre projet est entre de bonnes mains.</p></div>
         </div>
