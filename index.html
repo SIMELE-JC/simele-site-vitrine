@@ -571,6 +571,56 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
   color: var(--marine-fonce,#1a365d);
 }
 .rdv-interest-full { grid-column: 1 / -1; }
+
+/* ── Validation formulaire contact ── */
+.form-input.rdv-error {
+  border-color: #dc2626 !important;
+  background: #fef2f2;
+}
+.form-input.rdv-ok {
+  border-color: #16a34a !important;
+  background: #f0fdf4;
+}
+.rdv-field-error {
+  font-size: .75rem;
+  color: #dc2626;
+  margin-top: .3rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
+}
+.rdv-field-error::before {
+  content: '';
+  display: inline-block;
+  width: 14px; height: 14px;
+  background: #dc2626;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 4v4M7 9.5v.5' stroke='white' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: contain;
+}
+.rdv-alert-error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  padding: .8rem 1rem;
+  font-size: .85rem;
+  color: #991b1b;
+  line-height: 1.5;
+}
+.rdv-alert-success {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-left: 4px solid #16a34a;
+  border-radius: 8px;
+  padding: .8rem 1rem;
+  font-size: .85rem;
+  color: #166534;
+  line-height: 1.5;
+  font-weight: 500;
+}
 @media (max-width: 520px) {
   .rdv-interests-grid { grid-template-columns: 1fr; }
 }
@@ -963,9 +1013,9 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
           <span class="label">Formulaire de contact</span>
           <h2>Envoyez-moi<br><span class="italic text-marine">un message</span></h2>
           <div class="divider"></div>
-          <div class="form-group"><label class="form-label">Prénom & Nom *</label><input type="text" class="form-input" placeholder="Marie Dupont"></div>
-          <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" placeholder="marie@exemple.com"></div>
-          <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" placeholder="+590 6 90 00 00 00"></div>
+          <div class="form-group"><label class="form-label">Prénom & Nom *</label><input type="text" id="rdv-nom" class="form-input" placeholder="Marie Dupont" autocomplete="name"></div>
+          <div class="form-group"><label class="form-label">Email *</label><input type="email" id="rdv-email" class="form-input" placeholder="marie@exemple.com" autocomplete="email"></div>
+          <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" id="rdv-tel" class="form-input" placeholder="0690000000" autocomplete="tel"></div>
           <div class="form-group">
             <label class="form-label">Ce qui vous intéresse <span style="color:#c9a84c">*</span></label>
             <p style="font-size:.78rem;color:#9ca3af;margin:.2rem 0 .8rem">Sélectionnez une ou plusieurs options</p>
@@ -1049,9 +1099,10 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
 
             </div>
           </div>
-          <div class="form-group"><label class="form-label">Décrivez brièvement votre projet</label><textarea class="form-textarea" placeholder="En quelques lignes, parlez-moi de votre idée, votre secteur d'activité et là où vous en êtes..."></textarea></div>
-          <a class="btn-primary" style="width:100%; text-align:center; display:block;">Envoyer ma demande</a>
-          <p style="font-size:0.72rem; color:var(--gris); margin-top:1rem; text-align:center;">Réponse sous 24h ouvrées — Confidentialité garantie.</p>
+          <div class="form-group"><label class="form-label">Décrivez brièvement votre projet</label><textarea id="rdv-message" class="form-textarea" placeholder="En quelques lignes, parlez-moi de votre idée, votre secteur d'activité et là où vous en êtes..."></textarea></div>
+          <button type="button" id="rdv-submit-btn" class="btn-primary" style="width:100%;text-align:center;display:block;border:none;cursor:pointer;font-family:inherit" onclick="rdvEnvoyer()">Envoyer ma demande</button>
+          <div id="rdv-feedback" style="margin-top:.8rem;display:none"></div>
+          <p style="font-size:0.72rem; color:var(--gris); margin-top:.6rem; text-align:center;">Réponse sous 24h ouvrées — Confidentialité garantie.</p>
         </div>
         <div class="contact-infos">
           <span class="label">Coordonnées</span>
@@ -3139,10 +3190,238 @@ document.addEventListener('DOMContentLoaded', function() {
     window.simUpdate();
   });
 
-  /* Info buttons — empêcher le clic de cocher la checkbox parente */
-  document.querySelectorAll('.rdv-info-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) { e.preventDefault(); });
+
+})();
+
+
+/* ================================================================
+   VALIDATION FORMULAIRE CONTACT — rdvEnvoyer()
+   ================================================================ */
+(function() {
+
+  /* ── Helpers ── */
+  function getEl(id) { return document.getElementById(id); }
+
+  function showError(inputEl, msg) {
+    inputEl.classList.add('rdv-error');
+    inputEl.classList.remove('rdv-ok');
+    // Supprimer erreur précédente éventuelle
+    var prev = inputEl.parentElement.querySelector('.rdv-field-error');
+    if (prev) prev.remove();
+    var err = document.createElement('div');
+    err.className = 'rdv-field-error';
+    err.textContent = msg;
+    inputEl.parentElement.appendChild(err);
+  }
+
+  function clearError(inputEl) {
+    inputEl.classList.remove('rdv-error');
+    var prev = inputEl.parentElement.querySelector('.rdv-field-error');
+    if (prev) prev.remove();
+  }
+
+  function markOk(inputEl) {
+    inputEl.classList.remove('rdv-error');
+    inputEl.classList.add('rdv-ok');
+    var prev = inputEl.parentElement.querySelector('.rdv-field-error');
+    if (prev) prev.remove();
+  }
+
+  /* ── Nettoyage du numéro de téléphone (retire espaces, tirets, points) ── */
+  function cleanPhone(val) {
+    return val.replace(/[\s\-\.\(\)]/g, '');
+  }
+
+  /* ── Validation email ── */
+  function isValidEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val.trim());
+  }
+
+  /* ── Validation téléphone ── */
+  function isValidPhone(val) {
+    var cleaned = cleanPhone(val);
+    // Accepter : 10 chiffres (0690...) OU format international +590... (entre 10-15 chiffres)
+    if (/^\+[0-9]{9,14}$/.test(cleaned)) return true;  // +590690...
+    if (/^[0-9]{10}$/.test(cleaned)) return true;         // 0690000000
+    return false;
+  }
+
+  /* ── Validation live (feedback en temps réel) ── */
+  document.addEventListener('DOMContentLoaded', function() {
+
+    var emailEl = getEl('rdv-email');
+    var telEl   = getEl('rdv-tel');
+    var nomEl   = getEl('rdv-nom');
+
+    if (emailEl) {
+      emailEl.addEventListener('blur', function() {
+        var val = this.value.trim();
+        if (!val) { clearError(this); return; }
+        if (!isValidEmail(val)) {
+          showError(this, 'Adresse email invalide (ex : prenom@domaine.fr)');
+        } else {
+          markOk(this);
+        }
+      });
+      emailEl.addEventListener('input', function() {
+        if (this.classList.contains('rdv-error') && isValidEmail(this.value.trim())) {
+          markOk(this);
+        }
+      });
+    }
+
+    if (telEl) {
+      telEl.addEventListener('blur', function() {
+        var val = this.value.trim();
+        if (!val) { clearError(this); return; }  // Champ optionnel
+        if (!isValidPhone(val)) {
+          showError(this, 'Numéro invalide — 10 chiffres requis (ex : 0690 00 00 00)');
+        } else {
+          markOk(this);
+        }
+      });
+      telEl.addEventListener('input', function() {
+        if (this.classList.contains('rdv-error') && isValidPhone(this.value.trim())) {
+          markOk(this);
+        }
+      });
+    }
+
+    if (nomEl) {
+      nomEl.addEventListener('blur', function() {
+        var val = this.value.trim();
+        if (!val) { clearError(this); return; }
+        if (val.length < 2) {
+          showError(this, 'Veuillez entrer votre prénom et nom');
+        } else {
+          markOk(this);
+        }
+      });
+    }
+
+    /* Info buttons — empêcher le clic de cocher la checkbox parente */
+    document.querySelectorAll('.rdv-info-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) { e.preventDefault(); });
+    });
+
   });
+
+  /* ── Soumission avec validation complète ── */
+  window.rdvEnvoyer = function() {
+    var nomEl   = getEl('rdv-nom');
+    var emailEl = getEl('rdv-email');
+    var telEl   = getEl('rdv-tel');
+    var msgEl   = getEl('rdv-message');
+    var feedback = getEl('rdv-feedback');
+    var submitBtn = getEl('rdv-submit-btn');
+
+    var errors = [];
+    var valid = true;
+
+    /* Reset précédent */
+    [nomEl, emailEl, telEl].forEach(function(el) {
+      if (el) { el.classList.remove('rdv-error', 'rdv-ok'); }
+      var prev = el && el.parentElement.querySelector('.rdv-field-error');
+      if (prev) prev.remove();
+    });
+
+    /* ── Validation Nom ── */
+    var nom = nomEl ? nomEl.value.trim() : '';
+    if (!nom || nom.length < 2) {
+      showError(nomEl, 'Veuillez entrer votre prénom et nom');
+      errors.push('nom');
+      valid = false;
+    } else {
+      markOk(nomEl);
+    }
+
+    /* ── Validation Email ── */
+    var email = emailEl ? emailEl.value.trim() : '';
+    if (!email) {
+      showError(emailEl, "L'adresse email est obligatoire");
+      errors.push('email');
+      valid = false;
+    } else if (!isValidEmail(email)) {
+      showError(emailEl, 'Format invalide — exemple attendu : prenom@domaine.fr');
+      errors.push('email');
+      valid = false;
+    } else {
+      markOk(emailEl);
+    }
+
+    /* ── Validation Téléphone (optionnel mais si rempli, doit être valide) ── */
+    var tel = telEl ? telEl.value.trim() : '';
+    if (tel) {
+      if (!isValidPhone(tel)) {
+        showError(telEl, 'Numéro invalide — 10 chiffres requis (ex : 0690 00 00 00 ou +590 6 90 00 00 00)');
+        errors.push('tel');
+        valid = false;
+      } else {
+        markOk(telEl);
+      }
+    }
+
+    /* ── Validation intérêts (au moins 1) ── */
+    var checked = document.querySelectorAll('.rdv-interests-grid input[type="checkbox"]:checked');
+    if (checked.length === 0) {
+      errors.push('interests');
+      valid = false;
+      var grid = document.querySelector('.rdv-interests-grid');
+      if (grid) {
+        var prev = grid.parentElement.querySelector('.rdv-field-error-interests');
+        if (!prev) {
+          var err = document.createElement('div');
+          err.className = 'rdv-field-error rdv-field-error-interests';
+          err.style.marginTop = '.4rem';
+          err.textContent = 'Sélectionnez au moins une prestation';
+          grid.parentElement.appendChild(err);
+        }
+      }
+    } else {
+      var prevI = document.querySelector('.rdv-field-error-interests');
+      if (prevI) prevI.remove();
+    }
+
+    /* ── Affichage du résultat ── */
+    if (!valid) {
+      feedback.style.display = 'block';
+      feedback.innerHTML = '<div class="rdv-alert-error">'
+        + '<strong>Veuillez corriger les erreurs suivantes</strong><br>'
+        + 'Les champs surlignés en rouge nécessitent votre attention.'
+        + '</div>';
+      /* Scroll vers le premier champ en erreur */
+      var firstErr = document.querySelector('.rdv-error');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    /* ── Tout est valide : simuler l'envoi (formulaire visuel) ── */
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours…';
+    submitBtn.style.opacity = '.7';
+
+    setTimeout(function() {
+      var services = [...checked].map(function(c) { return c.value; }).join(', ');
+      feedback.style.display = 'block';
+      feedback.innerHTML = '<div class="rdv-alert-success">'
+        + '<strong>Demande envoyée !</strong><br>'
+        + 'Merci ' + nom.split(' ')[0] + ', votre demande a bien été reçue. '
+        + "Je vous recontacte sous 24h ouvrées à l'adresse <strong>" + email + "</strong>."
+        + '</div>';
+      submitBtn.style.display = 'none';
+      /* Reset léger des champs */
+      if (msgEl) msgEl.value = '';
+      checked.forEach(function(c) { c.checked = false; });
+      document.querySelectorAll('.rdv-interest-item').forEach(function(el) {
+        el.style.borderColor = '';
+        el.style.background = '';
+      });
+      [nomEl, emailEl, telEl].forEach(function(el) {
+        if (el) { el.value = ''; el.classList.remove('rdv-ok'); }
+      });
+    }, 800);
+  };
+
 })();
 
 </script>
