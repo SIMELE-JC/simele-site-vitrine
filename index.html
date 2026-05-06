@@ -2685,42 +2685,43 @@ function pijCollecterDonnees() {
 /* ── Envoi du formulaire PIJ ── */
 window.pijEnvoyer = async function() {
   var res = document.getElementById('pij-submit-result');
-  res.innerHTML = '<div style="text-align:center;padding:.8rem;color:#6b7280;font-size:.85rem">⏳ Envoi en cours...</div>';
+  res.innerHTML = '<div style="text-align:center;padding:.8rem;color:#6b7280;font-size:.85rem">Envoi en cours...</div>';
   var data = pijCollecterDonnees();
-  
-  // Validation minimale
+
+  // Validation minimale étape 1
   if (!data.nom || !data.prenom) {
-    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ Veuillez remplir au moins votre nom et prénom (étape 1).</div>';
+    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Veuillez remplir au moins votre nom et prénom (étape 1).</div>';
+    return;
+  }
+  // Validation CA (étape 4 obligatoire pour PIJ)
+  if (!data.ca_an1) {
+    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Veuillez renseigner le chiffre d'affaires prévisionnel An 1 (étape 4).</div>';
     return;
   }
 
   try {
-    // Build a readable summary for the notification
-    var summary = 'PIJ: ' + data.prenom + ' ' + data.nom + ' - ' + (data.raison_sociale||'') + ' - ' + (data.montant_pij_demande||'?') + ' EUR';
-
-    var formData = new FormData();
-    var jsonBlob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-    var fname = 'PIJ_' + data.nom + '_' + data.prenom + '_' + new Date().toISOString().slice(0,10) + '.json';
-    formData.append('fichier', jsonBlob, fname);
-    formData.append('commentaire', summary);
-    
-    var r2 = await fetch(_CRM + '/api/portal/envoyer-document', {
+    // Envoi direct dans le dossier via la nouvelle route
+    var r = await fetch(_CRM + '/api/portal/soumettre-pij', {
       method: 'POST',
-      headers: {'Authorization': 'Bearer ' + _ecToken},
-      body: formData
+      headers: {
+        'Authorization': 'Bearer ' + _ecToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ donnees: data })
     });
-    var d2 = await r2.json();
+    var d = await r.json();
 
-    if (d2.success || d2.upload_id) {
-      res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:1rem;color:#166534">'
-        + '<div style="font-weight:700;font-size:.95rem;margin-bottom:.3rem">✅ Votre dossier PIJ a bien été transmis !</div>'
-        + '<div style="font-size:.82rem">Votre conseiller SIMELE va etudier votre dossier et vous recontactera sous 48h. Vous pouvez suivre l\'avancement dans l\'onglet "Envoyer".</div>'
+    if (d.success) {
+      res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:1.2rem;color:#166534">'
+        + '<div style="font-weight:700;font-size:.95rem;margin-bottom:.4rem">Votre dossier PIJ a bien été transmis !</div>'
+        + '<div style="font-size:.83rem;line-height:1.5">Il est maintenant visible directement dans votre dossier client par votre conseiller SIMELE. '
+        + 'Vous serez recontacté(e) sous 48h pour la suite des démarches.</div>'
         + '</div>';
     } else {
-      throw new Error(d2.error || 'Erreur inconnue');
+      throw new Error(d.error || 'Erreur lors de l'envoi');
     }
   } catch(e) {
-    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ Erreur lors de l\'envoi : ' + e.message + '. Veuillez réessayer ou contacter directement le cabinet.</div>';
+    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Erreur : ' + e.message + '</div>';
   }
 };
 
