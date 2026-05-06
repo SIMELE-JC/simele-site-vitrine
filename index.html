@@ -2695,7 +2695,7 @@ window.pijEnvoyer = async function() {
   }
   // Validation CA (étape 4 obligatoire pour PIJ)
   if (!data.ca_an1) {
-    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Veuillez renseigner le chiffre d'affaires prévisionnel An 1 (étape 4).</div>';
+    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Veuillez renseigner le CA prévisionnel en étape 4 du formulaire.</div>';
     return;
   }
 
@@ -2718,7 +2718,7 @@ window.pijEnvoyer = async function() {
         + 'Vous serez recontacté(e) sous 48h pour la suite des démarches.</div>'
         + '</div>';
     } else {
-      throw new Error(d.error || 'Erreur lors de l'envoi');
+      throw new Error(d.error || "Erreur lors de l'envoi");
     }
   } catch(e) {
     res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Erreur : ' + e.message + '</div>';
