@@ -1636,340 +1636,419 @@ footer { background: var(--marine-fonce); color: rgba(255,255,255,0.38); padding
       <!-- Formulaire PIJ -->
       <div id="sub-form-pij" style="display:none">
 
-        <!-- Header retour -->
-        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem">
-          <button onclick="ecShowSubventions()" style="background:none;border:1px solid #e8ecf4;border-radius:8px;padding:.5rem .9rem;font-family:inherit;font-size:.82rem;color:#6b7280;cursor:pointer">← Retour</button>
-          <div>
-            <div style="font-weight:700;color:#1a365d;font-size:1rem">Dossier PIJ — Prime à l'Installation des Jeunes</div>
-            <div style="font-size:.78rem;color:#9ca3af">Remplissez les informations ci-dessous. Vos réponses sont transmises directement à votre conseiller SIMELE.</div>
-          </div>
-        </div>
 
-        <!-- Barre de progression -->
-        <div style="background:#f0f4ff;border-radius:10px;padding:.8rem 1.2rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between">
-          <div style="font-size:.82rem;color:#1a365d;font-weight:600" id="pij-step-label">Étape 1 sur 6 — Qui êtes-vous ?</div>
-          <div style="display:flex;gap:.3rem">
-            <div id="pij-dot-1" style="width:10px;height:10px;border-radius:50%;background:#1a365d"></div>
-            <div id="pij-dot-2" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
-            <div id="pij-dot-3" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
-            <div id="pij-dot-4" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
-            <div id="pij-dot-5" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
-            <div id="pij-dot-6" style="width:10px;height:10px;border-radius:50%;background:#e8ecf4"></div>
-          </div>
-        </div>
-
-        <!-- ═══════════ ÉTAPE 1 : IDENTITÉ ═══════════ -->
-        <div id="pij-step-1">
-          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Vos informations personnelles</h4>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div><label class="pij-label">Nom de famille</label><input id="pij-nom" class="pij-input" placeholder="DUPONT"></div>
-              <div><label class="pij-label">Prénom</label><input id="pij-prenom" class="pij-input" placeholder="Marie"></div>
-              <div><label class="pij-label">Date de naissance</label><input id="pij-ddn" type="date" class="pij-input"><div class="pij-hint">Vous devez avoir entre 18 et 35 ans</div></div>
-              <div><label class="pij-label">Lieu de naissance (ville)</label><input id="pij-lieu-nais" class="pij-input" placeholder="Pointe-à-Pitre"></div>
-              <div><label class="pij-label">Nationalité</label><input id="pij-nationalite" class="pij-input" placeholder="Française"></div>
-              <div><label class="pij-label">Numéro de téléphone</label><input id="pij-tel" class="pij-input" placeholder="0690 00 00 00"></div>
-              <div style="grid-column:1/-1"><label class="pij-label">Adresse complète</label><input id="pij-adresse" class="pij-input" placeholder="12 rue des Flamboyants, Lotissement..."></div>
-              <div><label class="pij-label">Code postal</label><input id="pij-cp" class="pij-input" placeholder="97100"></div>
-              <div><label class="pij-label">Commune</label><input id="pij-commune" class="pij-input" placeholder="Basse-Terre"></div>
-              <div style="grid-column:1/-1"><label class="pij-label">Adresse email</label><input id="pij-email" type="email" class="pij-input" placeholder="marie.dupont@email.fr"></div>
+        <!-- ===== FORMULAIRE PIJ 16 ÉTAPES ===== -->
+        <div id="sub-form-pij">
+          <!-- Barre de progression -->
+          <div style="background:#f0f4f8;border-radius:12px;padding:16px 20px;margin-bottom:20px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span id="pij-step-label" style="font-size:13px;font-weight:600;color:#1b2d5b">Etape 1 / 16</span>
+              <span id="pij-step-name" style="font-size:12px;color:#666">Identification</span>
             </div>
-            <div style="margin-top:1.2rem;padding:1rem;background:#fffbeb;border-radius:10px;border:1px solid #fde68a">
-              <p style="font-size:.82rem;color:#92400e;margin:0"><strong>Votre situation actuelle</strong></p>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem">
-                <div><label class="pij-label">Situation (avant de créer votre entreprise)</label>
-                  <select id="pij-situation" class="pij-input">
-                    <option value="">-- Sélectionnez --</option>
-                    <option>Demandeur d'emploi</option>
-                    <option>Salarié(e)</option>
-                    <option>Étudiant(e)</option>
-                    <option>Inactif(ve)</option>
-                    <option>Déjà chef d'entreprise</option>
-                  </select>
-                </div>
-                <div><label class="pij-label">Niveau d'études le plus élevé</label>
-                  <select id="pij-diplome" class="pij-input">
-                    <option value="">-- Sélectionnez --</option>
-                    <option>Sans diplôme</option>
-                    <option>Brevet des collèges (3ème)</option>
-                    <option>CAP / BEP</option>
-                    <option>Baccalauréat</option>
-                    <option>BTS / DUT (Bac+2)</option>
-                    <option>Licence (Bac+3)</option>
-                    <option>Master / Ingénieur (Bac+5)</option>
-                    <option>Doctorat (Bac+8)</option>
-                  </select>
-                </div>
-              </div>
-              <div style="margin-top:.8rem"><label class="pij-label">Avez-vous suivi une formation à la création d'entreprise ?</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-formation" value="oui"> Oui</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-formation" value="non"> Non</label>
-                </div>
-              </div>
-              <div style="margin-top:.8rem" id="pij-formation-detail-wrap">
-                <label class="pij-label">Si oui, précisez le nom et la durée</label>
-                <input id="pij-formation-detail" class="pij-input" placeholder="Ex: Formation BGE - 3 jours">
-              </div>
+            <div style="background:#ddd;border-radius:4px;height:6px">
+              <div id="pij-progress-bar" style="background:#1b2d5b;height:6px;border-radius:4px;width:6.25%;transition:width 0.3s"></div>
             </div>
           </div>
-          <div class="pij-nav"><div></div><button class="pij-btn-next" onclick="pijGoStep(2)">Suivant →</button></div>
-        </div>
 
-        <!-- ═══════════ ÉTAPE 2 : VOTRE PROJET ═══════════ -->
-        <div id="pij-step-2" style="display:none">
-          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Votre projet d'entreprise</h4>
-            <div style="display:grid;gap:1rem">
-              <div><label class="pij-label">Comment s'appelle votre future entreprise ?</label><input id="pij-raison-sociale" class="pij-input" placeholder="Ex: Marie Dupont Services, MDS Conseil..."></div>
-              <div><label class="pij-label">En quelques mots, que fera votre entreprise ?</label><textarea id="pij-activite-desc" class="pij-input" rows="3" style="resize:vertical" placeholder="Ex: Je vends des plats cuisinés faits maison livrés à domicile. Je propose aussi des plateaux repas pour les entreprises..."></textarea>
-                <div class="pij-hint">Expliquez simplement ce que vous allez vendre ou proposer comme service</div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-                <div><label class="pij-label">Quel type d'activité ?</label>
-                  <select id="pij-type-activite" class="pij-input">
-                    <option value="">-- Sélectionnez --</option>
-                    <option>Commerce (achat/vente de produits)</option>
-                    <option>Prestation de services</option>
-                    <option>Artisanat (fabrication / réparation)</option>
-                    <option>Agriculture / pêche</option>
-                    <option>Professions libérales (médecin, avocat...)</option>
-                    <option>Industrie / production</option>
-                    <option>Numérique / tech</option>
-                    <option>Autre</option>
-                  </select>
-                </div>
-                <div><label class="pij-label">Votre code APE / NAF (si vous le connaissez)</label><input id="pij-ape" class="pij-input" placeholder="Ex: 5610A"><div class="pij-hint">Laissez vide si vous ne savez pas</div></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-                <div><label class="pij-label">Forme juridique choisie</label>
-                  <select id="pij-forme-juridique" class="pij-input">
-                    <option value="">-- Sélectionnez --</option>
-                    <option>Micro-entreprise (auto-entrepreneur)</option>
-                    <option>EURL (entreprise individuelle à responsabilité limitée)</option>
-                    <option>SASU (société par actions simplifiée unipersonnelle)</option>
-                    <option>SARL (société à responsabilité limitée)</option>
-                    <option>SAS (société par actions simplifiée)</option>
-                    <option>EI (entreprise individuelle classique)</option>
-                    <option>Je ne sais pas encore</option>
-                  </select>
-                </div>
-                <div><label class="pij-label">Date de création ou date prévue</label><input id="pij-date-creation" type="date" class="pij-input"></div>
-              </div>
-              <div><label class="pij-label">Adresse de votre future entreprise</label><input id="pij-adresse-entreprise" class="pij-input" placeholder="Si différente de votre domicile"></div>
-              <div><label class="pij-label">Où exercerez-vous votre activité ?</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem;flex-wrap:wrap">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="domicile"> À mon domicile</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="local"> Dans un local / boutique</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="deplacement"> Chez les clients (déplacement)</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="internet"> Sur internet</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-lieu-exercice" value="mixte"> Plusieurs de ces options</label>
-                </div>
-              </div>
-              <div><label class="pij-label">À qui allez-vous vendre / proposer vos services ?</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem;flex-wrap:wrap">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="particuliers"> Des particuliers</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="entreprises"> Des entreprises</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="collectivites"> Des collectivités (mairie, conseil régional...)</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-clients" value="associations"> Des associations</label>
-                </div>
-              </div>
-              <div><label class="pij-label">Quels sont vos principaux concurrents (si vous en connaissez) ?</label>
-                <input id="pij-concurrents" class="pij-input" placeholder="Ex: Les restaurants du quartier, les traiteurs locaux...">
-                <div class="pij-hint">Laissez vide si vous n'en connaissez pas encore</div>
-              </div>
-              <div><label class="pij-label">Qu'est-ce qui vous distingue de la concurrence ? Pourquoi les clients viendraient chez vous ?</label>
-                <textarea id="pij-avantages" class="pij-input" rows="2" style="resize:vertical" placeholder="Ex: Je propose des prix plus accessibles, des produits 100% locaux, un service à domicile que personne ne propose dans ma commune..."></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(1)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(3)">Suivant →</button></div>
-        </div>
-
-        <!-- ═══════════ ÉTAPE 3 : INVESTISSEMENTS ═══════════ -->
-        <div id="pij-step-3" style="display:none">
-          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Ce que vous devez acheter pour démarrer</h4>
-            <p style="font-size:.82rem;color:#6b7280;margin:0 0 1.2rem">Listez tout ce dont vous avez besoin pour créer et faire fonctionner votre entreprise (matériel, local, véhicule, stock, site internet...)</p>
-            <div id="pij-investissements-liste" style="margin-bottom:.8rem"></div>
-            <button onclick="pijAjouterInvestissement()" style="background:#f0f4ff;border:1px dashed #1a365d;border-radius:8px;padding:.6rem 1.2rem;font-family:inherit;font-size:.82rem;color:#1a365d;cursor:pointer;width:100%;margin-bottom:1.2rem">+ Ajouter un élément</button>
-            <div style="background:#f0f9ff;border-radius:10px;padding:1rem;border:1px solid #bae6fd">
-              <div style="display:flex;justify-content:space-between;font-size:.9rem;font-weight:700;color:#1a365d">
-                <span>Total des investissements</span>
-                <span id="pij-total-invest">0 €</span>
-              </div>
-            </div>
-            <div style="margin-top:1.2rem;padding:1rem;background:#fffbeb;border-radius:10px;border:1px solid #fde68a">
-              <p style="font-size:.82rem;font-weight:700;color:#92400e;margin:0 0 .8rem">Comment allez-vous financer ces achats ?</p>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
-                <div><label class="pij-label">Votre argent personnel (apport)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-apport-perso" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
-                <div><label class="pij-label">Prêt bancaire demandé</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-pret-bancaire" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
-                <div><label class="pij-label">Aides et subventions attendues (hors PIJ)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-autres-aides" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcFinancement()"></div></div>
-                <div><label class="pij-label">PIJ demandé (max 8 000 €)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-montant-demande" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" max="8000" oninput="pijCalcFinancement()"></div></div>
-              </div>
-              <div style="margin-top:.8rem;padding:.7rem 1rem;background:white;border-radius:8px;border:1px solid #e8ecf4;display:flex;justify-content:space-between;font-size:.85rem">
-                <span style="color:#6b7280">Écart (total - financement)</span>
-                <span id="pij-ecart-financement" style="font-weight:700;color:#1a365d">0 €</span>
-              </div>
-            </div>
-          </div>
-          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(2)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(4)">Suivant →</button></div>
-        </div>
-
-        <!-- ═══════════ ÉTAPE 4 : PRÉVISIONS FINANCIÈRES ═══════════ -->
-        <div id="pij-step-4" style="display:none">
-          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 .5rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Vos estimations financières</h4>
-            <p style="font-size:.82rem;color:#6b7280;margin:0 0 1.2rem">Ne vous inquiétez pas si vous n'êtes pas sûr(e) — donnez votre meilleure estimation. Ces chiffres nous aident à construire votre dossier.</p>
-            <div style="display:grid;gap:1.2rem">
-              <div style="padding:1rem;background:#f8f9fa;border-radius:10px">
-                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">Vos revenus prévus</p>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem">
-                  <div><label class="pij-label">Chiffre d'affaires Année 1</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca1" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div><div class="pij-hint">Total des ventes prévues</div></div>
-                  <div><label class="pij-label">Chiffre d'affaires Année 2</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca2" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div></div>
-                  <div><label class="pij-label">Chiffre d'affaires Année 3</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-ca3" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0" oninput="pijCalcPrev()"></div></div>
-                </div>
-              </div>
-              <div style="padding:1rem;background:#f8f9fa;border-radius:10px">
-                <p style="font-size:.85rem;font-weight:700;color:#1a365d;margin:0 0 .8rem">Vos dépenses mensuelles prévues</p>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
-                  <div><label class="pij-label">Loyer du local (si applicable)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-loyer" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
-                  <div><label class="pij-label">Salaire que vous comptez vous verser</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-remuneration" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
-                  <div><label class="pij-label">Charges sociales estimées</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-charges-sociales" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div><div class="pij-hint">~22% du CA pour micro-entrepreneur</div></div>
-                  <div><label class="pij-label">Achats (matières premières, stock...)</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-achats" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
-                  <div><label class="pij-label">Téléphone / Internet / Abonnements</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-telecom" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
-                  <div><label class="pij-label">Carburant / Transport</label><div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-transport" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div></div>
-                </div>
-              </div>
-              <div><label class="pij-label">Combien de personnes comptez-vous employer ? (en dehors de vous)</label>
-                <select id="pij-emplois" class="pij-input">
-                  <option value="0">Aucun salarié pour l'instant</option>
-                  <option value="1">1 salarié</option>
-                  <option value="2">2 salariés</option>
-                  <option value="3">3 salariés ou plus</option>
+          <!-- ETAPE 1 : Identification du porteur -->
+          <div id="pij-step-1" class="pij-step">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Identification du porteur de projet</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div><label class="ec-label">Nom *</label><input type="text" id="pij-nom" class="ec-input" placeholder="DUPONT"></div>
+              <div><label class="ec-label">Prenom *</label><input type="text" id="pij-prenom" class="ec-input" placeholder="Marie"></div>
+              <div><label class="ec-label">Date de naissance</label><input type="date" id="pij-ddn" class="ec-input"></div>
+              <div><label class="ec-label">Lieu de naissance</label><input type="text" id="pij-lieu-nais" class="ec-input" placeholder="Pointe-a-Pitre"></div>
+              <div><label class="ec-label">Nationalite</label><input type="text" id="pij-nationalite" class="ec-input" placeholder="Francaise"></div>
+              <div><label class="ec-label">Telephone *</label><input type="tel" id="pij-tel" class="ec-input" placeholder="+590 690 00 00 00"></div>
+              <div><label class="ec-label">Email *</label><input type="email" id="pij-email" class="ec-input" placeholder="marie@email.com"></div>
+              <div><label class="ec-label">Situation familiale</label>
+                <select id="pij-situation-fam" class="ec-input">
+                  <option value="">-- Choisir --</option>
+                  <option>Celibataire</option><option>Marie(e)</option><option>Pacse(e)</option><option>Divorce(e)</option><option>Veuf(ve)</option>
                 </select>
               </div>
+              <div><label class="ec-label">Nombre d'enfants a charge</label><input type="number" id="pij-enfants" class="ec-input" min="0" value="0"></div>
+              <div><label class="ec-label">Adresse personnelle</label><input type="text" id="pij-adresse" class="ec-input" placeholder="15 rue des Fleurs"></div>
+              <div><label class="ec-label">Code postal</label><input type="text" id="pij-cp" class="ec-input" placeholder="97100"></div>
+              <div><label class="ec-label">Commune</label><input type="text" id="pij-commune" class="ec-input" placeholder="Basse-Terre"></div>
+            </div>
+            <div style="margin-top:12px">
+              <label class="ec-label">Situation actuelle</label>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="radio" name="pij-sit-actuelle" value="Demandeur d'emploi"> Demandeur d'emploi</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="radio" name="pij-sit-actuelle" value="Beneficiaire RSA"> Beneficiaire RSA</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="radio" name="pij-sit-actuelle" value="Salarie"> Salarie(e)</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="radio" name="pij-sit-actuelle" value="Etudiant"> Etudiant(e)</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="radio" name="pij-sit-actuelle" value="Autre"> Autre</label>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+              <div><label class="ec-label">Niveau de formation</label>
+                <select id="pij-formation" class="ec-input">
+                  <option value="">-- Choisir --</option>
+                  <option>Sans diplome</option><option>CAP/BEP</option><option>BAC</option><option>BAC+2</option><option>BAC+3</option><option>BAC+4/5</option><option>BAC+6 et plus</option>
+                </select>
+              </div>
+              <div><label class="ec-label">Diplomes obtenus</label><input type="text" id="pij-diplomes" class="ec-input" placeholder="BTS Commerce, Licence Gestion..."></div>
+            </div>
+            <div style="margin-top:12px"><label class="ec-label">Experiences professionnelles principales</label><textarea id="pij-experiences" class="ec-input" rows="3" placeholder="Decrivez vos experiences professionnelles..."></textarea></div>
+            <div style="margin-top:12px">
+              <label class="ec-label">Avez-vous deja cree une entreprise ?</label>
+              <div style="display:flex;gap:20px;margin-top:8px">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="pij-deja-cree" value="Oui" onclick="document.getElementById('pij-deja-cree-detail-wrap').style.display=''"> Oui</label>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="pij-deja-cree" value="Non" onclick="document.getElementById('pij-deja-cree-detail-wrap').style.display='none'"> Non</label>
+              </div>
+            </div>
+            <div id="pij-deja-cree-detail-wrap" style="display:none;margin-top:8px"><label class="ec-label">Si oui, precisions</label><textarea id="pij-deja-cree-detail" class="ec-input" rows="2" placeholder="Type d'entreprise, secteur, annee..."></textarea></div>
+          </div>
+
+          <!-- ETAPE 2 : Presentation du projet -->
+          <div id="pij-step-2" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Presentation du projet</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div><label class="ec-label">Nom commercial envisage</label><input type="text" id="pij-nom-commercial" class="ec-input" placeholder="Mon Entreprise"></div>
+              <div><label class="ec-label">Activite principale *</label><input type="text" id="pij-activite" class="ec-input" placeholder="Vente de produits cosmetiques"></div>
+              <div><label class="ec-label">Secteur d'activite</label><input type="text" id="pij-secteur" class="ec-input" placeholder="Commerce, Artisanat, Services..."></div>
+              <div><label class="ec-label">Code APE envisage</label><input type="text" id="pij-ape" class="ec-input" placeholder="4711F"></div>
+              <div><label class="ec-label">Date prevue de demarrage</label><input type="date" id="pij-date-demarrage" class="ec-input"></div>
+              <div><label class="ec-label">Commune d'implantation</label><input type="text" id="pij-commune-implant" class="ec-input" placeholder="Pointe-a-Pitre"></div>
+              <div style="grid-column:span 2"><label class="ec-label">Adresse du local (si connue)</label><input type="text" id="pij-adresse-local" class="ec-input" placeholder="Zone industrielle de Jarry..."></div>
+              <div style="grid-column:span 2"><label class="ec-label">Description detaillee de l'activite *</label><textarea id="pij-desc-activite" class="ec-input" rows="3" placeholder="Decrivez en detail votre activite, vos produits ou services..."></textarea></div>
+            </div>
+            <div style="margin-top:12px"><label class="ec-label">Lieu d'exercice</label>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-lieu-exercice" value="A domicile"> A domicile</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-lieu-exercice" value="Chez les clients"> Chez les clients</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-lieu-exercice" value="Local professionnel"> Local professionnel</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-lieu-exercice" value="En ligne"> En ligne</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-lieu-exercice" value="Autre"> Autre</label>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+              <div><label class="ec-label">Forme juridique envisagee</label>
+                <select id="pij-forme-juridique" class="ec-input">
+                  <option value="">-- Choisir --</option>
+                  <option>Micro-entreprise</option><option>Entreprise individuelle</option><option>EURL</option><option>SARL</option><option>SASU</option><option>SAS</option><option>Autre</option>
+                </select>
+              </div>
+              <div><label class="ec-label">Creation ou reprise ?</label>
+                <select id="pij-creation-reprise" class="ec-input">
+                  <option value="">-- Choisir --</option><option>Creation</option><option>Reprise</option>
+                </select>
+              </div>
+              <div><label class="ec-label">Regime fiscal envisage</label><input type="text" id="pij-regime-fiscal" class="ec-input" placeholder="Micro-fiscal, Reel simplifie..."></div>
+              <div><label class="ec-label">Regime social envisage</label><input type="text" id="pij-regime-social" class="ec-input" placeholder="TNS, Assimile-salarie..."></div>
+            </div>
+            <div style="margin-top:12px"><label class="ec-label">Motivation du porteur de projet</label><textarea id="pij-motivation" class="ec-input" rows="3" placeholder="Pourquoi souhaitez-vous creer cette entreprise ?"></textarea></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px">
+              <div><label class="ec-label">Objectifs court terme (1 an)</label><textarea id="pij-objectifs-ct" class="ec-input" rows="3" placeholder="..."></textarea></div>
+              <div><label class="ec-label">Objectifs moyen terme (3 ans)</label><textarea id="pij-objectifs-mt" class="ec-input" rows="3" placeholder="..."></textarea></div>
+              <div><label class="ec-label">Objectifs long terme (5 ans+)</label><textarea id="pij-objectifs-lt" class="ec-input" rows="3" placeholder="..."></textarea></div>
             </div>
           </div>
-          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(3)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(5)">Suivant →</button></div>
-        </div>
 
-        <!-- ═══════════ ÉTAPE 5 : SITUATION PERSONNELLE ═══════════ -->
-        <div id="pij-step-5" style="display:none">
-          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">Votre situation personnelle et familiale</h4>
-            <div style="display:grid;gap:1rem">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-                <div><label class="pij-label">Situation familiale</label>
-                  <select id="pij-situation-fam" class="pij-input">
-                    <option value="">-- Sélectionnez --</option>
-                    <option>Célibataire</option>
-                    <option>Marié(e) / Pacsé(e)</option>
-                    <option>En concubinage</option>
-                    <option>Divorcé(e)</option>
-                    <option>Veuf / Veuve</option>
+          <!-- ETAPE 3 : Produits et services -->
+          <div id="pij-step-3" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Produits et services</h3>
+            <p style="font-size:13px;color:#666;margin-bottom:12px">Listez vos produits ou services. Les calculs sont automatiques.</p>
+            <div id="pij-produits-container"></div>
+            <button type="button" onclick="pijAddProduit()" style="background:none;border:2px dashed #c9a96e;color:#c9a96e;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:13px;width:100%;margin-top:8px">+ Ajouter un produit / service</button>
+            <div style="background:#f0f4f8;border-radius:8px;padding:12px;margin-top:12px">
+              <div style="display:flex;justify-content:space-between"><span style="font-weight:600;color:#1b2d5b">CA mensuel total estime :</span><span id="pij-ca-mensuel-total" style="font-weight:700;color:#c9a96e">0 EUR</span></div>
+              <div style="display:flex;justify-content:space-between;margin-top:6px"><span style="font-weight:600;color:#1b2d5b">CA annuel total estime :</span><span id="pij-ca-annuel-total" style="font-weight:700;color:#c9a96e">0 EUR</span></div>
+            </div>
+          </div>
+
+          <!-- ETAPE 4 : Etude de marche -->
+          <div id="pij-step-4" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Etude de marche</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div style="grid-column:span 2"><label class="ec-label">Description du marche cible</label><textarea id="pij-marche-desc" class="ec-input" rows="3" placeholder="Decrivez le marche dans lequel vous allez evoluer..."></textarea></div>
+              <div><label class="ec-label">Zone geographique visee</label><input type="text" id="pij-zone-geo" class="ec-input" placeholder="Guadeloupe, Antilles, National..."></div>
+              <div><label class="ec-label">Profil type des clients</label><input type="text" id="pij-profil-clients" class="ec-input" placeholder="Femmes 25-45 ans, entreprises PME..."></div>
+            </div>
+            <div style="margin-top:12px"><label class="ec-label">Clientele principale</label>
+              <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px">
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-clientele" value="Particuliers"> Particuliers</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-clientele" value="Professionnels"> Professionnels</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-clientele" value="Collectivites"> Collectivites</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-clientele" value="Associations"> Associations</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-clientele" value="Autre"> Autre</label>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+              <div><label class="ec-label">Besoins identifies</label><textarea id="pij-besoins" class="ec-input" rows="3" placeholder="Quels besoins specifiques vos clients ont-ils ?"></textarea></div>
+              <div><label class="ec-label">Habitudes d'achat des clients</label><textarea id="pij-habitudes" class="ec-input" rows="3" placeholder="Comment, quand et ou achetent-ils ?"></textarea></div>
+              <div><label class="ec-label">Tendance du marche</label><textarea id="pij-tendance" class="ec-input" rows="3" placeholder="Le marche est-il en croissance, stable, en declin ?"></textarea></div>
+              <div><label class="ec-label">Saisonnalite eventuelle</label><textarea id="pij-saisonnalite" class="ec-input" rows="3" placeholder="Y a-t-il des periodes de forte ou faible activite ?"></textarea></div>
+              <div><label class="ec-label">Opportunites du marche</label><textarea id="pij-opportunites" class="ec-input" rows="3" placeholder="Quels sont les facteurs favorables ?"></textarea></div>
+              <div><label class="ec-label">Menaces du marche</label><textarea id="pij-menaces" class="ec-input" rows="3" placeholder="Quels sont les risques potentiels ?"></textarea></div>
+              <div style="grid-column:span 2"><label class="ec-label">Comment avez-vous verifie l'existence du besoin ?</label><textarea id="pij-verification" class="ec-input" rows="3" placeholder="Enquetes, sondages, tests, observations..."></textarea></div>
+              <div style="grid-column:span 2"><label class="ec-label">Resultats des recherches ou enquetes</label><textarea id="pij-resultats-recherche" class="ec-input" rows="3" placeholder="Quels resultats avez-vous obtenus ?"></textarea></div>
+            </div>
+          </div>
+
+          <!-- ETAPE 5 : Concurrence -->
+          <div id="pij-step-5" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Analyse de la concurrence</h3>
+            <p style="font-size:13px;color:#666;margin-bottom:12px">Identifiez vos principaux concurrents (minimum 3).</p>
+            <div id="pij-concurrents-container"></div>
+            <button type="button" onclick="pijAddConcurrent()" style="background:none;border:2px dashed #c9a96e;color:#c9a96e;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:13px;width:100%;margin-top:8px">+ Ajouter un concurrent</button>
+            <div style="margin-top:16px"><label class="ec-label">Synthese de votre avantage concurrentiel</label><textarea id="pij-avantage-concurrentiel" class="ec-input" rows="4" placeholder="Pourquoi les clients choisiront-ils votre offre plutot que celle de la concurrence ?"></textarea></div>
+          </div>
+
+          <!-- ETAPE 6 : Strategie commerciale -->
+          <div id="pij-step-6" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Strategie commerciale et marketing</h3>
+            <div style="margin-bottom:12px"><label class="ec-label">Comment trouverez-vous vos clients ?</label><textarea id="pij-prospection" class="ec-input" rows="3" placeholder="Reseaux sociaux, bouche-a-oreille, publicite..."></textarea></div>
+            <div style="margin-bottom:12px"><label class="ec-label">Canaux de communication prevus</label>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Reseaux sociaux"> Reseaux sociaux</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Site internet"> Site internet</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Bouche-a-oreille"> Bouche-a-oreille</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Flyers"> Flyers</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Radio"> Radio</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Presse"> Presse</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Partenariats"> Partenariats</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Prospection directe"> Prospection directe</label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" name="pij-canaux" value="Autres"> Autres</label>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div><label class="ec-label">Budget communication prevu</label><input type="text" id="pij-budget-comm" class="ec-input" placeholder="500 EUR/mois"></div>
+              <div><label class="ec-label">Partenaires envisages</label><input type="text" id="pij-partenaires" class="ec-input" placeholder="Collectivites, associations..."></div>
+              <div style="grid-column:span 2"><label class="ec-label">Actions commerciales au demarrage</label><textarea id="pij-actions-demarrage" class="ec-input" rows="3" placeholder="Evenements de lancement, promotions, offres speciales..."></textarea></div>
+              <div style="grid-column:span 2"><label class="ec-label">Strategie de fidelisation</label><textarea id="pij-fidelisation" class="ec-input" rows="3" placeholder="Carte de fidelite, suivi personnalise, newsletter..."></textarea></div>
+              <div style="grid-column:span 2"><label class="ec-label">Argumentaire commercial principal</label><textarea id="pij-argumentaire" class="ec-input" rows="3" placeholder="Quel est le message cle qui convaincra vos clients ?"></textarea></div>
+            </div>
+          </div>
+
+          <!-- ETAPE 7 : Competences -->
+          <div id="pij-step-7" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Competences du porteur de projet</h3>
+            <p style="font-size:13px;color:#666;margin-bottom:12px">Evaluez vos competences de 1 (faible) a 5 (excellent). NSP = Ne sais pas.</p>
+            <div id="pij-competences-grid" style="background:#f8f9fa;border-radius:8px;padding:16px"></div>
+            <div style="margin-top:16px"><label class="ec-label">Competences disponibles via associes, conjoints, collaborateurs ou partenaires</label><textarea id="pij-competences-ext" class="ec-input" rows="3" placeholder="Mon associe apporte une expertise en comptabilite..."></textarea></div>
+          </div>
+
+          <!-- ETAPE 8 : Moyens materiels -->
+          <div id="pij-step-8" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Moyens materiels et equipements</h3>
+            <p style="font-size:13px;color:#666;margin-bottom:12px">Listez tous les equipements necessaires a votre activite.</p>
+            <div id="pij-materiels-container"></div>
+            <button type="button" onclick="pijAddMateriel()" style="background:none;border:2px dashed #c9a96e;color:#c9a96e;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:13px;width:100%;margin-top:8px">+ Ajouter un equipement</button>
+            <div style="background:#f0f4f8;border-radius:8px;padding:12px;margin-top:12px">
+              <div style="display:flex;justify-content:space-between"><span style="font-weight:600;color:#1b2d5b">Total besoins materiels :</span><span id="pij-total-materiels" style="font-weight:700;color:#c9a96e">0 EUR HT</span></div>
+            </div>
+          </div>
+
+          <!-- ETAPE 9 : Locaux -->
+          <div id="pij-step-9" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Locaux</h3>
+            <div style="margin-bottom:12px">
+              <label class="ec-label">Utiliserez-vous un local professionnel ?</label>
+              <div style="display:flex;gap:20px;margin-top:8px">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="pij-local-oui-non" value="Oui" onclick="document.getElementById('pij-local-detail').style.display=''"> Oui</label>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="pij-local-oui-non" value="Non" onclick="document.getElementById('pij-local-detail').style.display='none'"> Non</label>
+              </div>
+            </div>
+            <div id="pij-local-detail">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="grid-column:span 2"><label class="ec-label">Adresse du local</label><input type="text" id="pij-local-adresse" class="ec-input" placeholder="Zone de Jarry, Bat A..."></div>
+                <div><label class="ec-label">Type de local</label>
+                  <select id="pij-local-type" class="ec-input">
+                    <option value="">-- Choisir --</option>
+                    <option>Zone industrielle</option><option>Pepiniere</option><option>Centre commercial</option><option>Couveuse</option><option>Centre-ville</option><option>Autre</option>
                   </select>
                 </div>
-                <div><label class="pij-label">Nombre d'enfants à charge</label>
-                  <select id="pij-enfants" class="pij-input">
-                    <option value="0">Aucun</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4+">4 ou plus</option>
-                  </select>
+                <div><label class="ec-label">Surface (m2)</label><input type="number" id="pij-local-surface" class="ec-input" placeholder="50"></div>
+                <div><label class="ec-label">Loyer mensuel (EUR)</label><input type="number" id="pij-local-loyer" class="ec-input" placeholder="800" oninput="pijCalcLocaux()"></div>
+                <div><label class="ec-label">Charges mensuelles (EUR)</label><input type="number" id="pij-local-charges" class="ec-input" placeholder="150" oninput="pijCalcLocaux()"></div>
+                <div><label class="ec-label">Depot de garantie (EUR)</label><input type="number" id="pij-local-depot" class="ec-input" placeholder="1600"></div>
+                <div><label class="ec-label">Cout des travaux (EUR)</label><input type="number" id="pij-local-travaux" class="ec-input" placeholder="5000"></div>
+                <div><label class="ec-label">Local deja trouve ?</label>
+                  <select id="pij-local-trouve" class="ec-input"><option value="">-- Choisir --</option><option>Oui</option><option>Non</option></select>
+                </div>
+                <div><label class="ec-label">Bail signe ?</label>
+                  <select id="pij-bail-signe" class="ec-input"><option value="">-- Choisir --</option><option>Oui</option><option>Non</option></select>
                 </div>
               </div>
-              <div><label class="pij-label">Êtes-vous propriétaire ou locataire ?</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-logement" value="proprietaire"> Propriétaire</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-logement" value="locataire"> Locataire</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-logement" value="heberge"> Hébergé(e) gratuitement</label>
-                </div>
-              </div>
-              <div><label class="pij-label">Quelles aides sociales percevez-vous actuellement ? (cochez tout ce qui s'applique)</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem;flex-wrap:wrap">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="rsa"> RSA</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="are"> ARE (Pôle Emploi)</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="apl"> APL</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="af"> Allocations familiales</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="checkbox" name="pij-aides-sociales" value="aucune"> Aucune</label>
-                </div>
-              </div>
-              <div><label class="pij-label">Avez-vous un compte bancaire professionnel (ou prévu) ?</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-compte-pro" value="oui"> Oui</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-compte-pro" value="non"> Non, pas encore</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-compte-pro" value="encours"> En cours d'ouverture</label>
-                </div>
-              </div>
-              <div><label class="pij-label">Avez-vous des dettes ou des crédits en cours ?</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-dettes" value="non"> Non</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-dettes" value="oui"> Oui (crédit voiture, conso...)</label>
-                </div>
-              </div>
-              <div id="pij-dettes-detail-wrap">
-                <label class="pij-label">Si oui, montant mensuel total de vos remboursements</label>
-                <div style="position:relative"><span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:#9ca3af">€</span><input id="pij-dettes-montant" type="number" class="pij-input" style="padding-left:1.6rem" placeholder="0"></div>
-              </div>
-            </div>
-          </div>
-          <div class="pij-nav"><button class="pij-btn-prev" onclick="pijGoStep(4)">← Précédent</button><button class="pij-btn-next" onclick="pijGoStep(6)">Suivant →</button></div>
-        </div>
-
-        <!-- ═══════════ ÉTAPE 6 : MOTIVATION & ENVOI ═══════════ -->
-        <div id="pij-step-6" style="display:none">
-          <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4;margin-bottom:1.2rem">
-            <h4 style="font-family:'Playfair Display',serif;color:#1a365d;font-size:1rem;margin:0 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid #f0f0f0">✍️ Votre motivation et informations complémentaires</h4>
-            <div style="display:grid;gap:1rem">
-              <div><label class="pij-label">Pourquoi voulez-vous créer cette entreprise ? Qu'est-ce qui vous a poussé à ce choix ?</label>
-                <textarea id="pij-motivation" class="pij-input" rows="4" style="resize:vertical" placeholder="Exprimez-vous librement : votre parcours, votre passion, le besoin que vous avez identifié sur votre territoire, ce qui vous a décidé à vous lancer..."></textarea>
-              </div>
-              <div><label class="pij-label">Avez-vous déjà des clients potentiels ou des commandes confirmées ?</label>
-                <div style="display:flex;gap:1rem;margin-top:.4rem">
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-clients-potentiels" value="oui"> Oui</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-clients-potentiels" value="non"> Non</label>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer"><input type="radio" name="pij-clients-potentiels" value="prospection"> Je suis en prospection</label>
-                </div>
-              </div>
-              <div><label class="pij-label">Si oui, décrivez ces premiers contacts commerciaux</label>
-                <textarea id="pij-premiers-clients" class="pij-input" rows="2" style="resize:vertical" placeholder="Ex: J'ai déjà 3 entreprises qui m'ont confirmé des commandes, une mairie qui attend mon devis..."></textarea>
-              </div>
-              <div><label class="pij-label">Avez-vous des partenaires professionnels ou des fournisseurs identifiés ?</label>
-                <textarea id="pij-partenaires" class="pij-input" rows="2" style="resize:vertical" placeholder="Ex: Accord avec un fournisseur de matières premières, partenariat avec une autre entreprise..."></textarea>
-                <div class="pij-hint">Laissez vide si pas encore</div>
-              </div>
-              <div><label class="pij-label">Quels risques identifiez-vous pour votre projet ? Comment comptez-vous les surmonter ?</label>
-                <textarea id="pij-risques" class="pij-input" rows="3" style="resize:vertical" placeholder="Ex: La concurrence est forte dans mon secteur, mais je me démarque par... / Le démarrage sera lent, j'ai prévu de compléter avec..."></textarea>
-              </div>
-              <div><label class="pij-label">Informations complémentaires pour votre conseiller SIMELE</label>
-                <textarea id="pij-infos-supp" class="pij-input" rows="2" style="resize:vertical" placeholder="Tout ce que vous souhaitez ajouter..."></textarea>
+              <div style="background:#f0f4f8;border-radius:8px;padding:12px;margin-top:12px">
+                <div style="display:flex;justify-content:space-between"><span style="font-weight:600;color:#1b2d5b">Cout mensuel local :</span><span id="pij-cout-local-mensuel" style="font-weight:700;color:#c9a96e">0 EUR</span></div>
               </div>
             </div>
           </div>
 
-          <!-- Récapitulatif -->
-          <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:16px;padding:1.4rem;margin-bottom:1.2rem">
-            <p style="font-size:.85rem;font-weight:700;color:#0369a1;margin:0 0 .6rem">✅ Avant d'envoyer, vérifiez :</p>
-            <ul style="font-size:.82rem;color:#374151;margin:0;padding-left:1.2rem;line-height:1.8">
-              <li>Toutes vos informations personnelles sont correctes</li>
-              <li>Votre projet est bien décrit</li>
-              <li>Vos investissements et financements sont renseignés</li>
-              <li>Votre motivation est exprimée</li>
-            </ul>
-            <p style="font-size:.78rem;color:#6b7280;margin:.8rem 0 0">Votre conseiller SIMELE recevra ce formulaire et vous contactera pour finaliser le dossier PIJ et vous accompagner dans les démarches.</p>
+          <!-- ETAPE 10 : Moyens humains -->
+          <div id="pij-step-10" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Moyens humains</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div><label class="ec-label">Travaillerez-vous seul(e) ?</label>
+                <select id="pij-seul" class="ec-input"><option value="">-- Choisir --</option><option>Oui</option><option>Non</option></select>
+              </div>
+              <div><label class="ec-label">Nombre de salaries prevus au demarrage</label><input type="number" id="pij-nb-salaries" class="ec-input" min="0" value="0"></div>
+              <div><label class="ec-label">Postes envisages</label><textarea id="pij-postes" class="ec-input" rows="2" placeholder="Vendeur, Assistant commercial..."></textarea></div>
+              <div><label class="ec-label">Type de contrat</label><textarea id="pij-contrats-rh" class="ec-input" rows="2" placeholder="CDI, CDD, temps partiel..."></textarea></div>
+              <div><label class="ec-label">Cout salarial mensuel estime (EUR)</label><input type="number" id="pij-cout-salarial" class="ec-input" placeholder="1500"></div>
+              <div><label class="ec-label">Besoin en sous-traitance ?</label>
+                <select id="pij-sous-traitance" class="ec-input"><option value="">-- Choisir --</option><option>Oui</option><option>Non</option></select>
+              </div>
+              <div><label class="ec-label">Type de sous-traitance</label><input type="text" id="pij-sous-traitance-type" class="ec-input" placeholder="Comptabilite, livraison..."></div>
+              <div><label class="ec-label">Cout mensuel sous-traitance (EUR)</label><input type="number" id="pij-cout-sst" class="ec-input" placeholder="300"></div>
+            </div>
           </div>
 
-          <div id="pij-submit-result" style="margin-bottom:.8rem"></div>
-          <div class="pij-nav">
-            <button class="pij-btn-prev" onclick="pijGoStep(5)">← Précédent</button>
-            <button onclick="pijEnvoyer()" style="padding:.9rem 2rem;background:#c9a84c;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(201,168,76,.3)">Envoyer mon dossier PIJ</button>
+          <!-- ETAPE 11 : CA Previsionnel -->
+          <div id="pij-step-11" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Chiffre d'affaires previsionnel</h3>
+            <div style="margin-bottom:12px"><label class="ec-label">Methode de calcul retenue</label>
+              <select id="pij-methode-ca" class="ec-input" style="margin-bottom:12px">
+                <option value="">-- Choisir --</option>
+                <option>Tarif unitaire x nombre d'unites vendues</option>
+                <option>Tarif horaire x nombre d'heures</option>
+                <option>Tarif quotidien x nombre de jours</option>
+                <option>Forfaitaire</option>
+                <option>Abonnement</option>
+                <option>Mixte</option>
+              </select>
+            </div>
+            <div style="margin-bottom:12px"><label class="ec-label">Detail du calcul</label><textarea id="pij-detail-ca" class="ec-input" rows="4" placeholder="Ex: 10 clients/mois x 150 EUR = 1500 EUR/mois..."></textarea></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div style="grid-column:span 2">
+                <label class="ec-label">CA mensuel estime (EUR)</label>
+                <input type="number" id="pij-ca-mensuel-prev" class="ec-input" placeholder="5000" oninput="pijCalcCA()">
+              </div>
+              <div><label class="ec-label">CA annuel Annee 1 (EUR)</label><input type="number" id="pij-ca-an1" class="ec-input" placeholder="60000" oninput="pijCalcCA()"></div>
+              <div><label class="ec-label">CA annuel Annee 2 (EUR)</label><input type="number" id="pij-ca-an2" class="ec-input" placeholder="72000"></div>
+              <div><label class="ec-label">CA annuel Annee 3 (EUR)</label><input type="number" id="pij-ca-an3" class="ec-input" placeholder="85000"></div>
+            </div>
+          </div>
+
+          <!-- ETAPE 12 : BFR -->
+          <div id="pij-step-12" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Besoin en fonds de roulement (BFR)</h3>
+            <p style="font-size:13px;color:#666;margin-bottom:12px">BFR = Stocks + Travaux en cours + Encours clients - Credit fournisseurs - Acomptes clients</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div><label class="ec-label">Stock de matieres premieres (EUR)</label><input type="number" id="pij-bfr-stock-mp" class="ec-input" placeholder="0" value="0" oninput="pijCalcBFR()"></div>
+              <div><label class="ec-label">Stock de produits finis (EUR)</label><input type="number" id="pij-bfr-stock-pf" class="ec-input" placeholder="0" value="0" oninput="pijCalcBFR()"></div>
+              <div><label class="ec-label">Travaux en cours (EUR)</label><input type="number" id="pij-bfr-tec" class="ec-input" placeholder="0" value="0" oninput="pijCalcBFR()"></div>
+              <div><label class="ec-label">Encours clients (EUR)</label><input type="number" id="pij-bfr-encours" class="ec-input" placeholder="0" value="0" oninput="pijCalcBFR()"></div>
+              <div><label class="ec-label">Credit fournisseurs (EUR)</label><input type="number" id="pij-bfr-credit-fourn" class="ec-input" placeholder="0" value="0" oninput="pijCalcBFR()"></div>
+              <div><label class="ec-label">Acomptes clients (EUR)</label><input type="number" id="pij-bfr-acomptes" class="ec-input" placeholder="0" value="0" oninput="pijCalcBFR()"></div>
+            </div>
+            <div style="background:#1b2d5b;color:white;border-radius:8px;padding:16px;margin-top:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-weight:600;font-size:15px">BFR calcule :</span>
+                <span id="pij-bfr-total" style="font-size:20px;font-weight:700;color:#c9a96e">0 EUR</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ETAPE 13 : Plan de financement -->
+          <div id="pij-step-13" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Plan de financement initial</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+              <!-- BESOINS -->
+              <div>
+                <h4 style="color:#1b2d5b;margin-bottom:12px;font-size:13px;text-transform:uppercase;letter-spacing:1px">Besoins</h4>
+                <div style="display:grid;gap:8px">
+                  <div><label class="ec-label" style="font-size:11px">Frais d'etablissement</label><input type="number" id="pij-b-frais-etab" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Droit au bail / pas de porte</label><input type="number" id="pij-b-droit-bail" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Logiciels</label><input type="number" id="pij-b-logiciels" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Publicite au demarrage</label><input type="number" id="pij-b-pub" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Materiel et outillage</label><input type="number" id="pij-b-materiel" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Amenagement</label><input type="number" id="pij-b-amenagement" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Materiel de bureau</label><input type="number" id="pij-b-bureau" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Tresorerie de demarrage</label><input type="number" id="pij-b-tresorerie" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Caution des loyers</label><input type="number" id="pij-b-caution" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Stock de depart</label><input type="number" id="pij-b-stock" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div style="background:#f0f4f8;border-radius:6px;padding:10px">
+                    <div style="display:flex;justify-content:space-between;font-weight:700;color:#1b2d5b"><span>TOTAL BESOINS</span><span id="pij-total-besoins">0 EUR</span></div>
+                  </div>
+                </div>
+              </div>
+              <!-- RESSOURCES -->
+              <div>
+                <h4 style="color:#1b2d5b;margin-bottom:12px;font-size:13px;text-transform:uppercase;letter-spacing:1px">Ressources</h4>
+                <div style="display:grid;gap:8px">
+                  <div><label class="ec-label" style="font-size:11px">Apport en capital</label><input type="number" id="pij-r-capital" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Comptes courants d'associes</label><input type="number" id="pij-r-cc-associes" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Pret d'honneur</label><input type="number" id="pij-r-pret-honneur" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Emprunt bancaire</label><input type="number" id="pij-r-emprunt" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Subvention PIJ</label><input type="number" id="pij-r-sub-pij" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Subvention FREQ</label><input type="number" id="pij-r-sub-freq" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Subvention AGEFIPH</label><input type="number" id="pij-r-sub-age" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div><label class="ec-label" style="font-size:11px">Autre subvention</label><input type="number" id="pij-r-autre-sub" class="ec-input" placeholder="0" value="0" oninput="pijCalcFinancement()"></div>
+                  <div style="background:#f0f4f8;border-radius:6px;padding:10px">
+                    <div style="display:flex;justify-content:space-between;font-weight:700;color:#1b2d5b"><span>TOTAL RESSOURCES</span><span id="pij-total-ressources">0 EUR</span></div>
+                  </div>
+                  <div style="background:#1b2d5b;color:white;border-radius:6px;padding:10px">
+                    <div style="display:flex;justify-content:space-between;font-weight:700"><span>SOLDE</span><span id="pij-solde-financement" style="color:#c9a96e">0 EUR</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ETAPE 14 : Compte de resultat -->
+          <div id="pij-step-14" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Compte de resultat previsionnel sur 3 ans</h3>
+            <div style="overflow-x:auto">
+              <table id="pij-cr-table" style="width:100%;border-collapse:collapse;font-size:12px">
+                <thead>
+                  <tr style="background:#1b2d5b;color:white">
+                    <th style="padding:8px 12px;text-align:left">Poste</th>
+                    <th style="padding:8px 12px;text-align:right">Annee 1</th>
+                    <th style="padding:8px 12px;text-align:right">Annee 2</th>
+                    <th style="padding:8px 12px;text-align:right">Annee 3</th>
+                  </tr>
+                </thead>
+                <tbody id="pij-cr-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ETAPE 15 : Pieces justificatives -->
+          <div id="pij-step-15" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Pieces justificatives</h3>
+            <p style="font-size:13px;color:#666;margin-bottom:16px">Listez les pieces que vous allez fournir. Vous pourrez les envoyer separement via l'onglet Documents.</p>
+            <div id="pij-pieces-list" style="display:grid;gap:8px">
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="Piece d'identite"> Piece d'identite (CNI ou passeport)</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="Justificatif de domicile"> Justificatif de domicile (- 3 mois)</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="CV"> CV detaille</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="Diplomes"> Copies des diplomes</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="Devis fournisseurs"> Devis fournisseurs</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="Justificatifs d'apport"> Justificatifs d'apport (releve bancaire)</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="Bail ou projet de bail"> Bail ou projet de bail</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="RIB"> RIB</label>
+              <label style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" name="pij-pieces" value="Attestations diverses"> Attestations diverses</label>
+            </div>
+            <div style="margin-top:16px"><label class="ec-label">Autres documents a fournir (preciser)</label><textarea id="pij-autres-docs" class="ec-input" rows="2" placeholder="Documents specifiques a votre projet..."></textarea></div>
+          </div>
+
+          <!-- ETAPE 16 : Validation finale -->
+          <div id="pij-step-16" class="pij-step" style="display:none">
+            <h3 style="color:#1b2d5b;margin-bottom:16px;font-size:15px">Validation finale</h3>
+            <div id="pij-recap-container" style="background:#f8f9fa;border-radius:10px;padding:20px;margin-bottom:16px;max-height:400px;overflow-y:auto"></div>
+            <div id="pij-manquants-alert" style="display:none;background:#FEE2E2;color:#991B1B;border-left:3px solid #EF4444;padding:12px;border-radius:6px;margin-bottom:12px"></div>
+            <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;padding:12px;background:#EFF6FF;border-radius:6px">
+              <input type="checkbox" id="pij-consentement" style="margin-top:3px">
+              <label for="pij-consentement" style="font-size:13px;color:#1e40af">J'atteste sur l'honneur que les informations fournies sont exactes et completes. J'accepte que ces donnees soient traitees par Cabinet SIMELE dans le cadre de mon accompagnement.</label>
+            </div>
+            <div style="display:flex;gap:12px">
+              <button type="button" onclick="pijSauvegarder()" style="flex:1;background:#6b7280;color:white;border:none;border-radius:8px;padding:14px;cursor:pointer;font-size:14px">Sauvegarder en brouillon</button>
+              <button type="button" onclick="pijValider()" style="flex:2;background:#1b2d5b;color:white;border:none;border-radius:8px;padding:14px;cursor:pointer;font-size:15px;font-weight:700">Valider et generer le PDF</button>
+            </div>
+          </div>
+
+          <!-- Navigation buttons -->
+          <div style="display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid #e5e7eb">
+            <button type="button" id="pij-btn-prev" onclick="pijPrev()" style="background:none;border:1px solid #ddd;border-radius:6px;padding:10px 20px;cursor:pointer;font-size:13px;color:#666;display:none">Precedent</button>
+            <button type="button" id="pij-btn-save" onclick="pijSauvegarder()" style="background:none;border:1px solid #c9a96e;border-radius:6px;padding:10px 16px;cursor:pointer;font-size:12px;color:#c9a96e;margin-left:auto">Sauvegarder</button>
+            <button type="button" id="pij-btn-next" onclick="pijNext()" style="background:#1b2d5b;color:white;border:none;border-radius:6px;padding:10px 24px;cursor:pointer;font-size:13px;font-weight:600;margin-left:8px">Suivant</button>
           </div>
         </div>
 
-      </div><!-- /sub-form-pij -->
-    </div><!-- /dd-subventions -->
 
     <div id="dd-mdp" style="display:none">
       <div style="background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 4px 32px rgba(26,54,93,.08);border:1px solid #e8ecf4">
@@ -2488,1104 +2567,743 @@ window.ecShowFormSubvention = function(type) {
 };
 
 /* ── Pré-remplir depuis les données du dashboard ── */
-function pijPreRemplir() {
-  try {
-    var userData = JSON.parse(localStorage.getItem('ec_user') || '{}');
-    if (userData.prenom) { var el = document.getElementById('pij-prenom'); if(el && !el.value) el.value = userData.prenom; }
-    if (userData.nom) { var el2 = document.getElementById('pij-nom'); if(el2 && !el2.value) el2.value = userData.nom; }
-    if (userData.email) { var el3 = document.getElementById('pij-email'); if(el3 && !el3.value) el3.value = userData.email; }
-    if (userData.tel) { var el4 = document.getElementById('pij-tel'); if(el4 && !el4.value) el4.value = userData.tel; }
-    if (userData.adresse) { var el5 = document.getElementById('pij-adresse'); if(el5 && !el5.value) el5.value = userData.adresse; }
-    if (userData.situation_fam) {
-      var sel = document.getElementById('pij-situation');
-      if (sel && !sel.value) {
-        for (var i=0; i<sel.options.length; i++) {
-          if (sel.options[i].text.toLowerCase().includes((userData.situation_fam||'').toLowerCase())) {
-            sel.selectedIndex = i; break;
-          }
-        }
-      }
-    }
-    // Load extended data from CRM if token available
-    if (_ecToken) {
-      fetch(_CRM + '/api/portal/dashboard', {headers:{'Authorization':'Bearer '+_ecToken}})
-        .then(r => r.json()).then(d => {
-          if (d.client) {
-            var c = d.client;
-            var nomEl = document.getElementById('pij-nom');
-            var prenomEl = document.getElementById('pij-prenom');
-            var emailEl = document.getElementById('pij-email');
-            if (nomEl && !nomEl.value && c.nom) nomEl.value = c.nom;
-            if (prenomEl && !prenomEl.value && c.prenom) prenomEl.value = c.prenom;
-            if (emailEl && !emailEl.value && c.email) emailEl.value = c.email;
-            // Activity from prestation
-            var actEl = document.getElementById('pij-activite-desc');
-            if (actEl && !actEl.value && c.prestation) actEl.value = c.prestation;
-          }
-        }).catch(() => {});
-    }
-  } catch(e) {}
-}
 
-/* ── Navigation entre étapes ── */
-var PIJ_STEP_LABELS = [
-  '', 'Étape 1 sur 6 — Qui êtes-vous ?',
-  'Étape 2 sur 6 — Votre projet',
-  'Étape 3 sur 6 — Vos investissements',
-  'Étape 4 sur 6 — Vos prévisions financières',
-  'Étape 5 sur 6 — Votre situation personnelle',
-  'Étape 6 sur 6 — Motivation & envoi'
+// ===================================================
+// FORMULAIRE PIJ - LOGIQUE COMPLETE
+// ===================================================
+var _pijStep = 1;
+var _pijData = {};
+var _pijCRM = 'https://ccs-gc-logi.up.railway.app';
+var _pijStepNames = [
+  'Identification',
+  'Presentation du projet',
+  'Produits et services',
+  'Etude de marche',
+  'Concurrence',
+  'Strategie commerciale',
+  'Competences',
+  'Moyens materiels',
+  'Locaux',
+  'Moyens humains',
+  'CA Previsionnel',
+  'Besoin en fonds de roulement',
+  'Plan de financement',
+  'Compte de resultat',
+  'Pieces justificatives',
+  'Validation'
 ];
-window.pijGoStep = function(n) {
-  for (var i=1; i<=6; i++) {
-    var el = document.getElementById('pij-step-' + i);
-    if (el) el.style.display = (i === n) ? '' : 'none';
-    var dot = document.getElementById('pij-dot-' + i);
-    if (dot) dot.style.background = i <= n ? '#1a365d' : '#e8ecf4';
+
+// Competences a evaluer
+var _pijCompetences = [
+  'Condition physique','Temps disponible','Argent disponible',
+  'Reseau personnel','Reseau professionnel','Connaissance du secteur',
+  'Competences de direction','Competences commerciales','Comptabilite/Gestion',
+  'Gestion RH','Confiance en soi','Empathie','Curiosite/Ouverture',
+  'Aptitude a communiquer','Imagination/Creativite','Prise d initiative',
+  'Gestion du temps','Gestion du stress','Travail en equipe','Autonomie'
+];
+
+// Initialiser le formulaire PIJ
+function pijInit() {
+  _pijStep = 1;
+  pijShowStep(1);
+  pijInitCompetences();
+  pijInitProduits();
+  pijInitConcurrents();
+  pijInitMateriels();
+  pijInitCR();
+  // Charger brouillon si existe
+  var saved = localStorage.getItem('pij_brouillon_'+(_pt||''));
+  if (saved) {
+    try {
+      _pijData = JSON.parse(saved);
+      pijRestoreData();
+    } catch(e) {}
   }
-  var lbl = document.getElementById('pij-step-label');
-  if (lbl) lbl.textContent = PIJ_STEP_LABELS[n] || '';
-  // Scroll to top of form
-  var form = document.getElementById('sub-form-pij');
-  if (form) form.scrollIntoView({behavior:'smooth', block:'start'});
-  // Init invest rows if step 3
-  if (n === 3 && !window._pijInvestInit) {
-    window._pijInvestInit = true;
-    window._pijInvestissements = [];
-    pijAjouterInvestissement();
-  }
-};
-
-/* ── Gestion investissements dynamiques ── */
-window._pijInvestissements = [];
-window.pijAjouterInvestissement = function() {
-  window._pijInvestissements.push({desc:'', qte:1, pu:0});
-  pijRenderInvestissements();
-};
-window.pijSupprimerInvest = function(idx) {
-  window._pijInvestissements.splice(idx, 1);
-  pijRenderInvestissements();
-  pijCalcFinancement();
-};
-window.pijUpdateInvest = function(idx, field, val) {
-  if (window._pijInvestissements[idx]) {
-    window._pijInvestissements[idx][field] = val;
-    pijCalcFinancement();
-    // Update total for this row
-    var row = document.getElementById('pij-invest-total-' + idx);
-    if (row) {
-      var t = (window._pijInvestissements[idx].qte||1) * (window._pijInvestissements[idx].pu||0);
-      row.textContent = t.toFixed(2).replace('.',',') + ' €';
-    }
-  }
-};
-function pijRenderInvestissements() {
-  var container = document.getElementById('pij-investissements-liste');
-  if (!container) return;
-  container.innerHTML = '';
-  if (!window._pijInvestissements.length) return;
-
-  // Header
-  var hdr = document.createElement('div');
-  hdr.className = 'pij-invest-row';
-  hdr.style.cssText = 'margin-bottom:.3rem';
-  hdr.innerHTML = '<div class="pij-label" style="margin:0">Description de l\'achat</div>'
-    + '<div class="pij-label" style="margin:0;text-align:center">Qté</div>'
-    + '<div class="pij-label" style="margin:0;text-align:right">Prix unit. (€)</div>'
-    + '<div class="pij-label" style="margin:0;text-align:right">Total</div>';
-  container.appendChild(hdr);
-
-  window._pijInvestissements.forEach(function(inv, i) {
-    var row = document.createElement('div');
-    row.className = 'pij-invest-row';
-    row.id = 'pij-invest-row-' + i;
-    var total = (inv.qte||1) * (inv.pu||0);
-    row.innerHTML = '<input class="pij-input" placeholder="Achat, materiel, vehicule, stock..." value="' + (inv.desc||'') + '" oninput="pijUpdateInvest(' + i + ',\'desc\',this.value)" style="grid-column:1">'
-      + '<input type="number" class="pij-input" value="' + (inv.qte||1) + '" min="1" oninput="pijUpdateInvest(' + i + ',\'qte\',parseFloat(this.value)||1)" style="text-align:center">'
-      + '<input type="number" class="pij-input" value="' + (inv.pu||'') + '" min="0" oninput="pijUpdateInvest(' + i + ',\'pu\',parseFloat(this.value)||0)" style="text-align:right" placeholder="0">'
-      + '<div style="display:flex;align-items:center;gap:.4rem;justify-content:flex-end">'
-      + '<span id="pij-invest-total-' + i + '" style="font-size:.85rem;font-weight:600;color:#1a365d;white-space:nowrap">' + total.toFixed(2).replace('.',',') + ' €</span>'
-      + '<button onclick="pijSupprimerInvest(' + i + ')" style="background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;border-radius:6px;padding:3px 8px;font-size:.8rem;cursor:pointer;flex-shrink:0">✕</button>'
-      + '</div>';
-    container.appendChild(row);
-  });
-}
-window.pijCalcFinancement = function() {
-  var totalInvest = (window._pijInvestissements||[]).reduce(function(a,b){ return a + (b.qte||1)*(b.pu||0); }, 0);
-  var el = document.getElementById('pij-total-invest');
-  if (el) el.textContent = totalInvest.toFixed(2).replace('.',',') + ' €';
-
-  var apport = parseFloat(document.getElementById('pij-apport-perso')?.value||0) || 0;
-  var pret = parseFloat(document.getElementById('pij-pret-bancaire')?.value||0) || 0;
-  var autres = parseFloat(document.getElementById('pij-autres-aides')?.value||0) || 0;
-  var pij = parseFloat(document.getElementById('pij-montant-demande')?.value||0) || 0;
-  var totalFinancement = apport + pret + autres + pij;
-  var ecart = totalInvest - totalFinancement;
-  var ecartEl = document.getElementById('pij-ecart-financement');
-  if (ecartEl) {
-    ecartEl.textContent = ecart.toFixed(2).replace('.',',') + ' €';
-    ecartEl.style.color = Math.abs(ecart) < 1 ? '#16a34a' : ecart > 0 ? '#dc2626' : '#6b7280';
-  }
-};
-
-/* ── Collecte des données PIJ ── */
-function pijCollecterDonnees() {
-  var getVal = id => (document.getElementById(id)?.value || '').trim();
-  var getRadio = name => {
-    var els = document.querySelectorAll('input[name="' + name + '"]:checked');
-    return els.length ? els[0].value : '';
-  };
-  var getCheckboxes = name => [...document.querySelectorAll('input[name="' + name + '"]:checked')].map(e => e.value).join(', ');
-  
-  return {
-    type: 'PIJ',
-    // Identité
-    nom: getVal('pij-nom'), prenom: getVal('pij-prenom'),
-    date_naissance: getVal('pij-ddn'), lieu_naissance: getVal('pij-lieu-nais'),
-    nationalite: getVal('pij-nationalite'), telephone: getVal('pij-tel'),
-    adresse: getVal('pij-adresse'), cp: getVal('pij-cp'), commune: getVal('pij-commune'),
-    email: getVal('pij-email'), situation_avant: getVal('pij-situation'),
-    diplome: getVal('pij-diplome'), formation: getRadio('pij-formation'),
-    formation_detail: getVal('pij-formation-detail'),
-    // Projet
-    raison_sociale: getVal('pij-raison-sociale'), activite_desc: getVal('pij-activite-desc'),
-    type_activite: getVal('pij-type-activite'), ape: getVal('pij-ape'),
-    forme_juridique: getVal('pij-forme-juridique'), date_creation: getVal('pij-date-creation'),
-    adresse_entreprise: getVal('pij-adresse-entreprise'),
-    lieu_exercice: getRadio('pij-lieu-exercice'),
-    clients_cibles: getCheckboxes('pij-clients'),
-    concurrents: getVal('pij-concurrents'), avantages: getVal('pij-avantages'),
-    // Investissements
-    investissements: window._pijInvestissements || [],
-    apport_perso: getVal('pij-apport-perso'), pret_bancaire: getVal('pij-pret-bancaire'),
-    autres_aides: getVal('pij-autres-aides'), montant_pij_demande: getVal('pij-montant-demande'),
-    // Prévisions
-    ca_an1: getVal('pij-ca1'), ca_an2: getVal('pij-ca2'), ca_an3: getVal('pij-ca3'),
-    loyer: getVal('pij-loyer'), remuneration: getVal('pij-remuneration'),
-    charges_sociales: getVal('pij-charges-sociales'), achats: getVal('pij-achats'),
-    telecom: getVal('pij-telecom'), transport: getVal('pij-transport'),
-    emplois_prevus: getVal('pij-emplois'),
-    // Situation perso
-    situation_familiale: getVal('pij-situation-fam'), nb_enfants: getVal('pij-enfants'),
-    logement: getRadio('pij-logement'),
-    aides_sociales: getCheckboxes('pij-aides-sociales'),
-    compte_pro: getRadio('pij-compte-pro'), dettes: getRadio('pij-dettes'),
-    dettes_montant: getVal('pij-dettes-montant'),
-    // Motivation
-    motivation: getVal('pij-motivation'),
-    clients_potentiels: getRadio('pij-clients-potentiels'),
-    premiers_clients: getVal('pij-premiers-clients'),
-    partenaires: getVal('pij-partenaires'), risques: getVal('pij-risques'),
-    infos_supp: getVal('pij-infos-supp'),
-    // Meta
-    date_soumission: new Date().toISOString()
-  };
+  // Aussi charger depuis le CRM
+  pijChargerDepuisCRM();
 }
 
-/* ── Envoi du formulaire PIJ ── */
-window.pijEnvoyer = async function() {
-  var res = document.getElementById('pij-submit-result');
-  res.innerHTML = '<div style="text-align:center;padding:.8rem;color:#6b7280;font-size:.85rem">Envoi en cours...</div>';
-  var data = pijCollecterDonnees();
-
-  // Validation minimale étape 1
-  if (!data.nom || !data.prenom) {
-    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Veuillez remplir au moins votre nom et prénom (étape 1).</div>';
-    return;
+function pijShowStep(n) {
+  _pijStep = n;
+  for (var i=1; i<=16; i++) {
+    var el = document.getElementById('pij-step-'+i);
+    if (el) el.style.display = (i===n) ? '' : 'none';
   }
-  // Validation CA (étape 4 obligatoire pour PIJ)
-  if (!data.ca_an1) {
-    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Veuillez renseigner le CA prévisionnel en étape 4 du formulaire.</div>';
-    return;
-  }
+  var label = document.getElementById('pij-step-label');
+  var nameEl = document.getElementById('pij-step-name');
+  var bar = document.getElementById('pij-progress-bar');
+  var btnPrev = document.getElementById('pij-btn-prev');
+  var btnNext = document.getElementById('pij-btn-next');
+  if (label) label.textContent = 'Etape ' + n + ' / 16';
+  if (nameEl) nameEl.textContent = _pijStepNames[n-1];
+  if (bar) bar.style.width = (n/16*100) + '%';
+  if (btnPrev) btnPrev.style.display = n > 1 ? '' : 'none';
+  if (btnNext) btnNext.style.display = n < 16 ? '' : 'none';
+  if (n === 16) pijGenererRecap();
+  window.scrollTo(0, document.getElementById('sub-form-pij') ? document.getElementById('sub-form-pij').offsetTop - 80 : 0);
+}
 
+function pijNext() {
+  pijCollecterEtape(_pijStep);
+  pijSauvegarderLocal();
+  if (_pijStep < 16) pijShowStep(_pijStep + 1);
+}
+
+function pijPrev() {
+  pijCollecterEtape(_pijStep);
+  pijSauvegarderLocal();
+  if (_pijStep > 1) pijShowStep(_pijStep - 1);
+}
+
+function pijCollecterEtape(n) {
+  if (n === 1) {
+    _pijData.nom = document.getElementById('pij-nom').value || '';
+    _pijData.prenom = document.getElementById('pij-prenom').value || '';
+    _pijData.ddn = document.getElementById('pij-ddn').value || '';
+    _pijData.lieu_nais = document.getElementById('pij-lieu-nais').value || '';
+    _pijData.nationalite = document.getElementById('pij-nationalite').value || '';
+    _pijData.tel = document.getElementById('pij-tel').value || '';
+    _pijData.email = document.getElementById('pij-email').value || '';
+    _pijData.situation_fam = document.getElementById('pij-situation-fam').value || '';
+    _pijData.enfants = document.getElementById('pij-enfants').value || '0';
+    _pijData.adresse = document.getElementById('pij-adresse').value || '';
+    _pijData.cp = document.getElementById('pij-cp').value || '';
+    _pijData.commune = document.getElementById('pij-commune').value || '';
+    var sit = document.querySelector('input[name="pij-sit-actuelle"]:checked');
+    _pijData.situation_actuelle = sit ? sit.value : '';
+    _pijData.formation = document.getElementById('pij-formation').value || '';
+    _pijData.diplomes = document.getElementById('pij-diplomes').value || '';
+    _pijData.experiences = document.getElementById('pij-experiences').value || '';
+    var deja = document.querySelector('input[name="pij-deja-cree"]:checked');
+    _pijData.deja_cree = deja ? deja.value : '';
+    _pijData.deja_cree_detail = document.getElementById('pij-deja-cree-detail') ? document.getElementById('pij-deja-cree-detail').value : '';
+  } else if (n === 2) {
+    _pijData.nom_commercial = document.getElementById('pij-nom-commercial').value || '';
+    _pijData.activite = document.getElementById('pij-activite').value || '';
+    _pijData.desc_activite = document.getElementById('pij-desc-activite').value || '';
+    _pijData.secteur = document.getElementById('pij-secteur').value || '';
+    _pijData.ape = document.getElementById('pij-ape').value || '';
+    _pijData.date_demarrage = document.getElementById('pij-date-demarrage').value || '';
+    _pijData.commune_implant = document.getElementById('pij-commune-implant').value || '';
+    _pijData.adresse_local = document.getElementById('pij-adresse-local').value || '';
+    var lieux = Array.from(document.querySelectorAll('input[name="pij-lieu-exercice"]:checked')).map(function(el){return el.value;});
+    _pijData.lieu_exercice = lieux;
+    _pijData.forme_juridique = document.getElementById('pij-forme-juridique').value || '';
+    _pijData.creation_reprise = document.getElementById('pij-creation-reprise').value || '';
+    _pijData.regime_fiscal = document.getElementById('pij-regime-fiscal').value || '';
+    _pijData.regime_social = document.getElementById('pij-regime-social').value || '';
+    _pijData.motivation = document.getElementById('pij-motivation').value || '';
+    _pijData.objectifs_ct = document.getElementById('pij-objectifs-ct').value || '';
+    _pijData.objectifs_mt = document.getElementById('pij-objectifs-mt').value || '';
+    _pijData.objectifs_lt = document.getElementById('pij-objectifs-lt').value || '';
+  } else if (n === 4) {
+    _pijData.marche_desc = document.getElementById('pij-marche-desc').value || '';
+    _pijData.zone_geo = document.getElementById('pij-zone-geo').value || '';
+    _pijData.profil_clients = document.getElementById('pij-profil-clients').value || '';
+    var clientele = Array.from(document.querySelectorAll('input[name="pij-clientele"]:checked')).map(function(el){return el.value;});
+    _pijData.clientele = clientele;
+    _pijData.besoins = document.getElementById('pij-besoins').value || '';
+    _pijData.habitudes = document.getElementById('pij-habitudes').value || '';
+    _pijData.tendance = document.getElementById('pij-tendance').value || '';
+    _pijData.saisonnalite = document.getElementById('pij-saisonnalite').value || '';
+    _pijData.opportunites = document.getElementById('pij-opportunites').value || '';
+    _pijData.menaces = document.getElementById('pij-menaces').value || '';
+    _pijData.verification = document.getElementById('pij-verification').value || '';
+    _pijData.resultats_recherche = document.getElementById('pij-resultats-recherche').value || '';
+  } else if (n === 6) {
+    _pijData.prospection = document.getElementById('pij-prospection').value || '';
+    var canaux = Array.from(document.querySelectorAll('input[name="pij-canaux"]:checked')).map(function(el){return el.value;});
+    _pijData.canaux = canaux;
+    _pijData.budget_comm = document.getElementById('pij-budget-comm').value || '';
+    _pijData.partenaires = document.getElementById('pij-partenaires').value || '';
+    _pijData.actions_demarrage = document.getElementById('pij-actions-demarrage').value || '';
+    _pijData.fidelisation = document.getElementById('pij-fidelisation').value || '';
+    _pijData.argumentaire = document.getElementById('pij-argumentaire').value || '';
+  } else if (n === 7) {
+    var comp = {};
+    _pijCompetences.forEach(function(c, i) {
+      var el = document.getElementById('pij-comp-'+i);
+      comp[c] = el ? el.value : '';
+    });
+    _pijData.competences = comp;
+    _pijData.competences_ext = document.getElementById('pij-competences-ext').value || '';
+  } else if (n === 9) {
+    var localOuiNon = document.querySelector('input[name="pij-local-oui-non"]:checked');
+    _pijData.local_oui_non = localOuiNon ? localOuiNon.value : '';
+    _pijData.local_adresse = document.getElementById('pij-local-adresse') ? document.getElementById('pij-local-adresse').value : '';
+    _pijData.local_type = document.getElementById('pij-local-type') ? document.getElementById('pij-local-type').value : '';
+    _pijData.local_surface = document.getElementById('pij-local-surface') ? document.getElementById('pij-local-surface').value : '';
+    _pijData.local_loyer = document.getElementById('pij-local-loyer') ? document.getElementById('pij-local-loyer').value : '';
+    _pijData.local_charges = document.getElementById('pij-local-charges') ? document.getElementById('pij-local-charges').value : '';
+    _pijData.local_depot = document.getElementById('pij-local-depot') ? document.getElementById('pij-local-depot').value : '';
+    _pijData.local_travaux = document.getElementById('pij-local-travaux') ? document.getElementById('pij-local-travaux').value : '';
+    _pijData.local_trouve = document.getElementById('pij-local-trouve') ? document.getElementById('pij-local-trouve').value : '';
+    _pijData.bail_signe = document.getElementById('pij-bail-signe') ? document.getElementById('pij-bail-signe').value : '';
+  } else if (n === 10) {
+    _pijData.seul = document.getElementById('pij-seul').value || '';
+    _pijData.nb_salaries = document.getElementById('pij-nb-salaries').value || '';
+    _pijData.postes = document.getElementById('pij-postes').value || '';
+    _pijData.contrats_rh = document.getElementById('pij-contrats-rh').value || '';
+    _pijData.cout_salarial = document.getElementById('pij-cout-salarial').value || '';
+    _pijData.sous_traitance = document.getElementById('pij-sous-traitance').value || '';
+    _pijData.sous_traitance_type = document.getElementById('pij-sous-traitance-type').value || '';
+    _pijData.cout_sst = document.getElementById('pij-cout-sst').value || '';
+  } else if (n === 11) {
+    _pijData.methode_ca = document.getElementById('pij-methode-ca').value || '';
+    _pijData.detail_ca = document.getElementById('pij-detail-ca').value || '';
+    _pijData.ca_mensuel_prev = document.getElementById('pij-ca-mensuel-prev').value || '';
+    _pijData.ca_an1 = document.getElementById('pij-ca-an1').value || '';
+    _pijData.ca_an2 = document.getElementById('pij-ca-an2').value || '';
+    _pijData.ca_an3 = document.getElementById('pij-ca-an3').value || '';
+  } else if (n === 12) {
+    _pijData.bfr_stock_mp = document.getElementById('pij-bfr-stock-mp').value || '0';
+    _pijData.bfr_stock_pf = document.getElementById('pij-bfr-stock-pf').value || '0';
+    _pijData.bfr_tec = document.getElementById('pij-bfr-tec').value || '0';
+    _pijData.bfr_encours = document.getElementById('pij-bfr-encours').value || '0';
+    _pijData.bfr_credit_fourn = document.getElementById('pij-bfr-credit-fourn').value || '0';
+    _pijData.bfr_acomptes = document.getElementById('pij-bfr-acomptes').value || '0';
+  } else if (n === 13) {
+    var besoinsIds = ['frais-etab','droit-bail','logiciels','pub','materiel','amenagement','bureau','tresorerie','caution','stock'];
+    var ressourcesIds = ['capital','cc-associes','pret-honneur','emprunt','sub-pij','sub-freq','sub-age','autre-sub'];
+    besoinsIds.forEach(function(id) {
+      var el = document.getElementById('pij-b-'+id);
+      _pijData['b_'+id.replace('-','_')] = el ? el.value : '0';
+    });
+    ressourcesIds.forEach(function(id) {
+      var el = document.getElementById('pij-r-'+id);
+      _pijData['r_'+id.replace('-','_')] = el ? el.value : '0';
+    });
+  } else if (n === 14) {
+    _pijData.cr = pijCollecterCR();
+  } else if (n === 15) {
+    var pieces = Array.from(document.querySelectorAll('input[name="pij-pieces"]:checked')).map(function(el){return el.value;});
+    _pijData.pieces = pieces;
+    _pijData.autres_docs = document.getElementById('pij-autres-docs').value || '';
+  }
+}
+
+// Sauvegarder en local
+function pijSauvegarderLocal() {
+  localStorage.setItem('pij_brouillon_'+(_pt||''), JSON.stringify(_pijData));
+}
+
+// Sauvegarder sur le CRM
+async function pijSauvegarder() {
+  pijCollecterEtape(_pijStep);
+  pijSauvegarderLocal();
+  var tok = localStorage.getItem('pt') || _pt || '';
   try {
-    // Envoi direct dans le dossier via la nouvelle route
-    var r = await fetch(_CRM + '/api/portal/soumettre-pij', {
+    var r = await fetch(_pijCRM+'/api/pij/sauvegarder', {
       method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + _ecToken,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ donnees: data })
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+tok},
+      body: JSON.stringify({donnees: _pijData, statut: 'brouillon', etape_courante: _pijStep})
     });
-    var d = await r.json();
-
-    if (d.success) {
-      res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:1.2rem;color:#166534">'
-        + '<div style="font-weight:700;font-size:.95rem;margin-bottom:.4rem">Votre dossier PIJ a bien été transmis !</div>'
-        + '<div style="font-size:.83rem;line-height:1.5">Il est maintenant visible directement dans votre dossier client par votre conseiller SIMELE. '
-        + 'Vous serez recontacté(e) sous 48h pour la suite des démarches.</div>'
-        + '</div>';
+    if (r.ok) {
+      pijShowMsg('Brouillon sauvegarde.', 'success');
     } else {
-      throw new Error(d.error || "Erreur lors de l'envoi");
+      pijShowMsg('Erreur de sauvegarde.', 'error');
     }
   } catch(e) {
-    res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">Erreur : ' + e.message + '</div>';
-  }
-};
-
-
-/* ================================================================
-   DOCUMENTS — Upload + liste mirroir CRM
-   ================================================================ */
-var _ecDocFile = null;
-
-window.ecDocFileSelect = function(input) {
-  var file = input.files[0]; if (!file) return;
-  _ecDocFile = file;
-  document.getElementById('ec-doc-upload-zone').style.display = 'none';
-  var sel = document.getElementById('ec-doc-file-selected');
-  sel.style.display = 'flex';
-  document.getElementById('ec-doc-file-name').textContent = file.name;
-  document.getElementById('ec-doc-file-size').textContent = file.size > 1048576 ? (file.size/1048576).toFixed(1)+' Mo' : Math.round(file.size/1024)+' Ko';
-};
-window.ecDocHandleDrop = function(e) {
-  e.preventDefault();
-  document.getElementById('ec-doc-upload-zone').style.borderColor = '#c8d4e8';
-  var file = e.dataTransfer.files[0]; if (!file) return;
-  _ecDocFile = file;
-  document.getElementById('ec-doc-upload-zone').style.display = 'none';
-  var sel = document.getElementById('ec-doc-file-selected');
-  sel.style.display = 'flex';
-  document.getElementById('ec-doc-file-name').textContent = file.name;
-  document.getElementById('ec-doc-file-size').textContent = file.size > 1048576 ? (file.size/1048576).toFixed(1)+' Mo' : Math.round(file.size/1024)+' Ko';
-};
-window.ecDocFileClear = function() {
-  _ecDocFile = null;
-  document.getElementById('ec-doc-file-input').value = '';
-  document.getElementById('ec-doc-file-selected').style.display = 'none';
-  document.getElementById('ec-doc-upload-zone').style.display = '';
-};
-window.ecDocEnvoyer = async function() {
-  if (!_ecDocFile) { alert('Veuillez sélectionner un fichier.'); return; }
-  var comment = document.getElementById('ec-doc-comment')?.value || '';
-  var nom = document.getElementById('ec-doc-nom')?.value || '';
-  var res = document.getElementById('ec-doc-upload-result');
-  if (res) res.innerHTML = '<div style="padding:.6rem;color:#6b7280;font-size:.82rem;text-align:center">⏳ Envoi en cours...</div>';
-  var fd = new FormData();
-  fd.append('fichier', _ecDocFile, _ecDocFile.name);
-  fd.append('commentaire', comment + (nom ? ' | Nom souhaité: '+nom : ''));
-  try {
-    var r = await fetch(_CRM + '/api/portal/envoyer-document', {method:'POST', headers:{'Authorization':'Bearer '+_ecToken}, body:fd});
-    var d = await r.json();
-    if (d.success) {
-      if (res) res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.7rem;color:#166534;font-size:.82rem">✅ ' + d.message + '</div>';
-      ecDocFileClear();
-      document.getElementById('ec-doc-nom').value = '';
-      document.getElementById('ec-doc-comment').value = '';
-      setTimeout(ecLoadDocuments, 1000);
-      setTimeout(ecLoadEnvois, 1000);
-    } else {
-      if (res) res.innerHTML = '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:.7rem;color:#dc2626;font-size:.82rem">❌ ' + (d.error||'Erreur') + '</div>';
-    }
-  } catch(e) {
-    if (res) res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.7rem;color:#dc2626;font-size:.82rem">❌ Erreur réseau.</div>';
-  }
-};
-
-/* ================================================================
-   PRESTATIONS — Catalogue complet + demande devis
-   ================================================================ */
-var _ecSelectedService = null;
-
-async function ecLoadServices() {
-  window._servicesLoaded = true;
-  var grid = document.getElementById('ec-services-grid');
-  if (!grid) return;
-  try {
-    var r = await fetch(_CRM + '/api/portal/services');
-    var d = await r.json();
-    var SERVICES = d.services || [];
-
-    // Get current prestation
-    var dash = await (await fetch(_CRM + '/api/portal/dashboard', {headers:{'Authorization':'Bearer '+_ecToken}})).json();
-    var currentPrest = dash.prestation_choisie || (dash.client && dash.client.prestation) || '';
-    if (currentPrest) {
-      var cpEl = document.getElementById('ec-current-prestation');
-      if (cpEl) { cpEl.style.display=''; cpEl.textContent = 'Prestation en cours : ' + currentPrest; }
-    }
-
-    var COLORS = ['#1a365d','#2c5282','#2b6cb0','#3182ce','#4299e1','#63b3ed'];
-    grid.innerHTML = SERVICES.map(function(s, i) {
-      var isFree = !s.prix;
-      var isSelected = s.label === currentPrest;
-      return '<div onclick="ecHandleServiceClick(this)" data-sid="'+s.id+'" data-slabel="'+encodeURIComponent(s.label)+'" data-sprix="'+(s.prix||'')+'" style="border:2px solid '+(isSelected?'#c9a84c':'#e8ecf4')+';border-left:4px solid '+COLORS[i%6]+';border-radius:10px;padding:1rem;cursor:pointer;transition:all .2s;background:'+(isSelected?'#fffbeb':'#fff')+'">'
-        + '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem">'
-        + '<div style="font-size:.88rem;font-weight:700;color:#1a365d;flex:1">'+s.label+'</div>'
-        + '<div style="font-size:1rem;font-weight:800;color:'+(isFree?'#9ca3af':'#c9a84c')+';white-space:nowrap;margin-left:.5rem">'+(s.prix ? s.prix+' €' : 'Sur devis')+'</div>'
-        + '</div>'
-        + '<div style="font-size:.75rem;color:#6b7280">'+s.desc+'</div>'
-        + (isSelected ? '<div style="margin-top:.5rem;background:#c9a84c;color:#fff;border-radius:6px;padding:2px 8px;font-size:.7rem;font-weight:700;display:inline-block">✓ Sélectionnée</div>' : '')
-        + '</div>';
-    }).join('');
-  } catch(e) {
-    if (grid) grid.innerHTML = '<div style="color:#dc2626;font-size:.85rem;grid-column:1/-1">Erreur de chargement.</div>';
+    pijShowMsg('Sauvegarde locale effectuee.', 'info');
   }
 }
 
-window.ecHandleServiceClick = function(el) {
-  var id = el.dataset.id;
-  var label = el.dataset.label;
-  var prix = el.dataset.prix ? parseFloat(el.dataset.prix) : null;
-  ecSelectService(el, id, label, prix);
-};
-window.ecSelectService = function(el, id, label, prix) {
-  document.querySelectorAll('#ec-services-grid > div').forEach(function(c) {
-    c.style.border = '2px solid #e8ecf4';
-    c.style.borderLeft = '4px solid #e8ecf4';
-    c.style.background = '#fff';
-  });
-  el.style.border = '2px solid #c9a84c';
-  el.style.background = '#fffbeb';
-  _ecSelectedService = {id:id, label:label, prix:prix};
-
-  var devisForm = document.getElementById('ec-devis-form');
-  var msgWrap = document.getElementById('ec-prestation-msg-wrap');
-  var submitBtn = document.getElementById('ec-prestation-submit-btn');
-
-  if (!prix) {
-    // Sur devis
-    if (devisForm) {
-      devisForm.style.display = '';
-      var lbl = document.getElementById('ec-devis-service-label');
-      if (lbl) lbl.textContent = 'Prestation sélectionnée : ' + label;
-    }
-    if (msgWrap) msgWrap.style.display = 'none';
-    if (submitBtn) submitBtn.style.display = 'none';
-  } else {
-    if (devisForm) devisForm.style.display = 'none';
-    if (msgWrap) msgWrap.style.display = '';
-    if (submitBtn) submitBtn.style.display = '';
-  }
-};
-
-window.ecEnvoyerPrestation = async function() {
-  if (!_ecSelectedService) { alert('Veuillez sélectionner une prestation.'); return; }
-  var msg = document.getElementById('ec-prestation-message')?.value || '';
-  var res = document.getElementById('ec-prestation-result');
+// Charger depuis le CRM
+async function pijChargerDepuisCRM() {
+  var tok = localStorage.getItem('pt') || _pt || '';
+  if (!tok) return;
   try {
-    var r = await fetch(_CRM + '/api/portal/choisir-prestation', {
-      method:'POST', headers:{'Authorization':'Bearer '+_ecToken,'Content-Type':'application/json'},
-      body: JSON.stringify({service_id:_ecSelectedService.id, service_label:_ecSelectedService.label, prix:_ecSelectedService.prix, message:msg})
+    var r = await fetch(_pijCRM+'/api/pij/mon-dossier', {
+      headers: {'Authorization':'Bearer '+tok}
     });
-    var d = await r.json();
-    if (d.success) {
-      if (res) res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.8rem;color:#166534;font-size:.85rem;margin-top:.5rem">✅ ' + d.message + '</div>';
-      var cp = document.getElementById('ec-current-prestation');
-      if (cp) { cp.style.display=''; cp.textContent='Prestation sélectionnée : ' + _ecSelectedService.label; }
-    } else {
-      if (res) res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ ' + (d.error||'Erreur') + '</div>';
+    if (r.ok) {
+      var d = await r.json();
+      if (d.pij && d.pij.donnees) {
+        try {
+          var donnees = typeof d.pij.donnees === 'string' ? JSON.parse(d.pij.donnees) : d.pij.donnees;
+          _pijData = donnees;
+          pijRestoreData();
+          if (d.pij.etape_courante) pijShowStep(parseInt(d.pij.etape_courante)||1);
+        } catch(e) {}
+      }
     }
-  } catch(e) {
-    if (res) res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ Erreur de connexion.</div>';
-  }
-};
-
-window.ecEnvoyerDemandeDevis = async function() {
-  if (!_ecSelectedService) return;
-  var desc = document.getElementById('ec-devis-description')?.value || '';
-  if (!desc.trim()) { alert('Veuillez décrire votre besoin.'); return; }
-  var res = document.getElementById('ec-prestation-result');
-  try {
-    var r = await fetch(_CRM + '/api/portal/demande-devis', {
-      method:'POST', headers:{'Authorization':'Bearer '+_ecToken,'Content-Type':'application/json'},
-      body: JSON.stringify({service_id:_ecSelectedService.id, service_label:_ecSelectedService.label, description:desc})
-    });
-    var d = await r.json();
-    if (d.success) {
-      document.getElementById('ec-devis-form').style.display = 'none';
-      if (res) res.innerHTML = '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.8rem;color:#166534;font-size:.85rem;margin-top:.5rem">✅ Votre demande de devis a été transmise ! Le cabinet reviendra vers vous très rapidement.</div>';
-    } else {
-      if (res) res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ ' + (d.error||'Erreur') + '</div>';
-    }
-  } catch(e) {
-    if (res) res.innerHTML = '<div style="background:#fef2f2;border-radius:8px;padding:.8rem;color:#dc2626;font-size:.85rem">❌ Erreur de connexion.</div>';
-  }
-};
-
-/* ================================================================
-   CHAT EN DIRECT — Messagerie client ↔ cabinet
-   ================================================================ */
-var _ecChatPolling = null;
-var _ecChatLastCount = 0;
-
-window.ecInitChat = async function() {
-  var msgsEl = document.getElementById('ec-chat-messages');
-  var input = document.getElementById('ec-chat-input');
-  if (!msgsEl) return;
-
-  // Set avatar
-  if (_clientData && _clientData.client) {
-    var av = document.getElementById('chat-avatar');
-    var tit = document.getElementById('chat-titre');
-    var sub = document.getElementById('chat-sous-titre');
-    if (av) av.textContent = (_clientData.client.prenom||'?')[0].toUpperCase();
-    if (tit) tit.textContent = 'Chat avec Cabinet SIMELE';
-    if (sub) sub.textContent = 'Bonjour ' + (_clientData.client.prenom||'') + ' ! Posez vos questions ici.';
-  }
-
-  // Load messages
-  await ecRefreshChat();
-
-  // Start polling
-  if (_ecChatPolling) clearInterval(_ecChatPolling);
-  _ecChatPolling = setInterval(ecRefreshChat, 5000);
-
-  // Status dot
-  var dot = document.getElementById('chat-status-dot');
-  var txt = document.getElementById('chat-status-txt');
-  if (dot) dot.style.background = '#2ecc71';
-  if (txt) txt.textContent = 'En ligne';
-};
-
-window.ecRefreshChat = async function() {
-  try {
-    var r = await fetch(_CRM + '/api/portal/chat', {headers:{'Authorization':'Bearer '+_ecToken}});
-    if (!r.ok) return;
-    var d = await r.json();
-    var msgs = d.messages || [];
-    var container = document.getElementById('ec-chat-messages');
-    if (!container) return;
-
-    if (!msgs.length) {
-      container.innerHTML = '<div style="text-align:center;padding:2rem;color:#9ca3af;font-size:.85rem">'
-        + '<div style="font-size:2.5rem;margin-bottom:.8rem"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h14a1 1 0 011 1v8a1 1 0 01-1 1H6l-4 3V5a1 1 0 011-1z"/></svg></div>'
-        + '<div style="font-weight:600;margin-bottom:.3rem">Démarrez la conversation</div>'
-        + '<div>Posez votre première question ci-dessous.<br>Le cabinet vous répondra dans les meilleurs délais.</div>'
-        + '</div>';
-      return;
-    }
-
-    var wasAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 30;
-
-    container.innerHTML = msgs.map(function(m) {
-      var isClient = m.expediteur === 'client';
-      var date = (m.created_at||'').slice(0,16).replace('T',' ');
-      return '<div style="display:flex;flex-direction:column;align-items:'+(isClient?'flex-end':'flex-start')+';margin-bottom:.2rem">'
-        + '<div style="max-width:78%;background:'+(isClient?'#1a365d':'#fff')+';color:'+(isClient?'#fff':'#333')
-        + ';border-radius:'+(isClient?'12px 4px 12px 12px':'4px 12px 12px 12px')
-        + ';padding:.7rem 1rem;font-size:.85rem;line-height:1.5;box-shadow:0 1px 3px rgba(0,0,0,.08)">'
-        + m.message.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')
-        + '</div>'
-        + '<div style="font-size:.68rem;color:#9ca3af;margin-top:.2rem;padding:0 .3rem">'
-        + (isClient ? 'Vous' : '🏢 Cabinet SIMELE') + ' · ' + date
-        + '</div></div>';
-    }).join('');
-
-    if (wasAtBottom) container.scrollTop = container.scrollHeight;
-  } catch(e) {}
-};
-
-window.ecEnvoyerMessage = async function() {
-  var input = document.getElementById('ec-chat-input');
-  if (!input || !input.value.trim()) return;
-  var msg = input.value.trim();
-  input.value = '';
-  try {
-    var r = await fetch(_CRM + '/api/portal/chat', {
-      method:'POST',
-      headers:{'Authorization':'Bearer '+_ecToken,'Content-Type':'application/json'},
-      body: JSON.stringify({message: msg})
-    });
-    var d = await r.json();
-    if (d.success) await ecRefreshChat();
-  } catch(e) {}
-};
-
-/* Load envois for documents tab */
-async function ecLoadEnvois() {
-  var list = document.getElementById('ec-mes-envois'); if(!list) return;
-  try {
-    var r = await fetch(_CRM + '/api/portal/dashboard', {headers:{'Authorization':'Bearer '+_ecToken}});
-    var d = await r.json();
-    var envois = d.mes_uploads || [];
-    if (!envois.length) { list.innerHTML='<div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.82rem">Aucun document envoyé pour le moment.</div>'; return; }
-    var STATUS = {en_attente:'⏳ En attente de validation', valide:'✅ Ajouté à votre dossier', rejete:'❌ Non retenu'};
-    var BG = {en_attente:'#fffbeb;border:1px solid #f59e0b', valide:'#f0fdf4;border:1px solid #86efac', rejete:'#fef2f2;border:1px solid #fca5a5'};
-    list.innerHTML = envois.map(function(u) {
-      return '<div style="background:'+BG[u.statut]+';border-radius:8px;padding:.7rem 1rem;margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center">'
-        + '<div><div style="font-size:.85rem;font-weight:600;color:#374151">'+u.nom_original+'</div>'
-        + '<div style="font-size:.75rem;color:#6b7280">'+(STATUS[u.statut]||u.statut)+' · '+(u.created_at||'').slice(0,10)+'</div></div>'
-        + '</div>';
-    }).join('');
   } catch(e) {}
 }
 
-/* Stop chat polling when leaving tab */
-(function() {
-  var origTab = window.ecDashTab;
-  window.ecDashTab = function(t) {
-    if (t !== 'envoyer' && _ecChatPolling) { clearInterval(_ecChatPolling); _ecChatPolling = null; }
-    if (origTab) origTab(t);
-  };
-})();
-
-
-/* ── DOM Structure Fix: ensure dd-* panels are siblings of ec-dashboard ── */
-(function fixDashboardStructure() {
-  var espaceClientPage = document.getElementById('espace-client');
-  if (!espaceClientPage) return;
-  
-  var panelIds = ['dd-dossier', 'dd-prestations', 'dd-documents', 'dd-envoyer', 'dd-finances', 'dd-subventions'];
-  
-  panelIds.forEach(function(id) {
-    var panel = document.getElementById(id);
-    if (!panel) return;
-    
-    // Check if panel is inside dd-mdp (wrong)
-    var parent = panel.parentElement;
-    if (parent && parent.id === 'dd-mdp') {
-      // Move panel to be sibling of dd-mdp (inside espace-client page)
-      var ddMdp = document.getElementById('dd-mdp');
-      if (ddMdp && ddMdp.parentElement) {
-        ddMdp.parentElement.insertBefore(panel, ddMdp.nextSibling);
-        console.log('[FIX] Moved ' + id + ' out of dd-mdp');
-      }
-    }
-  });
-  
-  // Also fix the tabs row and dashboard visibility
-  var dash = document.getElementById('ec-dashboard');
-  var tabsRow = document.querySelector('#espace-client > div[style*="border-bottom"]');
-  
-  // If tabs row is inside dash (wrong), move it after dash
-  if (tabsRow && dash && tabsRow.parentElement === dash) {
-    dash.parentElement.insertBefore(tabsRow, dash.nextSibling);
-    console.log('[FIX] Moved tabs row out of ec-dashboard');
+// Valider le formulaire
+async function pijValider() {
+  var consent = document.getElementById('pij-consentement');
+  if (!consent || !consent.checked) {
+    pijShowMsg('Veuillez cocher la case de consentement.', 'error');
+    return;
   }
-})();
-
-
-/* ================================================================
-   MENU MOBILE — Hamburger navigation
-   ================================================================ */
-function mobToggle() {
-  var menu = document.getElementById('mob-menu');
-  var overlay = document.getElementById('mob-overlay');
-  var btn = document.getElementById('nav-ham');
-  if (!menu) return;
-  var isOpen = menu.classList.contains('open');
-  if (isOpen) {
-    menu.classList.remove('open');
-    if (overlay) overlay.classList.remove('open');
-    if (btn) btn.classList.remove('open');
-    document.body.style.overflow = '';
-  } else {
-    menu.classList.add('open');
-    if (overlay) overlay.classList.add('open');
-    if (btn) btn.classList.add('open');
-    document.body.style.overflow = 'hidden';
+  pijCollecterEtape(16);
+  // Vérifier champs obligatoires
+  var manquants = [];
+  if (!_pijData.nom) manquants.push('Nom');
+  if (!_pijData.prenom) manquants.push('Prenom');
+  if (!_pijData.tel) manquants.push('Telephone');
+  if (!_pijData.email) manquants.push('Email');
+  if (!_pijData.activite) manquants.push('Activite principale');
+  if (manquants.length > 0) {
+    var alert = document.getElementById('pij-manquants-alert');
+    if (alert) { alert.style.display=''; alert.textContent = 'Champs obligatoires manquants: '+manquants.join(', '); }
+    return;
+  }
+  var tok = localStorage.getItem('pt') || _pt || '';
+  try {
+    var r = await fetch(_pijCRM+'/api/pij/valider', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+tok},
+      body: JSON.stringify({donnees: _pijData})
+    });
+    if (r.ok) {
+      pijShowMsg('Dossier PIJ valide ! Generation du PDF...', 'success');
+      setTimeout(function() { pijGenererPDF(); }, 500);
+      localStorage.removeItem('pij_brouillon_'+(_pt||''));
+    } else {
+      pijShowMsg('Erreur lors de la validation.', 'error');
+    }
+  } catch(e) {
+    pijShowMsg('Erreur de connexion.', 'error');
   }
 }
-function mobClose() {
-  var menu = document.getElementById('mob-menu');
-  var overlay = document.getElementById('mob-overlay');
-  var btn = document.getElementById('nav-ham');
-  if (menu) menu.classList.remove('open');
-  if (overlay) overlay.style.display = 'none';
-  if (btn) btn.classList.remove('open');
-  document.body.style.overflow = '';
+
+// Restaurer les donnees dans le formulaire
+function pijRestoreData() {
+  function setVal(id, val) { var el=document.getElementById(id); if(el && val!==undefined) el.value=val; }
+  setVal('pij-nom', _pijData.nom); setVal('pij-prenom', _pijData.prenom);
+  setVal('pij-ddn', _pijData.ddn); setVal('pij-lieu-nais', _pijData.lieu_nais);
+  setVal('pij-nationalite', _pijData.nationalite); setVal('pij-tel', _pijData.tel);
+  setVal('pij-email', _pijData.email); setVal('pij-situation-fam', _pijData.situation_fam);
+  setVal('pij-enfants', _pijData.enfants); setVal('pij-adresse', _pijData.adresse);
+  setVal('pij-cp', _pijData.cp); setVal('pij-commune', _pijData.commune);
+  setVal('pij-formation', _pijData.formation); setVal('pij-diplomes', _pijData.diplomes);
+  setVal('pij-experiences', _pijData.experiences);
+  setVal('pij-nom-commercial', _pijData.nom_commercial); setVal('pij-activite', _pijData.activite);
+  setVal('pij-desc-activite', _pijData.desc_activite); setVal('pij-secteur', _pijData.secteur);
+  setVal('pij-motivation', _pijData.motivation);
 }
-function mobNav(page) {
-  mobClose();
-  if (typeof showPage === 'function') {
-    showPage(page);
-  } else {
-    // Fallback: show the page div directly
-    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-    var target = document.getElementById(page);
-    if (target) target.classList.add('active');
-    window.scrollTo(0, 0);
-  }
+
+// ===== COMPETENCES GRILLE =====
+function pijInitCompetences() {
+  var container = document.getElementById('pij-competences-grid');
+  if (!container) return;
+  var html = '';
+  _pijCompetences.forEach(function(c, i) {
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee">';
+    html += '<span style="font-size:13px;color:#1b2d5b">'+c+'</span>';
+    html += '<div style="display:flex;gap:4px">';
+    [1,2,3,4,5].forEach(function(n) {
+      html += '<label style="display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer">';
+      html += '<input type="radio" name="pij-comp-radio-'+i+'" id="pij-comp-'+i+'" value="'+n+'" style="cursor:pointer">';
+      html += '<span style="font-size:10px;color:#999">'+n+'</span></label>';
+    });
+    html += '<label style="display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;margin-left:8px">';
+    html += '<input type="radio" name="pij-comp-radio-'+i+'" value="NSP" style="cursor:pointer">';
+    html += '<span style="font-size:10px;color:#999">NSP</span></label>';
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
 }
-// Close menu on overlay click
-document.addEventListener('DOMContentLoaded', function() {
-  var overlay = document.getElementById('mob-overlay');
-  if (overlay) overlay.addEventListener('click', mobClose);
-});
 
+// ===== TABLEAU PRODUITS =====
+var _pijProduits = [];
+function pijInitProduits() {
+  _pijProduits = [{nom:'',desc:'',cible:'',prix_ht:0,prix_ttc:0,freq:0,ca_mensuel:0,ca_annuel:0}];
+  pijRenderProduits();
+}
+function pijAddProduit() {
+  _pijProduits.push({nom:'',desc:'',cible:'',prix_ht:0,prix_ttc:0,freq:0,ca_mensuel:0,ca_annuel:0});
+  pijRenderProduits();
+}
+function pijRenderProduits() {
+  var container = document.getElementById('pij-produits-container');
+  if (!container) return;
+  container.innerHTML = _pijProduits.map(function(p, i) {
+    return '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px">'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+      '<div><label class="ec-label" style="font-size:11px">Produit/Service</label><input type="text" value="'+p.nom+'" oninput="_pijProduits['+i+'].nom=this.value" class="ec-input" placeholder="Nom du produit..."></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Clientele visee</label><input type="text" value="'+p.cible+'" oninput="_pijProduits['+i+'].cible=this.value" class="ec-input" placeholder="Particuliers..."></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Prix HT (EUR)</label><input type="number" value="'+p.prix_ht+'" oninput="_pijProduits['+i+'].prix_ht=parseFloat(this.value)||0;pijCalcProduit('+i+')" class="ec-input"></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Ventes/mois estimees</label><input type="number" value="'+p.freq+'" oninput="_pijProduits['+i+'].freq=parseFloat(this.value)||0;pijCalcProduit('+i+')" class="ec-input"></div>'+
+      '<div><label class="ec-label" style="font-size:11px">CA mensuel estime</label><input type="number" value="'+p.ca_mensuel+'" id="pij-prod-cam-'+i+'" class="ec-input" readonly></div>'+
+      '<div><label class="ec-label" style="font-size:11px">CA annuel estime</label><input type="number" value="'+p.ca_annuel+'" id="pij-prod-caa-'+i+'" class="ec-input" readonly></div>'+
+      '</div>'+
+      '<button type="button" onclick="_pijProduits.splice('+i+',1);pijRenderProduits()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:12px;margin-top:8px">Supprimer</button>'+
+      '</div>';
+  }).join('');
+  _pijData.produits = _pijProduits;
+  pijCalcTotalsProduits();
+}
+function pijCalcProduit(i) {
+  var p = _pijProduits[i];
+  p.ca_mensuel = Math.round(p.prix_ht * p.freq);
+  p.ca_annuel = p.ca_mensuel * 12;
+  var camEl = document.getElementById('pij-prod-cam-'+i);
+  var caaEl = document.getElementById('pij-prod-caa-'+i);
+  if (camEl) camEl.value = p.ca_mensuel;
+  if (caaEl) caaEl.value = p.ca_annuel;
+  pijCalcTotalsProduits();
+}
+function pijCalcTotalsProduits() {
+  var totalMensuel = _pijProduits.reduce(function(s,p){return s+p.ca_mensuel;},0);
+  var totalAnnuel = totalMensuel * 12;
+  var elM = document.getElementById('pij-ca-mensuel-total');
+  var elA = document.getElementById('pij-ca-annuel-total');
+  if (elM) elM.textContent = totalMensuel.toLocaleString('fr-FR') + ' EUR';
+  if (elA) elA.textContent = totalAnnuel.toLocaleString('fr-FR') + ' EUR';
+  _pijData.ca_total_mensuel = totalMensuel;
+  _pijData.ca_total_annuel = totalAnnuel;
+}
 
-/* ══════════════════════════════════════════════════
-   SIMULATEUR — Logique de calcul
-══════════════════════════════════════════════════ */
-(function() {
-  var simShowDetail = false;
+// ===== TABLEAU CONCURRENTS =====
+var _pijConcurrents = [];
+function pijInitConcurrents() {
+  _pijConcurrents = [{nom:'',type:'',localisation:'',services:'',tarifs:'',pts_forts:'',pts_faibles:'',diff:''}];
+  pijRenderConcurrents();
+}
+function pijAddConcurrent() {
+  _pijConcurrents.push({nom:'',type:'',localisation:'',services:'',tarifs:'',pts_forts:'',pts_faibles:'',diff:''});
+  pijRenderConcurrents();
+}
+function pijRenderConcurrents() {
+  var container = document.getElementById('pij-concurrents-container');
+  if (!container) return;
+  container.innerHTML = _pijConcurrents.map(function(c, i) {
+    return '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px">'+
+      '<h4 style="margin:0 0 10px;font-size:13px;color:#1b2d5b">Concurrent '+(i+1)+'</h4>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+      '<div><label class="ec-label" style="font-size:11px">Nom</label><input type="text" value="'+c.nom+'" oninput="_pijConcurrents['+i+'].nom=this.value" class="ec-input"></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Type</label><input type="text" value="'+c.type+'" oninput="_pijConcurrents['+i+'].type=this.value" class="ec-input" placeholder="Direct, indirect..."></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Localisation</label><input type="text" value="'+c.localisation+'" oninput="_pijConcurrents['+i+'].localisation=this.value" class="ec-input"></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Tarifs</label><input type="text" value="'+c.tarifs+'" oninput="_pijConcurrents['+i+'].tarifs=this.value" class="ec-input" placeholder="Fourchette de prix..."></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Points forts</label><textarea oninput="_pijConcurrents['+i+'].pts_forts=this.value" class="ec-input" rows="2">'+c.pts_forts+'</textarea></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Points faibles</label><textarea oninput="_pijConcurrents['+i+'].pts_faibles=this.value" class="ec-input" rows="2">'+c.pts_faibles+'</textarea></div>'+
+      '<div style="grid-column:span 2"><label class="ec-label" style="font-size:11px">Votre differentiation</label><textarea oninput="_pijConcurrents['+i+'].diff=this.value" class="ec-input" rows="2" placeholder="En quoi etes-vous different de ce concurrent ?">'+c.diff+'</textarea></div>'+
+      '</div>'+
+      (i>0?'<button type="button" onclick="_pijConcurrents.splice('+i+',1);pijRenderConcurrents()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:12px;margin-top:8px">Supprimer</button>':'')+
+      '</div>';
+  }).join('');
+  _pijData.concurrents = _pijConcurrents;
+}
 
-  var fr = function(n) { return Math.round(n).toLocaleString('fr-FR'); };
-  var eur = function(n) { return fr(n) + ' €'; };
+// ===== TABLEAU MATERIELS =====
+var _pijMateriels = [];
+function pijInitMateriels() {
+  _pijMateriels = [{desc:'',acquis:'Non',mode:'Achat',usage:'',cout:0,fournisseur:''}];
+  pijRenderMateriels();
+}
+function pijAddMateriel() {
+  _pijMateriels.push({desc:'',acquis:'Non',mode:'Achat',usage:'',cout:0,fournisseur:''});
+  pijRenderMateriels();
+}
+function pijRenderMateriels() {
+  var container = document.getElementById('pij-materiels-container');
+  if (!container) return;
+  container.innerHTML = _pijMateriels.map(function(m, i) {
+    return '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:8px">'+
+      '<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px;align-items:end">'+
+      '<div><label class="ec-label" style="font-size:11px">Description</label><input type="text" value="'+m.desc+'" oninput="_pijMateriels['+i+'].desc=this.value" class="ec-input" placeholder="Ordinateur portable..."></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Deja acquis</label><select oninput="_pijMateriels['+i+'].acquis=this.value" class="ec-input"><option'+(m.acquis=="Non"?" selected":"")+'">Non</option><option'+(m.acquis=="Oui"?" selected":"")+'">Oui</option></select></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Mode</label><select oninput="_pijMateriels['+i+'].mode=this.value" class="ec-input"><option>Achat</option><option>Location</option><option>Leasing</option><option>Pret</option></select></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Cout HT (EUR)</label><input type="number" value="'+m.cout+'" oninput="_pijMateriels['+i+'].cout=parseFloat(this.value)||0;pijCalcMateriels()" class="ec-input"></div>'+
+      '<div><label class="ec-label" style="font-size:11px">Fournisseur</label><input type="text" value="'+m.fournisseur+'" oninput="_pijMateriels['+i+'].fournisseur=this.value" class="ec-input"></div>'+
+      '</div>'+
+      '<button type="button" onclick="_pijMateriels.splice('+i+',1);pijRenderMateriels()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:12px;margin-top:8px">Supprimer</button>'+
+      '</div>';
+  }).join('');
+  pijCalcMateriels();
+  _pijData.materiels = _pijMateriels;
+}
+function pijCalcMateriels() {
+  var total = _pijMateriels.reduce(function(s,m){return s+m.cout;},0);
+  var el = document.getElementById('pij-total-materiels');
+  if (el) el.textContent = total.toLocaleString('fr-FR') + ' EUR HT';
+  _pijData.total_materiels = total;
+}
 
-  function calcIRBrut(rev) {
-    if (rev <= 0) return 0;
-    var t = [[0,11497,0],[11497,29315,.11],[29315,83823,.30],[83823,180294,.41],[180294,Infinity,.45]];
-    return Math.round(t.reduce(function(ir,b){ return rev>b[0]?ir+(Math.min(rev,b[1])-b[0])*b[2]:ir; },0));
-  }
+// ===== CALCULS AUTOMATIQUES =====
+function pijCalcBFR() {
+  var mp = parseFloat(document.getElementById('pij-bfr-stock-mp').value)||0;
+  var pf = parseFloat(document.getElementById('pij-bfr-stock-pf').value)||0;
+  var tec = parseFloat(document.getElementById('pij-bfr-tec').value)||0;
+  var enc = parseFloat(document.getElementById('pij-bfr-encours').value)||0;
+  var cf = parseFloat(document.getElementById('pij-bfr-credit-fourn').value)||0;
+  var ac = parseFloat(document.getElementById('pij-bfr-acomptes').value)||0;
+  var bfr = mp + pf + tec + enc - cf - ac;
+  var el = document.getElementById('pij-bfr-total');
+  if (el) { el.textContent = bfr.toLocaleString('fr-FR') + ' EUR'; el.style.color = bfr >= 0 ? '#c9a96e' : '#ef4444'; }
+  _pijData.bfr = bfr;
+}
 
-  function getNbParts(situ, enf) {
-    var base = situ==='marie' ? 2 : situ==='veuf' ? 1.5 : 1;
-    var n = parseInt(enf)||0;
-    var p = n>=1 ? 0.5 : 0;
-    if (n>=2) p += 0.5;
-    if (n>=3) p += (n-2)*1;
-    return base + p;
-  }
+function pijCalcFinancement() {
+  var bIds = ['frais-etab','droit-bail','logiciels','pub','materiel','amenagement','bureau','tresorerie','caution','stock'];
+  var rIds = ['capital','cc-associes','pret-honneur','emprunt','sub-pij','sub-freq','sub-age','autre-sub'];
+  var totalB = bIds.reduce(function(s,id){var el=document.getElementById('pij-b-'+id);return s+(parseFloat(el?el.value:0)||0);},0);
+  var totalR = rIds.reduce(function(s,id){var el=document.getElementById('pij-r-'+id);return s+(parseFloat(el?el.value:0)||0);},0);
+  var solde = totalR - totalB;
+  var elB = document.getElementById('pij-total-besoins');
+  var elR = document.getElementById('pij-total-ressources');
+  var elS = document.getElementById('pij-solde-financement');
+  if (elB) elB.textContent = totalB.toLocaleString('fr-FR') + ' EUR';
+  if (elR) elR.textContent = totalR.toLocaleString('fr-FR') + ' EUR';
+  if (elS) { elS.textContent = solde.toLocaleString('fr-FR') + ' EUR'; elS.style.color = solde >= 0 ? '#c9a96e' : '#ef4444'; }
+  _pijData.total_besoins = totalB;
+  _pijData.total_ressources = totalR;
+  _pijData.solde_financement = solde;
+}
 
-  function calcIR(revenu, situ, enf) {
-    if (revenu <= 0) return 0;
-    var parts = getNbParts(situ||'celibataire', enf||0);
-    var irQF = Math.round(calcIRBrut(revenu / parts) * parts);
-    /* Plafonnement avantage QF : 1 759 € par demi-part au-delà de la base */
-    var baseRef = situ==='marie' ? 2 : 1;
-    var demiSup = (parts - baseRef) * 2;
-    if (demiSup > 0) {
-      var irSansQF = Math.round(calcIRBrut(revenu / baseRef) * baseRef);
-      irQF = Math.max(irQF, irSansQF - Math.round(demiSup * 1759));
-    }
-    return Math.max(0, irQF);
-  }
+function pijCalcLocaux() {
+  var loyer = parseFloat(document.getElementById('pij-local-loyer') ? document.getElementById('pij-local-loyer').value : 0)||0;
+  var charges = parseFloat(document.getElementById('pij-local-charges') ? document.getElementById('pij-local-charges').value : 0)||0;
+  var total = loyer + charges;
+  var el = document.getElementById('pij-cout-local-mensuel');
+  if (el) el.textContent = total.toLocaleString('fr-FR') + ' EUR';
+}
 
-  function calcIS(ben) {
-    if (ben <= 0) return 0;
-    var SEUIL = 42500;
-    return ben <= SEUIL ? Math.round(ben * 0.15) : Math.round(SEUIL * 0.15 + (ben - SEUIL) * 0.25);
-  }
+function pijCalcCA() {
+  var mensuel = parseFloat(document.getElementById('pij-ca-mensuel-prev').value)||0;
+  var an1El = document.getElementById('pij-ca-an1');
+  if (an1El && !an1El.value && mensuel) an1El.value = mensuel * 12;
+}
 
-  function calcMicro(ca, charges, situ, enf, autresRev) {
-    var COT_RATE = 0.232, ABATT = 0.34;
-    var cotis = Math.round(ca * COT_RATE);
-    var revFisc = Math.round(ca * (1 - ABATT)) + (autresRev||0);
-    var ir = calcIR(revFisc, situ, enf);
-    var rsn = Math.max(0, ca - cotis - ir - charges);
-    return {
-      nom: 'Micro-Entreprise', rsn: rsn, tresorerie: 0,
-      detail: {
-        entreprise: [
-          { label: "Chiffre d'affaires", val: ca },
-          { label: "Abattement forfaitaire (34%)", val: -Math.round(ca * ABATT) },
-          { label: "Cotisations sociales (23,2%)", val: -cotis },
-          { label: "Trésorerie", val: 0, total: true }
-        ],
-        dirigeant: [
-          { label: "Base imposable", val: revFisc },
-          { label: "Impôt sur le revenu", val: -ir },
-          { label: "Charges professionnelles", val: -charges },
-          { label: "Revenu super net", val: rsn, total: true }
-        ]
-      }
-    };
-  }
+// ===== COMPTE DE RESULTAT =====
+var _pijCRData = {};
+var _pijCRLines = [
+  {id:'ventes_march',label:'Vente de marchandises',type:'ca'},
+  {id:'prestations',label:'Prestations de services',type:'ca'},
+  {id:'ca_ht',label:'CHIFFRE D AFFAIRES HT',type:'total_ca',bold:true},
+  {id:'achats_mp',label:'Achats matieres premieres',type:'charge'},
+  {id:'achats_march',label:'Achats marchandises',type:'charge'},
+  {id:'autres_cv',label:'Autres charges variables',type:'charge'},
+  {id:'total_cv',label:'TOTAL CHARGES VARIABLES',type:'total',bold:true},
+  {id:'marge_cv',label:'MARGE SUR COUT VARIABLE',type:'total',bold:true},
+  {id:'loyer_charges',label:'Loyer et charges',type:'fixed'},
+  {id:'sous_traitance',label:'Sous-traitance',type:'fixed'},
+  {id:'assurances',label:'Assurances',type:'fixed'},
+  {id:'honoraires',label:'Honoraires',type:'fixed'},
+  {id:'telephone',label:'Telephone/Internet',type:'fixed'},
+  {id:'publicite',label:'Publicite/Communication',type:'fixed'},
+  {id:'transports',label:'Transports/Carburant',type:'fixed'},
+  {id:'total_autres',label:'TOTAL AUTRES CHARGES',type:'total',bold:true},
+  {id:'va',label:'VALEUR AJOUTEE',type:'total',bold:true},
+  {id:'impots',label:'Impots et taxes',type:'charge'},
+  {id:'salaires',label:'Salaires',type:'charge'},
+  {id:'charges_sociales',label:'Charges sociales',type:'charge'},
+  {id:'total_personnel',label:'TOTAL CHARGES PERSONNEL',type:'total',bold:true},
+  {id:'ebe',label:'EXCEDENT BRUT D EXPLOITATION',type:'total',bold:true},
+  {id:'amortissements',label:'Dotations aux amortissements',type:'charge'},
+  {id:'charges_fin',label:'Charges financieres',type:'charge'},
+  {id:'resultat',label:'RESULTAT COURANT AVANT IMPOT',type:'result',bold:true},
+  {id:'seuil',label:'SEUIL DE RENTABILITE',type:'calc',bold:true},
+  {id:'point_mort',label:'POINT MORT (mois)',type:'calc',bold:true}
+];
 
-  function calcEURL(ca, charges, remunMens, situ, enf, autresRev) {
-    var remunAnn = remunMens * 12;
-    var cotis = Math.round(remunAnn * 0.41);
-    var benefice = ca - charges - remunAnn - cotis;
-    var is = calcIS(Math.max(0, benefice));
-    var tresorerie = Math.max(0, Math.max(0, benefice) - is);
-    var revIR = Math.max(0, remunAnn - cotis) + (autresRev||0);
-    var ir = calcIR(revIR, situ, enf);
-    var rsn = Math.max(0, remunAnn - ir);
-    return {
-      nom: 'EURL', rsn: rsn, tresorerie: Math.max(0, tresorerie),
-      detail: {
-        entreprise: [
-          { label: "Chiffre d'affaires", val: ca },
-          { label: "Dépenses professionnelles", val: -charges },
-          { label: "Rémunération annuelle", val: -remunAnn },
-          { label: "Cotisations TNS (41%)", val: -cotis },
-          { label: "Impôt sur les sociétés", val: -is },
-          { label: "Trésorerie", val: Math.max(0, tresorerie), total: true }
-        ],
-        dirigeant: [
-          { label: "Rémunération brute", val: remunAnn },
-          { label: "Cotisations déductibles", val: -cotis },
-          { label: "Impôt sur le revenu", val: -ir },
-          { label: "Revenu super net", val: rsn, total: true }
-        ]
-      }
-    };
-  }
+function pijInitCR() {
+  var tbody = document.getElementById('pij-cr-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = _pijCRLines.map(function(line) {
+    var bg = line.bold ? 'background:#f0f4f8;font-weight:700' : '';
+    var readOnly = (line.type === 'total' || line.type === 'total_ca' || line.type === 'result' || line.type === 'calc') ? 'readonly style="background:#f5f5f5"' : '';
+    var id1 = 'pij-cr-'+line.id+'-1', id2 = 'pij-cr-'+line.id+'-2', id3 = 'pij-cr-'+line.id+'-3';
+    var onInput = readOnly ? '' : 'oninput="pijCalcCR()"';
+    return '<tr style="'+bg+'">'+
+      '<td style="padding:6px 12px;border-bottom:1px solid #eee;font-size:12px'+(line.bold?';font-weight:700':'')+'">'+line.label+'</td>'+
+      '<td style="padding:4px 8px;border-bottom:1px solid #eee"><input type="number" id="'+id1+'" '+readOnly+' '+onInput+' class="ec-input" style="padding:4px;font-size:12px" value="0"></td>'+
+      '<td style="padding:4px 8px;border-bottom:1px solid #eee"><input type="number" id="'+id2+'" '+readOnly+' '+onInput+' class="ec-input" style="padding:4px;font-size:12px" value="0"></td>'+
+      '<td style="padding:4px 8px;border-bottom:1px solid #eee"><input type="number" id="'+id3+'" '+readOnly+' '+onInput+' class="ec-input" style="padding:4px;font-size:12px" value="0"></td>'+
+      '</tr>';
+  }).join('');
+}
 
-  function calcSASU(ca, charges, salMens, divsBruts, situ, enf, autresRev) {
-    var salAnn = salMens * 12;
-    var chPatro = Math.round(salAnn * 0.42);
-    var chSalar = Math.round(salAnn * 0.22);
-    var salNet = salAnn - chSalar;
-    var benefice = ca - charges - salAnn - chPatro;
-    var is = calcIS(Math.max(0, benefice));
-    var disponible = Math.max(0, Math.max(0, benefice) - is);
-    var divsDist = Math.min(divsBruts, disponible);
-    var divsNets = Math.round(divsDist * 0.70);
-    var treso = disponible - divsDist;
-    var ir = calcIR(salNet * 0.90 + (autresRev||0), situ, enf);
-    var rsn = Math.max(0, salNet - ir + divsNets);
-    return {
-      nom: 'SASU', rsn: rsn, tresorerie: treso, disponibleDivs: disponible,
-      detail: {
-        entreprise: [
-          { label: "Chiffre d'affaires", val: ca },
-          { label: "Dépenses professionnelles", val: -charges },
-          { label: "Salaire brut annuel", val: -salAnn },
-          { label: "Charges patronales (42%)", val: -chPatro },
-          { label: "Impôt sur les sociétés", val: -is },
-          { label: "Dividendes distribués", val: -divsDist },
-          { label: "Trésorerie", val: treso, total: true }
-        ],
-        dirigeant: [
-          { label: "Salaire net", val: salNet },
-          { label: "Dividendes nets (PFU 30%)", val: divsNets },
-          { label: "Impôt sur le revenu", val: -ir },
-          { label: "Revenu super net", val: rsn, total: true }
-        ]
-      }
-    };
-  }
-
-  function renderDetail(detail) {
-    if (!simShowDetail) return '';
-    var rows = function(arr) {
-      return arr.map(function(r) {
-        var v = Math.round(r.val);
-        var cls = r.total ? '' : (v === 0 ? 'sim-zero' : (v < 0 ? 'sim-neg' : 'sim-pos'));
-        var sign = v < 0 ? '−' : '';
-        return '<div class="sim-det-row' + (r.total ? ' total' : '') + '">'
-          + '<span class="sim-det-label">' + r.label + '</span>'
-          + '<span class="' + cls + '">' + sign + fr(Math.abs(v)) + ' €</span>'
-          + '</div>';
-      }).join('');
-    };
-    return '<div class="sim-detail">'
-      + '<div class="sim-det-title">Entreprise</div>' + rows(detail.entreprise)
-      + '<div class="sim-det-title">Dirigeant</div>' + rows(detail.dirigeant)
-      + '</div>';
-  }
-
-  function renderFirst(s, idx) {
-    var medals = ['🥇','🥈','🥉'];
-    var treso = s.tresorerie > 0
-      ? '<div class="sim-rsn-row"><span>🏦 Trésorerie disponible</span><span class="sim-amount">' + eur(s.tresorerie) + '</span></div>'
-      : '';
-    return '<div class="sim-first">'
-      + '<div class="sim-medal-row"><span class="sim-medal">' + medals[idx] + '</span><span class="sim-struct">' + s.nom + '</span></div>'
-      + '<div class="sim-rsn-row"><span>👤 Revenu super net / an</span><span class="sim-amount-big">' + eur(s.rsn) + '</span></div>'
-      + treso + renderDetail(s.detail) + '</div>';
-  }
-
-  function renderCard(s, idx) {
-    var medals = ['🥇','🥈','🥉'];
-    var treso = s.tresorerie > 0
-      ? '<div class="sim-rsn-row"><span>🏦 Trésorerie</span><span class="sim-amount">' + eur(s.tresorerie) + '</span></div>'
-      : '';
-    return '<div class="sim-result-card">'
-      + '<div class="sim-medal-row"><span class="sim-medal">' + medals[idx] + '</span><span class="sim-struct">' + s.nom + '</span></div>'
-      + '<div class="sim-rsn-row"><span>👤 Revenu net</span><span class="sim-amount">' + eur(s.rsn) + '</span></div>'
-      + treso + renderDetail(s.detail) + '</div>';
-  }
-
-  window.simToggleDetail = function() {
-    simShowDetail = !simShowDetail;
-    var lbl = document.getElementById('sim-toggle-lbl');
-    if (lbl) lbl.textContent = simShowDetail ? 'Masquer le détail' : 'Afficher le détail';
-    simUpdate();
-  };
-
-  window.simUpdate = function() {
-    var ca = +(document.getElementById('sl-ca') || {}).value || 0;
-    var charges = +(document.getElementById('sl-charges') || {}).value || 0;
-    var eurlR = +(document.getElementById('sl-eurl-remun') || {}).value || 0;
-    var sasuS = +(document.getElementById('sl-sasu-sal') || {}).value || 0;
-    var sasuD = +(document.getElementById('sl-sasu-divs') || {}).value || 0;
-
-    document.getElementById('lbl-ca').textContent = eur(ca);
-    document.getElementById('lbl-charges').textContent = eur(charges);
-    document.getElementById('lbl-eurl-remun').textContent = fr(eurlR);
-    document.getElementById('lbl-sasu-sal').textContent = fr(sasuS);
-    document.getElementById('lbl-sasu-divs').textContent = eur(sasuD);
-
-    /* ── Situation personnelle ── */
-    var situ = (document.getElementById('sl-situation')||{value:'celibataire'}).value||'celibataire';
-    var enf  = +(document.getElementById('sl-enfants')||{value:0}).value||0;
-    var autresRev = +(document.getElementById('sl-autres')||{value:0}).value||0;
-
-    var enfEl = document.getElementById('lbl-enfants');
-    if (enfEl) enfEl.textContent = String(enf);
-    var arEl = document.getElementById('lbl-autres');
-    if (arEl) arEl.textContent = eur(autresRev);
-
-    var parts = getNbParts(situ, enf);
-    var situMap = {celibataire:'Célibataire', marie:'Marié(e)/Pacsé(e)', veuf:'Veuf/Veuve'};
-    var infoEl = document.getElementById('sim-parts-info');
-    if (infoEl) infoEl.innerHTML = '<strong>' + (situMap[situ]||situ) + '</strong> · '
-      + enf + ' enfant(s) · <strong>' + parts.toFixed(1) + ' part(s)</strong>'
-      + (autresRev > 0 ? ' · +' + eur(autresRev) + ' hors activité' : '')
-      + ' · Barème IR 2024';
-
-    var micro = calcMicro(ca, charges, situ, enf, autresRev);
-    var eurl  = calcEURL(ca, charges, eurlR, situ, enf, autresRev);
-    var sasu  = calcSASU(ca, charges, sasuS, sasuD, situ, enf, autresRev);
-
-    var slDiv = document.getElementById('sl-sasu-divs');
-    if (slDiv) {
-      slDiv.max = sasu.disponibleDivs || 0;
-      if (+slDiv.value > (sasu.disponibleDivs || 0)) slDiv.value = sasu.disponibleDivs || 0;
-    }
-
-    var all = [micro, eurl, sasu];
-    all.sort(function(a, b) { return b.rsn - a.rsn; });
-
-    var zone = document.getElementById('sim-results');
-    if (zone) {
-      zone.innerHTML = renderFirst(all[0], 0)
-        + '<div class="sim-grid">' + renderCard(all[1], 1) + renderCard(all[2], 2) + '</div>';
-    }
-  };
-
-  // Init listeners quand la page est prête
-  document.addEventListener('DOMContentLoaded', function() {
-    ['sl-ca','sl-charges','sl-eurl-remun','sl-sasu-sal','sl-sasu-divs','sl-enfants','sl-autres'].forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el) el.addEventListener('input', window.simUpdate);
-    });
-    var slSit = document.getElementById('sl-situation');
-    if (slSit) slSit.addEventListener('change', window.simUpdate);
-    var slSit = document.getElementById('sl-situation');
-    if (slSit) slSit.addEventListener('change', window.simUpdate);
-    window.simUpdate();
+function pijCalcCR() {
+  [1,2,3].forEach(function(y) {
+    var g = function(id) { var el=document.getElementById('pij-cr-'+id+'-'+y); return el?parseFloat(el.value)||0:0; };
+    var s = function(id, val) { var el=document.getElementById('pij-cr-'+id+'-'+y); if(el){el.value=Math.round(val);} };
+    var ca = g('ventes_march') + g('prestations');
+    s('ca_ht', ca);
+    var totalCV = g('achats_mp') + g('achats_march') + g('autres_cv');
+    s('total_cv', totalCV);
+    s('marge_cv', ca - totalCV);
+    var totalAutres = g('loyer_charges') + g('sous_traitance') + g('assurances') + g('honoraires') + g('telephone') + g('publicite') + g('transports');
+    s('total_autres', totalAutres);
+    s('va', ca - totalCV - totalAutres);
+    var totalPersonnel = g('salaires') + g('charges_sociales');
+    s('total_personnel', totalPersonnel);
+    var ebe = ca - totalCV - totalAutres - g('impots') - totalPersonnel;
+    s('ebe', ebe);
+    var resultat = ebe - g('amortissements') - g('charges_fin');
+    s('resultat', resultat);
+    var chargesFixes = totalAutres + totalPersonnel + g('impots') + g('amortissements') + g('charges_fin');
+    var tauxMCV = ca > 0 ? (ca - totalCV) / ca : 0;
+    var seuil = tauxMCV > 0 ? Math.round(chargesFixes / tauxMCV) : 0;
+    s('seuil', seuil);
+    var pointMort = seuil > 0 && ca > 0 ? Math.round((seuil / ca) * 12) : 0;
+    s('point_mort', pointMort);
   });
+}
 
-
-})();
-
-
-/* ================================================================
-   VALIDATION FORMULAIRE CONTACT — rdvEnvoyer()
-   ================================================================ */
-(function() {
-
-  /* ── Helpers ── */
-  function getEl(id) { return document.getElementById(id); }
-
-  function showError(inputEl, msg) {
-    inputEl.classList.add('rdv-error');
-    inputEl.classList.remove('rdv-ok');
-    // Supprimer erreur précédente éventuelle
-    var prev = inputEl.parentElement.querySelector('.rdv-field-error');
-    if (prev) prev.remove();
-    var err = document.createElement('div');
-    err.className = 'rdv-field-error';
-    err.textContent = msg;
-    inputEl.parentElement.appendChild(err);
-  }
-
-  function clearError(inputEl) {
-    inputEl.classList.remove('rdv-error');
-    var prev = inputEl.parentElement.querySelector('.rdv-field-error');
-    if (prev) prev.remove();
-  }
-
-  function markOk(inputEl) {
-    inputEl.classList.remove('rdv-error');
-    inputEl.classList.add('rdv-ok');
-    var prev = inputEl.parentElement.querySelector('.rdv-field-error');
-    if (prev) prev.remove();
-  }
-
-  /* ── Nettoyage du numéro de téléphone (retire espaces, tirets, points) ── */
-  function cleanPhone(val) {
-    return val.replace(/[\s\-\.\(\)]/g, '');
-  }
-
-  /* ── Validation email ── */
-  function isValidEmail(val) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val.trim());
-  }
-
-  /* ── Validation téléphone ── */
-  function isValidPhone(val) {
-    var cleaned = cleanPhone(val);
-    // Accepter : 10 chiffres (0690...) OU format international +590... (entre 10-15 chiffres)
-    if (/^\+[0-9]{9,14}$/.test(cleaned)) return true;  // +590690...
-    if (/^[0-9]{10}$/.test(cleaned)) return true;         // 0690000000
-    return false;
-  }
-
-  /* ── Validation live (feedback en temps réel) ── */
-  document.addEventListener('DOMContentLoaded', function() {
-
-    var emailEl = getEl('rdv-email');
-    var telEl   = getEl('rdv-tel');
-    var nomEl   = getEl('rdv-nom');
-
-    if (emailEl) {
-      emailEl.addEventListener('blur', function() {
-        var val = this.value.trim();
-        if (!val) { clearError(this); return; }
-        if (!isValidEmail(val)) {
-          showError(this, 'Adresse email invalide (ex : prenom@domaine.fr)');
-        } else {
-          markOk(this);
-        }
-      });
-      emailEl.addEventListener('input', function() {
-        if (this.classList.contains('rdv-error') && isValidEmail(this.value.trim())) {
-          markOk(this);
-        }
-      });
-    }
-
-    if (telEl) {
-      telEl.addEventListener('blur', function() {
-        var val = this.value.trim();
-        if (!val) { clearError(this); return; }  // Champ optionnel
-        if (!isValidPhone(val)) {
-          showError(this, 'Numéro invalide — 10 chiffres requis (ex : 0690 00 00 00)');
-        } else {
-          markOk(this);
-        }
-      });
-      telEl.addEventListener('input', function() {
-        if (this.classList.contains('rdv-error') && isValidPhone(this.value.trim())) {
-          markOk(this);
-        }
-      });
-    }
-
-    if (nomEl) {
-      nomEl.addEventListener('blur', function() {
-        var val = this.value.trim();
-        if (!val) { clearError(this); return; }
-        if (val.length < 2) {
-          showError(this, 'Veuillez entrer votre prénom et nom');
-        } else {
-          markOk(this);
-        }
-      });
-    }
-
-    /* Info buttons — empêcher le clic de cocher la checkbox parente */
-    document.querySelectorAll('.rdv-info-btn').forEach(function(btn) {
-      btn.addEventListener('click', function(e) { e.preventDefault(); });
-    });
-
+function pijCollecterCR() {
+  var cr = {};
+  _pijCRLines.forEach(function(line) {
+    cr[line.id] = {
+      an1: parseFloat(document.getElementById('pij-cr-'+line.id+'-1')?document.getElementById('pij-cr-'+line.id+'-1').value:0)||0,
+      an2: parseFloat(document.getElementById('pij-cr-'+line.id+'-2')?document.getElementById('pij-cr-'+line.id+'-2').value:0)||0,
+      an3: parseFloat(document.getElementById('pij-cr-'+line.id+'-3')?document.getElementById('pij-cr-'+line.id+'-3').value:0)||0
+    };
   });
+  return cr;
+}
 
-  /* ── Soumission avec validation complète ── */
-  window.rdvEnvoyer = function() {
-    var nomEl   = getEl('rdv-nom');
-    var emailEl = getEl('rdv-email');
-    var telEl   = getEl('rdv-tel');
-    var msgEl   = getEl('rdv-message');
-    var feedback = getEl('rdv-feedback');
-    var submitBtn = getEl('rdv-submit-btn');
+// ===== RECAP =====
+function pijGenererRecap() {
+  var container = document.getElementById('pij-recap-container');
+  if (!container) return;
+  pijCollecterEtape(_pijStep-1);
+  var sections = [
+    {titre:'Porteur de projet', items:[
+      ['Nom complet', (_pijData.prenom||'')+' '+(_pijData.nom||'')],
+      ['Email', _pijData.email||''], ['Telephone', _pijData.tel||''],
+      ['Situation', _pijData.situation_actuelle||''], ['Formation', _pijData.formation||'']
+    ]},
+    {titre:'Projet', items:[
+      ['Activite', _pijData.activite||''], ['Nom commercial', _pijData.nom_commercial||''],
+      ['Forme juridique', _pijData.forme_juridique||''], ['Demarrage', _pijData.date_demarrage||'']
+    ]},
+    {titre:'Finances', items:[
+      ['CA mensuel estime', (_pijData.ca_total_mensuel||0).toLocaleString('fr-FR')+' EUR'],
+      ['CA annuel estime', (_pijData.ca_total_annuel||0).toLocaleString('fr-FR')+' EUR'],
+      ['BFR', (_pijData.bfr||0).toLocaleString('fr-FR')+' EUR'],
+      ['Total besoins', (_pijData.total_besoins||0).toLocaleString('fr-FR')+' EUR'],
+      ['Total ressources', (_pijData.total_ressources||0).toLocaleString('fr-FR')+' EUR']
+    ]}
+  ];
+  container.innerHTML = sections.map(function(s) {
+    return '<div style="margin-bottom:16px">'+
+      '<h4 style="color:#1b2d5b;margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:1px">'+s.titre+'</h4>'+
+      s.items.filter(function(item){return item[1];}).map(function(item) {
+        return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee">'+
+          '<span style="font-size:12px;color:#666">'+item[0]+'</span>'+
+          '<span style="font-size:12px;font-weight:600;color:#1b2d5b">'+item[1]+'</span></div>';
+      }).join('')+'</div>';
+  }).join('');
+}
 
-    var errors = [];
-    var valid = true;
+// ===== GENERATION PDF =====
+function pijGenererPDF() {
+  var d = _pijData;
+  var html = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">'+
+    '<title>Dossier PIJ - '+(d.prenom||'')+' '+(d.nom||'')+'</title>'+
+    '<style>body{font-family:Arial,sans-serif;font-size:12px;color:#1b2d5b;max-width:900px;margin:0 auto;padding:30px;line-height:1.5}'+
+    '.header{background:#1b2d5b;color:white;padding:20px 30px;margin:-30px -30px 30px;display:flex;justify-content:space-between;align-items:center}'+
+    '.header button{background:#c9a96e;color:white;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-size:13px;font-weight:bold}'+
+    '@media print{.header button,.no-print{display:none}body{padding:10px}}'+
+    'h1{text-align:center;font-size:18px;text-transform:uppercase;letter-spacing:2px;border-bottom:3px solid #1b2d5b;padding-bottom:12px;margin-bottom:20px}'+
+    'h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;background:#f0f4f8;padding:8px 12px;border-left:4px solid #c9a96e;margin:20px 0 10px}'+
+    'table{width:100%;border-collapse:collapse;margin:10px 0;font-size:11px}'+
+    'th{background:#1b2d5b;color:white;padding:6px 10px;text-align:left}'+
+    'td{padding:5px 10px;border-bottom:1px solid #eee}'+
+    '.field{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f0f0f0}'+
+    '.field-label{color:#666;font-size:11px}'+
+    '.field-value{font-weight:600;color:#1b2d5b;font-size:11px}'+
+    '.total-row{background:#1b2d5b;color:white;font-weight:bold}'+
+    '.signature{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px}'+
+    '.sig-box{border-top:2px solid #1b2d5b;padding-top:8px}'+
+    '.meta{font-size:10px;color:#999;text-align:right;margin-bottom:20px}'+
+    '</style></head><body>'+
+    '<div class="header"><div><strong>CABINET DE CONSEILS SIMELE</strong><br><small>20 Lotissement Tolbiac 1 - 97114 Trois-Rivieres<br>SIRET: 92787546800039</small></div>'+
+    '<button onclick="window.print()">Imprimer / Sauvegarder PDF</button></div>'+
+    '<div class="meta">Genere le '+new Date().toLocaleDateString('fr-FR')+' | '+( d.prenom||'')+' '+(d.nom||'')+'</div>'+
+    '<h1>Dossier PIJ - Point Information Jeunesse</h1>'+
 
-    /* Reset précédent */
-    [nomEl, emailEl, telEl].forEach(function(el) {
-      if (el) { el.classList.remove('rdv-error', 'rdv-ok'); }
-      var prev = el && el.parentElement.querySelector('.rdv-field-error');
-      if (prev) prev.remove();
-    });
+    '<h2>1. Identification du porteur de projet</h2>'+
+    '<div class="field"><span class="field-label">Nom complet</span><span class="field-value">'+(d.prenom||'')+' '+(d.nom||'')+'</span></div>'+
+    '<div class="field"><span class="field-label">Date de naissance</span><span class="field-value">'+(d.ddn||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Nationalite</span><span class="field-value">'+(d.nationalite||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Telephone</span><span class="field-value">'+(d.tel||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Email</span><span class="field-value">'+(d.email||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Adresse</span><span class="field-value">'+(d.adresse||'')+', '+(d.cp||'')+' '+(d.commune||'')+'</span></div>'+
+    '<div class="field"><span class="field-label">Situation familiale</span><span class="field-value">'+(d.situation_fam||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Situation actuelle</span><span class="field-value">'+(d.situation_actuelle||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Formation</span><span class="field-value">'+(d.formation||'-')+' - '+(d.diplomes||'-')+'</span></div>'+
 
-    /* ── Validation Nom ── */
-    var nom = nomEl ? nomEl.value.trim() : '';
-    if (!nom || nom.length < 2) {
-      showError(nomEl, 'Veuillez entrer votre prénom et nom');
-      errors.push('nom');
-      valid = false;
-    } else {
-      markOk(nomEl);
-    }
+    '<h2>2. Presentation du projet</h2>'+
+    '<div class="field"><span class="field-label">Nom commercial</span><span class="field-value">'+(d.nom_commercial||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Activite principale</span><span class="field-value">'+(d.activite||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Secteur</span><span class="field-value">'+(d.secteur||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Forme juridique</span><span class="field-value">'+(d.forme_juridique||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Date de demarrage</span><span class="field-value">'+(d.date_demarrage||'-')+'</span></div>'+
+    '<p style="margin-top:8px;font-size:11px;color:#444"><strong>Description : </strong>'+(d.desc_activite||'-')+'</p>'+
+    '<p style="font-size:11px;color:#444"><strong>Motivation : </strong>'+(d.motivation||'-')+'</p>'+
 
-    /* ── Validation Email ── */
-    var email = emailEl ? emailEl.value.trim() : '';
-    if (!email) {
-      showError(emailEl, "L'adresse email est obligatoire");
-      errors.push('email');
-      valid = false;
-    } else if (!isValidEmail(email)) {
-      showError(emailEl, 'Format invalide — exemple attendu : prenom@domaine.fr');
-      errors.push('email');
-      valid = false;
-    } else {
-      markOk(emailEl);
-    }
+    '<h2>3. Produits et services</h2>'+
+    (d.produits && d.produits.length > 0 ?
+      '<table><thead><tr><th>Produit/Service</th><th>Clientele</th><th>Prix HT</th><th>Ventes/mois</th><th>CA mensuel</th><th>CA annuel</th></tr></thead><tbody>'+
+      d.produits.map(function(p){return '<tr><td>'+(p.nom||'-')+'</td><td>'+(p.cible||'-')+'</td><td>'+p.prix_ht+' EUR</td><td>'+p.freq+'</td><td>'+(p.ca_mensuel||0)+' EUR</td><td>'+(p.ca_annuel||0)+' EUR</td></tr>';}).join('')+
+      '<tr class="total-row"><td colspan="4">TOTAL</td><td>'+(d.ca_total_mensuel||0)+' EUR</td><td>'+(d.ca_total_annuel||0)+' EUR</td></tr>'+
+      '</tbody></table>' : '<p style="color:#999;font-size:11px">Aucun produit renseigne</p>')+
 
-    /* ── Validation Téléphone (optionnel mais si rempli, doit être valide) ── */
-    var tel = telEl ? telEl.value.trim() : '';
-    if (tel) {
-      if (!isValidPhone(tel)) {
-        showError(telEl, 'Numéro invalide — 10 chiffres requis (ex : 0690 00 00 00 ou +590 6 90 00 00 00)');
-        errors.push('tel');
-        valid = false;
-      } else {
-        markOk(telEl);
-      }
-    }
+    '<h2>4. Etude de marche</h2>'+
+    '<div class="field"><span class="field-label">Zone geographique</span><span class="field-value">'+(d.zone_geo||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">Clientele</span><span class="field-value">'+((d.clientele||[]).join(', ')||'-')+'</span></div>'+
+    '<p style="font-size:11px;color:#444"><strong>Description du marche : </strong>'+(d.marche_desc||'-')+'</p>'+
 
-    /* ── Validation intérêts (au moins 1) ── */
-    var checked = document.querySelectorAll('.rdv-interests-grid input[type="checkbox"]:checked');
-    if (checked.length === 0) {
-      errors.push('interests');
-      valid = false;
-      var grid = document.querySelector('.rdv-interests-grid');
-      if (grid) {
-        var prev = grid.parentElement.querySelector('.rdv-field-error-interests');
-        if (!prev) {
-          var err = document.createElement('div');
-          err.className = 'rdv-field-error rdv-field-error-interests';
-          err.style.marginTop = '.4rem';
-          err.textContent = 'Sélectionnez au moins une prestation';
-          grid.parentElement.appendChild(err);
-        }
-      }
-    } else {
-      var prevI = document.querySelector('.rdv-field-error-interests');
-      if (prevI) prevI.remove();
-    }
+    '<h2>7. Competences (notation /5)</h2>'+
+    (d.competences ? '<table><thead><tr><th>Competence</th><th>Note</th></tr></thead><tbody>'+
+      Object.entries(d.competences).map(function(e){return '<tr><td>'+e[0]+'</td><td>'+e[1]+'</td></tr>';}).join('')+
+      '</tbody></table>' : '<p style="color:#999;font-size:11px">Non renseigne</p>')+
 
-    /* ── Affichage du résultat ── */
-    if (!valid) {
-      feedback.style.display = 'block';
-      feedback.innerHTML = '<div class="rdv-alert-error">'
-        + '<strong>Veuillez corriger les erreurs suivantes</strong><br>'
-        + 'Les champs surlignés en rouge nécessitent votre attention.'
-        + '</div>';
-      /* Scroll vers le premier champ en erreur */
-      var firstErr = document.querySelector('.rdv-error');
-      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
+    '<h2>11. Chiffre d affaires previsionnel</h2>'+
+    '<div class="field"><span class="field-label">Methode</span><span class="field-value">'+(d.methode_ca||'-')+'</span></div>'+
+    '<div class="field"><span class="field-label">CA mensuel</span><span class="field-value">'+(d.ca_mensuel_prev||0)+' EUR</span></div>'+
+    '<div class="field"><span class="field-label">CA Annee 1</span><span class="field-value">'+(d.ca_an1||0)+' EUR</span></div>'+
+    '<div class="field"><span class="field-label">CA Annee 2</span><span class="field-value">'+(d.ca_an2||0)+' EUR</span></div>'+
+    '<div class="field"><span class="field-label">CA Annee 3</span><span class="field-value">'+(d.ca_an3||0)+' EUR</span></div>'+
 
-    /* ── Tout est valide : simuler l'envoi (formulaire visuel) ── */
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Envoi en cours…';
-    submitBtn.style.opacity = '.7';
+    '<h2>12. Besoin en fonds de roulement</h2>'+
+    '<div style="background:#1b2d5b;color:white;padding:12px;border-radius:6px;display:flex;justify-content:space-between"><span>BFR calcule</span><strong style="color:#c9a96e">'+(d.bfr||0)+' EUR</strong></div>'+
 
-    setTimeout(function() {
-      var services = [...checked].map(function(c) { return c.value; }).join(', ');
-      feedback.style.display = 'block';
-      feedback.innerHTML = '<div class="rdv-alert-success">'
-        + '<strong>Demande envoyée !</strong><br>'
-        + 'Merci ' + nom.split(' ')[0] + ', votre demande a bien été reçue. '
-        + "Je vous recontacte sous 24h ouvrées à l'adresse <strong>" + email + "</strong>."
-        + '</div>';
-      submitBtn.style.display = 'none';
-      /* Reset léger des champs */
-      if (msgEl) msgEl.value = '';
-      checked.forEach(function(c) { c.checked = false; });
-      document.querySelectorAll('.rdv-interest-item').forEach(function(el) {
-        el.style.borderColor = '';
-        el.style.background = '';
-      });
-      [nomEl, emailEl, telEl].forEach(function(el) {
-        if (el) { el.value = ''; el.classList.remove('rdv-ok'); }
-      });
-    }, 800);
-  };
+    '<h2>13. Plan de financement</h2>'+
+    '<div class="field"><span class="field-label">Total besoins</span><span class="field-value">'+(d.total_besoins||0)+' EUR</span></div>'+
+    '<div class="field"><span class="field-label">Total ressources</span><span class="field-value">'+(d.total_ressources||0)+' EUR</span></div>'+
+    '<div style="background:'+(( d.solde_financement||0) >= 0 ? '#d1fae5' : '#fee2e2')+';padding:10px;border-radius:4px;margin-top:8px">'+
+    '<strong>Solde : '+(d.solde_financement||0)+' EUR</strong></div>'+
 
-})();
+    '<h2>15. Pieces justificatives prevues</h2>'+
+    (d.pieces && d.pieces.length > 0 ? '<ul>'+d.pieces.map(function(p){return '<li style="font-size:11px">'+p+'</li>';}).join('')+'</ul>' : '<p style="color:#999;font-size:11px">A preciser</p>')+
 
-</script>
-</body>
+    '<div class="signature">'+
+    '<div class="sig-box"><strong>Le conseiller SIMELE</strong><br><span style="font-size:11px;color:#666">Jean-Christophe Simele</span><div style="height:60px"></div><span style="font-size:10px;color:#999">Signature et cachet</span></div>'+
+    '<div class="sig-box"><strong>Le porteur de projet</strong><br><span style="font-size:11px;color:#666">'+(d.prenom||'')+' '+(d.nom||'')+'</span><br><span style="font-size:10px;color:#666;font-style:italic">Precede de "Lu et approuve"</span><div style="height:60px"></div><span style="font-size:10px;color:#999">Signature</span></div>'+
+    '</div>'+
+    '</body></html>';
+
+  var win = window.open('', '_blank');
+  if (!win) { pijShowMsg('Autorisez les popups pour voir le PDF.', 'error'); return; }
+  win.document.write(html);
+  win.document.close();
+  pijShowMsg('PDF genere ! Cliquez sur "Imprimer / Sauvegarder PDF" dans la nouvelle fenetre.', 'success');
+}
+
+// ===== AFFICHER MESSAGE =====
+function pijShowMsg(msg, type) {
+  var container = document.getElementById('sub-form-pij');
+  var existing = document.getElementById('pij-msg-bar');
+  if (existing) existing.remove();
+  var div = document.createElement('div');
+  div.id = 'pij-msg-bar';
+  var colors = {success:'#d1fae5:#065f46:#10b981', error:'#fee2e2:#991b1b:#ef4444', info:'#eff6ff:#1e40af:#3b82f6'};
+  var c = (colors[type]||colors.info).split(':');
+  div.style.cssText = 'background:'+c[0]+';color:'+c[1]+';border-left:3px solid '+c[2]+';padding:10px 14px;border-radius:4px;margin:10px 0;font-size:13px';
+  div.textContent = msg;
+  if (container) container.insertBefore(div, container.firstChild);
+  setTimeout(function(){if(div.parentNode)div.remove();}, 5000);
+}
+
+// Initialiser quand on affiche l'onglet PIJ
+function showPIJTab() {
+  pijInit();
+}
 </html>
