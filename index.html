@@ -3348,5 +3348,138 @@ function ecTab(t) {
 }
 
 
+
+// ===== FONCTIONS MANQUANTES + BRANCHEMENT CRM =====
+var _CRM = 'https://ccs-gc-logi.up.railway.app';
+
+function ecInitChat() {
+  var el = document.getElementById('dd-envoyer');
+  if (!el) return;
+  var tok = localStorage.getItem('pt') || '';
+  // Charger les messages existants
+  fetch(_CRM + '/api/portal/messages', {headers: {'Authorization': 'Bearer ' + tok}})
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var msgs = d.messages || [];
+      var html = msgs.length === 0 ? '<p style="color:#999;font-size:13px">Aucun message pour le moment.</p>' :
+        msgs.map(function(m) {
+          return '<div style="padding:10px;border-bottom:1px solid #eee"><div style="font-size:11px;color:#999">' + m.created_at + '</div><div style="font-size:13px;margin-top:4px">' + m.contenu + '</div></div>';
+        }).join('');
+      var msgEl = document.getElementById('ec-messages-list');
+      if (msgEl) msgEl.innerHTML = html;
+    }).catch(function() {});
+}
+
+function pijGoStep(n) {
+  if (typeof pijShowStep === 'function') pijShowStep(n);
+}
+
+// ===== ACTION : CHOISIR UNE PRESTATION → CRM =====
+var _origEcSelectService = window.ecSelectService;
+window.ecSelectService = function(el, id, label, prix) {
+  if (_origEcSelectService) _origEcSelectService(el, id, label, prix);
+};
+
+var _origEcHandleServiceClick = window.ecHandleServiceClick;
+window.ecHandleServiceClick = function(el) {
+  if (_origEcHandleServiceClick) _origEcHandleServiceClick(el);
+};
+
+// Surcharger la fonction qui valide la commande de prestation
+var _origEcCommande = window.ecCommande || window.ecValiderCommande;
+window.ecEnvoyerChoixPrestation = async function(serviceId, serviceLabel, montant) {
+  var tok = localStorage.getItem('pt') || '';
+  if (!tok) return;
+  try {
+    var r = await fetch(_CRM + '/api/portal/choisir-prestation', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok},
+      body: JSON.stringify({service_id: serviceId, service_label: serviceLabel, montant: montant})
+    });
+    if (r.ok) {
+      console.log('Prestation envoyee au CRM:', serviceLabel);
+    }
+  } catch(e) { console.error('Erreur envoi prestation CRM:', e); }
+};
+
+// Hook sur le bouton de validation de prestation
+var _origEcValiderPrestation = window.ecValiderPrestation;
+window.ecValiderPrestation = async function(serviceId, serviceLabel, montant) {
+  var tok = localStorage.getItem('pt') || '';
+  try {
+    var r = await fetch(_CRM + '/api/portal/choisir-prestation', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok},
+      body: JSON.stringify({service_id: serviceId, service_label: serviceLabel, montant: montant || 0})
+    });
+    var d = await r.json();
+    if (d.success || d.ok) {
+      alert('Votre choix de prestation a ete enregistre. Votre conseiller vous contactera prochainement.');
+    }
+  } catch(e) {}
+  if (_origEcValiderPrestation) _origEcValiderPrestation(serviceId, serviceLabel, montant);
+};
+
+// ===== ACTION : ENVOYER UN DOCUMENT → CRM =====
+var _origEcEnvoyerFichier = window.ecEnvoyerFichier;
+window.ecEnvoyerFichier = async function() {
+  var tok = localStorage.getItem('pt') || '';
+  var fileInput = document.getElementById('ec-file-input') || document.querySelector('input[type="file"]');
+  var sujetEl = document.getElementById('ec-message-sujet') || document.getElementById('ec-envoi-sujet');
+  var msgEl = document.getElementById('ec-message-texte') || document.getElementById('ec-envoi-message');
+  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+    if (_origEcEnvoyerFichier) _origEcEnvoyerFichier();
+    return;
+  }
+  var formData = new FormData();
+  formData.append('fichier', fileInput.files[0]);
+  if (sujetEl) formData.append('sujet', sujetEl.value);
+  if (msgEl) formData.append('message', msgEl.value);
+  try {
+    var r = await fetch(_CRM + '/api/portal/envoyer-document', {
+      method: 'POST',
+      headers: {'Authorization': 'Bearer ' + tok},
+      body: formData
+    });
+    var d = await r.json();
+    if (d.success || d.ok) {
+      alert('Document envoye avec succes ! Votre conseiller en a ete notifie.');
+      if (fileInput) fileInput.value = '';
+      if (typeof ecLoadEnvois === 'function') ecLoadEnvois();
+    } else {
+      alert('Erreur envoi: ' + (d.error || 'Reessayez'));
+    }
+  } catch(e) {
+    if (_origEcEnvoyerFichier) _origEcEnvoyerFichier();
+  }
+};
+
+// ===== ACTION : DEMANDE DE SUBVENTION → CRM =====
+var _origEcEnvoyerSubvention = window.ecEnvoyerSubvention || window.ecSoumettreSubvention;
+window.ecSoumettreSubvention = async function(typeSubvention, donnees) {
+  var tok = localStorage.getItem('pt') || '';
+  try {
+    var r = await fetch(_CRM + '/api/portal/commande', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok},
+      body: JSON.stringify({type: 'subvention', sous_type: typeSubvention, donnees: donnees || {}})
+    });
+    var d = await r.json();
+    if (d.success || d.ok) {
+      alert('Votre demande de subvention a ete transmise. Votre conseiller la traitera dans les plus brefs delais.');
+    }
+  } catch(e) {
+    console.error('Erreur envoi subvention:', e);
+  }
+  if (_origEcEnvoyerSubvention) _origEcEnvoyerSubvention(typeSubvention, donnees);
+};
+
+// Notifier le CRM quand le formulaire PIJ est valide
+var _origPijValider = window.pijValider;
+window.pijValider = async function() {
+  if (_origPijValider) await _origPijValider();
+  // Notification supplementaire au CRM si besoin
+};
+
 </script>
 </html>
