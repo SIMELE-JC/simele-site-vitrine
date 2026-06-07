@@ -3481,5 +3481,42 @@ window.pijValider = async function() {
   // Notification supplementaire au CRM si besoin
 };
 
+
+// ===== MENU MOBILE =====
+function mobToggle() {
+  var menu = document.getElementById('mob-menu');
+  var overlay = document.getElementById('mob-overlay');
+  var btn = document.getElementById('nav-ham');
+  if (!menu) return;
+  var isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+    if (btn) btn.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    menu.classList.add('open');
+    if (overlay) overlay.classList.add('open');
+    if (btn) btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function mobClose() {
+  var menu = document.getElementById('mob-menu');
+  var overlay = document.getElementById('mob-overlay');
+  var btn = document.getElementById('nav-ham');
+  if (menu) menu.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
+  if (btn) btn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Fermer le menu quand on clique sur un lien
+document.addEventListener('DOMContentLoaded', function() {
+  var mobLinks = document.querySelectorAll('#mob-menu a');
+  mobLinks.forEach(function(link) {
+    link.addEventListener('click', function() { mobClose(); });
+  });
+});
+
 </script>
 </html>
